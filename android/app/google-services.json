@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "962384191254",
+    "project_id": "revivals-7697a",
+    "storage_bucket": "revivals-7697a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962384191254:android:ea470833cac7e8d167ba37",
+        "android_client_info": {
+          "package_name": "sg.bluemoon.r"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962384191254-vkmcfu7t0v6hvcm8ftkm65nftr1fjtl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmH_YuLFWduaMJ8e0Ggbr1RmnynGbN2mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962384191254-vkmcfu7t0v6hvcm8ftkm65nftr1fjtl0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "962384191254-hm413sgcmr8e79l0cfhl6eq34sp7n900.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sg.bluemoon.revivals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962384191254:android:2b5e7a1de55fd8ff67ba37",
+        "android_client_info": {
+          "package_name": "sg.bluemoon.revivals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962384191254-vkmcfu7t0v6hvcm8ftkm65nftr1fjtl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmH_YuLFWduaMJ8e0Ggbr1RmnynGbN2mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962384191254-vkmcfu7t0v6hvcm8ftkm65nftr1fjtl0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "962384191254-hm413sgcmr8e79l0cfhl6eq34sp7n900.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sg.bluemoon.revivals"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
