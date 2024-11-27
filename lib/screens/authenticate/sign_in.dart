@@ -42,6 +42,7 @@ class _SignIn extends State<SignIn> {
       List<Renter> renters =
           Provider.of<ItemStore>(context, listen: false).renters;
       found = false;
+      log(renters.toString());
       for (Renter r in renters) {
         if (r.email == email) {
           found = true;

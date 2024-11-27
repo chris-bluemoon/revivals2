@@ -11,6 +11,7 @@ import 'package:revivals/screens/profile/my_admin.dart';
 import 'package:revivals/screens/profile/my_fittings.dart';
 import 'package:revivals/screens/profile/my_transactions.dart';
 import 'package:revivals/screens/profile/settings.dart';
+import 'package:revivals/screens/profile/upload_pics.dart';
 import 'package:revivals/screens/profile/verify_id.dart';
 import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/services/class_store.dart';
@@ -200,6 +201,21 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       Icon(Icons.verified_user_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
                       const StyledBody('VERIFY ID', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                SizedBox(height: width * 0.06),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const UploadPics())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.image_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('UPLOAD PICS', weight: FontWeight.normal),
                     ],
                   ),
                 ),
