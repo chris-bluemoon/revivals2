@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:revivals/services/class_store.dart';
 
 
 
@@ -52,26 +54,40 @@ class _UploadPicsState extends State<UploadPics> {
     setState(() {
       _image = image;
       // await FirebaseStorage.instance.ref(imageRef).putFile(videoFile);
-      uploadPic();
+      // uploadPic();
+      uploadFile();
+      listFiles();
     });
   }
 
-  Future<String> uploadPic() async {
-
-    //Get the file from the image picker and store it 
-    // XFile? image = await ImagePicker.pickImage(source: ImageSource.gallery);  
-
-    //Create a reference to the location you want to upload to in firebase  
-    // StorageReference reference = storage.ref().child("images/");
-    Reference ref = storage.ref().child("image1${DateTime.now()}");
-    log(ref.toString());
+  Future<String> uploadFile() async {
+    String id = Provider.of<ItemStore>(context, listen:false).renter.id;
+    Reference ref = storage.ref().child(id).child("testimage");
+    print('REFERENCE: $ref');
     File file = File(_image!.path);
     UploadTask uploadTask = ref.putFile(file);
-    String location= '';
-    uploadTask.then((res) {
-      location = res.ref.getDownloadURL() as String;
-    });
+    print('UPLOAD TASK${uploadTask.snapshot}');
+    TaskSnapshot taskSnapshot = await uploadTask;
+    log(ref.bucket.toString());
+    log(ref.fullPath.toString());
+    return await taskSnapshot.ref.getDownloadURL();
+  }
 
-    return location;
-   }
+  listFiles() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final listResult = await storageRef.listAll();
+
+  // for (var prefix in listResult.prefixes) {
+  // The prefixes under storageRef.
+  // You can call listAll() recursively on them.
+  // }
+    for (var ref in listResult.items) {
+        print('Found file: $ref');
+    }
+
+    for (var item in listResult.items) {
+      log(item.toString());
+    }
+  }
+
 }

@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/help_centre/faqs.dart';
+import 'package:revivals/screens/profile/create_item.dart';
+import 'package:revivals/screens/profile/download_pics.dart';
 import 'package:revivals/screens/profile/my_account.dart';
 import 'package:revivals/screens/profile/my_admin.dart';
 import 'package:revivals/screens/profile/my_fittings.dart';
+import 'package:revivals/screens/profile/my_items.dart';
 import 'package:revivals/screens/profile/my_transactions.dart';
 import 'package:revivals/screens/profile/settings.dart';
-import 'package:revivals/screens/profile/upload_pics.dart';
 import 'package:revivals/screens/profile/verify_id.dart';
 import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/services/class_store.dart';
@@ -208,14 +210,44 @@ class _ProfileLandingState extends State<ProfileLanding> {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => (const UploadPics())));
+                        builder: (context) => (const CreateItem())));
                   },
                   child: Row(
                     children: [
                       SizedBox(width: width * 0.01),
                       Icon(Icons.image_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
-                      const StyledBody('UPLOAD PICS', weight: FontWeight.normal),
+                      const StyledBody('CREATE ITEM', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                SizedBox(height: width * 0.06),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const MyItems())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.image_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('MY ITEMS', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                SizedBox(height: width * 0.06),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const DownloadPics())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.image_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('DOWNLOAD PICS', weight: FontWeight.normal),
                     ],
                   ),
                 ),

@@ -208,7 +208,7 @@ class _SummaryRentalState extends State<SummaryRental> {
                             deliveryPrice: widget.deliveryPrice.value,
                             price: widget.price.toString(),
                             deposit: widget.item.rentPrice.toString(),
-                            gd_image_id: widget.item.imageId)
+                            gd_image_id: widget.item.imageId[0])
                         .sendEmail2();
                     showAlertDialog(context, widget.item.type, width);
                     // Navigator.of(context).push(MaterialPageRoute(

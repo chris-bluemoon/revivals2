@@ -35,9 +35,12 @@ class _MyAdminState extends State<MyAdmin> {
       Provider.of<ItemStore>(context, listen: false).deleteFittingRenters();
     }
     void handleSubmit() {
+    
     for (var i = 0; i < allItems.length; i++) {
+      log(allItems[i].owner);
       Provider.of<ItemStore>(context, listen: false).addItem(Item(
         id: uuid.v4(),
+        owner: allItems[i].owner,
         type: allItems[i].type,
         bookingType: allItems[i].bookingType,
         occasion: allItems[i].occasion,

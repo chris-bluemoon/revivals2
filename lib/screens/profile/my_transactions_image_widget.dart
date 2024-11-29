@@ -25,7 +25,7 @@ class MyTransactionsImageWidget extends StatelessWidget {
   late String itemName;
   late String brandName;
   late String imageName;
-  Item item = Item(id: '-', type: 'dress', bookingType: 'rental', dateAdded: '01-01-2023', occasion: ['party'], style: 'classic', name: 'MISSING', brand: 'MISSING', colour: ['Black'], size: ['8'], length: 'midi', print: 'none', sleeve: 'short sleeve', rentPrice: 1200, buyPrice: 0, rrp: 16000, description: 'Short Description', bust: '', waist: '', hips: '', longDescription: '', imageId: '', );
+  Item item = Item(id: '-', owner: 'owner', type: 'dress', bookingType: 'rental', dateAdded: '01-01-2023', occasion: ['party'], style: 'classic', name: 'MISSING', brand: 'MISSING', colour: ['Black'], size: ['8'], length: 'midi', print: 'none', sleeve: 'short sleeve', rentPrice: 1200, buyPrice: 0, rrp: 16000, description: 'Short Description', bust: '', waist: '', hips: '', longDescription: '', imageId: [] );
 
 
   String setItemImage() {
