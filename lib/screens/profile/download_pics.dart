@@ -39,7 +39,8 @@ class _DownloadPicsState extends State<DownloadPics> {
                 : Image.network(url)
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: getImage,
+            onPressed: Provider.of<ItemStore>(context, listen: false).fetchImages,
+            // onPressed: getImage,
             tooltip: 'Pick Image',
             child: const Icon(Icons.add_a_photo),
           ),

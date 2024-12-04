@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/item_image.dart';
 import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/get_country_price.dart';
@@ -89,11 +92,14 @@ String capitalize(string) {
   String convertedRRPPrice = '-1';
   String symbol = '?';
 
+  Image? myImage;
+
   @override
   void initState() {
     // List currListOfFavs =
     //     Provider.of<ItemStore>(context, listen: false).favourites;
     // isFav = isAFav(widget.item, currListOfFavs);
+    Future.delayed(const Duration(seconds: 5));
     super.initState();
   }
 
@@ -158,13 +164,37 @@ String capitalize(string) {
     return formattedSize;
   }
 
+  Image thisImage = Image.asset('assets/img/items2/No_Image_Available.jpg');
 Widget createImage(String imageName) {
+  // final ref = FirebaseStorage.instance.ref().child('testimage');
+  // var url = await ref.getDownloadURL();
+  // log('URL $url');
+  // return Image.network(url);
+  if (myImage == null) log("creating image as myImage is null");
   return Image.asset(imageName,
       errorBuilder: (context, object, stacktrace) =>
           Image.asset('assets/img/items2/No_Image_Available.jpg'));
 }
   @override
   Widget build(BuildContext context) {
+    // List<ItemImage> cardImage = widget.item.imageId;
+
+    log('Length of images is: ${Provider.of<ItemStore>(context, listen: false).images.length}');
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      log(i.id);
+    }
+    log('imageId is: ${Provider.of<ItemStore>(context, listen: false).images[0].id}');
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      log('ItemImage i is ${i.id} and widget has first element ${widget.item.imageId[0]}');
+      if (i.id == widget.item.imageId[0]) {
+        log('FOUND AN IMAGE MATCH');
+        setState(() {
+          // thisImage = Image.asset('assets/img/items2/AJE_Breathless_Frill_Sleeves_Dress_1.jpg');
+          thisImage = i.imageId;
+        }
+        );
+      }
+    }
     double width = MediaQuery.of(context).size.width;
     List currListOfFavs =
         Provider.of<ItemStore>(context, listen: false).favourites;
@@ -188,7 +218,14 @@ Widget createImage(String imageName) {
             if (!widget.isDesigner) Center(child: StyledHeading(widget.item.brand)),
             SizedBox(height: width * 0.02),
             // Image.asset('assets/img/items2/${setItemImage()}', width: 200, height: 600),
-            Expanded(child: Center(child: createImage('assets/img/items2/${setItemImage()}')),),
+            Expanded(child: Center(
+              // child: (Provider.of<ItemStore>(context, listen: false).images == null) ? createImage('assets/img/items2/${setItemImage()}')
+              // : Provider.of<ItemStore>(context, listen: false).images[0]
+              // child: (cardImage.imageId == null) ? createImage('assets/img/items2/${setItemImage()}')
+              // : cardImage.imageId
+              child: thisImage
+            ),
+            ),
             // Image.asset('assets/img/items2/${setItemImage()}', fit: BoxFit.fill),
             Row(
               // mainAxisAlignment: MainAxisAlignment.left,

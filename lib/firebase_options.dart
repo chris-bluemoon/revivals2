@@ -50,22 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAUL3f4EWrs0PeFt6EAB7TuuBYqJ9GDymI',
-    appId: '1:532886439020:android:c57833641d5fefcec58449',
-    messagingSenderId: '532886439020',
-    projectId: 'unearthed2-5343a',
-    storageBucket: 'unearthed2-5343a.appspot.com',
+    apiKey: 'AIzaSyAmH_YuLFWduaMJ8e0Ggbr1RmnynGbN2mo',
+    appId: '1:962384191254:android:2b5e7a1de55fd8ff67ba37',
+    messagingSenderId: '962384191254',
+    projectId: 'revivals-7697a',
+    storageBucket: 'revivals-7697a.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCo_erOILlJmrIfAUoipR1VoYSLyxukE8k',
-    appId: '1:532886439020:ios:faf1483c71519899c58449',
-    messagingSenderId: '532886439020',
-    projectId: 'unearthed2-5343a',
-    storageBucket: 'unearthed2-5343a.appspot.com',
-    androidClientId: '532886439020-6b830pq75fngj19rtk0k2jsae9qvqdkm.apps.googleusercontent.com',
-    iosClientId: '532886439020-52h926mukuq19kdo645c6qgn4vfdt14k.apps.googleusercontent.com',
-    iosBundleId: 'sg.bluemoon.unearthed',
+    apiKey: 'AIzaSyCO7Gx3VEkWh-ZuJR_EYPgjPIPmxutOSGI',
+    appId: '1:962384191254:ios:b5427b3187f80bb767ba37',
+    messagingSenderId: '962384191254',
+    projectId: 'revivals-7697a',
+    storageBucket: 'revivals-7697a.firebasestorage.app',
+    androidClientId: '962384191254-57tqcnp36t8m9kq1l9v4mm1k1sc6vspu.apps.googleusercontent.com',
+    iosClientId: '962384191254-of46pt0iqldf7prq3e27mdkdnusbrml7.apps.googleusercontent.com',
+    iosBundleId: 'com.example.revivals',
   );
 
 }
