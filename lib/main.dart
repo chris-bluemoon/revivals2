@@ -16,7 +16,7 @@ void main() async {
   // Firebase initialize
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "revivals dev project",
+    // name: "revivals dev project",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
