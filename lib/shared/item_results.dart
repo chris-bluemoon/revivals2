@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/screens/fitting/fitting.dart';
 import 'package:revivals/screens/to_rent/to_rent.dart';
+import 'package:revivals/screens/to_rent/to_rent_submission.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/filters_page.dart';
 import 'package:revivals/shared/item_card.dart';
@@ -132,6 +133,10 @@ class _ItemResultsState extends State<ItemResults> {
     } else {
       for (Item i in allItems) {
         switch (widget.attribute) {
+          case 'status':
+            if (i.status == widget.value) {
+              finalItems.add(i);
+          }
           case 'brand':
             if (i.brand == widget.value) {
               finalItems.add(i);
@@ -173,6 +178,9 @@ class _ItemResultsState extends State<ItemResults> {
       switch (attribute) {
         case 'dateAdded':  {
           title = 'LATEST ADDITIONS';
+        }
+        case 'status':  {
+          title = 'SUBMISSIONS';
         }
         case 'brand':  {
           title = widget.value.toUpperCase();
@@ -243,10 +251,14 @@ class _ItemResultsState extends State<ItemResults> {
                                   (widget.attribute == 'fitting') ? ItemCard(finalItems[index], false, true) :
                                   ItemCard(finalItems[index], false, false),
                                 onTap: () {
-                                  if (widget.attribute != 'fitting') {
+                                  if (widget.attribute != 'fitting' && widget.attribute != 'status') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           (ToRent(finalItems[index]))));
+                                  } else if (widget.attribute == 'status') {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          (ToRentSubmission(finalItems[index]))));
                                   }
                                 }),
                             itemCount: finalItems.length,

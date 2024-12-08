@@ -173,6 +173,7 @@ class ItemStore extends ChangeNotifier {
       // And populating tables required by Items
       populateFavourites();
       populateFittings();
+      fetchImages();
 
       notifyListeners();
       
@@ -328,6 +329,10 @@ class ItemStore extends ChangeNotifier {
   void saveFittingRenter(FittingRenter fittingRenter) async {
     await FirestoreService.updateFittingRenter(fittingRenter);
     notifyListeners();
+    return;
+  }
+  void saveItem(Item item) async {
+    await FirestoreService.updateItem(item);
     return;
   }
 }

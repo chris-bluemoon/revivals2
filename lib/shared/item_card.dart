@@ -183,7 +183,8 @@ Widget createImage(String imageName) {
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
       log(i.id);
     }
-    log('imageId is: ${Provider.of<ItemStore>(context, listen: false).images[0].id}');
+    // TODO: fix this
+    log('${Provider.of<ItemStore>(context, listen: false).images[0].id}');
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
       log('ItemImage i is ${i.id} and widget has first element ${widget.item.imageId[0]}');
       if (i.id == widget.item.imageId[0]) {
@@ -237,7 +238,8 @@ Widget createImage(String imageName) {
                     alignment: Alignment.centerLeft,
                     child: StyledHeading(widget.item.name))),
                 const Expanded(child: SizedBox()),
-                if (!widget.isFittingScreen) (isFav) ? IconButton(
+                if (widget.item.status != 'submitted ') if (!widget.isFittingScreen) (isFav) ? IconButton(
+                // (widget.item.status != 'submission') (!widget.isFittingScreen) (isFav) ? IconButton(
                   icon: Icon(Icons.favorite, size: width*0.05), color: Colors.red,
                   onPressed: () {
                       _toggleFav();

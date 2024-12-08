@@ -101,6 +101,13 @@ class FirestoreService {
      }
     );
   }
+  static Future<void> updateItem(Item item) async {
+    await refItem.doc(item.id).update(
+      {
+        'status': item.status,
+     }
+    );
+  }
   
   static deleteItems() {
   FirebaseFirestore.instance

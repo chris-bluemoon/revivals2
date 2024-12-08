@@ -103,7 +103,7 @@ class _CreateItemState extends State<CreateItem> {
   }
 
   handleSubmit(String type, String colour, String size, String imagePath) {
-    log('Uploading (handle submit)...');
+    log('handleSubmit - Adding item (addItem) to ItemStore');
     String ownerId = Provider.of<ItemStore>(context, listen: false).renter.id;
       Provider.of<ItemStore>(context, listen: false).addItem(Item(
         id: uuid.v4(),
@@ -129,6 +129,7 @@ class _CreateItemState extends State<CreateItem> {
         hips: allItems[0].hips,
         longDescription: allItems[0].longDescription,
         imageId: [imagePath],
+        status: 'submitted'
         // imageId: allItems[0].imageId,
     ));
   }
