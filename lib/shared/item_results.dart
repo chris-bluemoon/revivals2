@@ -64,15 +64,27 @@ class _ItemResultsState extends State<ItemResults> {
     numOfFilters = noOfFilters;
     setState(() {});
   }
+  late List<Item> allItems = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
+      if (i.status == 'accepted' && widget.attribute == '') {
+        allItems.add(i);
+      }
+    }
+    log('Count of items in ItemStore: ${allItems.length}');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     // getCurrentUser();
-    List<Item> allItems = Provider.of<ItemStore>(context, listen: false).items;
     List<Item> finalItems = [];
     filteredItems.clear();
-    log('Fittings count ${Provider.of<ItemStore>(context, listen: false).renter.fittings.length.toString()}');
+
 
     if (filterOn == true) {
       switch (widget.attribute) {

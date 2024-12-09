@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
 import 'package:revivals/models/item.dart';
@@ -114,25 +112,43 @@ class _ToRentState extends State<ToRent> {
     }
   }
 
-    Future _initImages() async {
-      // >> To get paths you need these 2 lines
-      // List<String> someImages = [];
-      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    // Future _initImages() async {
+    //   // >> To get paths you need these 2 lines
+    //   // List<String> someImages = [];
+    //   final manifestContent = await rootBundle.loadString('AssetManifest.json');
     
-      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-      // >> To get paths you need these 2 lines
+    //   final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    //   // >> To get paths you need these 2 lines
 
-      final imagePaths = manifestMap.keys
-          .where((String key) => key.contains('items2/'))
-          .toList();
+    //   final imagePaths = manifestMap.keys
+    //       .where((String key) => key.contains('items2/'))
+    //       .toList();
     
+    //   int counter = 0;
+    //   for (String i in imagePaths) {
+    //     String brand = widget.item.brand.replaceAll(RegExp(' +'), '_');
+    //     String name = widget.item.name.replaceAll(RegExp(' +'), '_');
+    //     String toCompare = '${brand}_$name';
+    //     if (i.contains(toCompare)) {
+    //       log('Found an image');
+    //       counter++;
+    //       items.add(counter);
+    //       dotColours.add(Colors.grey);
+    //     }
+    //     setState(() {
+    //       itemCheckComplete = true;
+    //       log('Setting itemCheckComplete to true');
+    //     });
+    //   }
+    //   // setState(() {
+    //     // someImages = imagePaths;
+    //   // });
+    // }
+    Future _initImages() async {
+
       int counter = 0;
-      for (String i in imagePaths) {
-        String brand = widget.item.brand.replaceAll(RegExp(' +'), '_');
-        String name = widget.item.name.replaceAll(RegExp(' +'), '_');
-        String toCompare = '${brand}_$name';
-        if (i.contains(toCompare)) {
-          log('Found an image');
+      for (String i in widget.item.imageId) {
+          log('Found an image $i');
           counter++;
           items.add(counter);
           dotColours.add(Colors.grey);
@@ -142,10 +158,6 @@ class _ToRentState extends State<ToRent> {
           log('Setting itemCheckComplete to true');
         });
       }
-      // setState(() {
-        // someImages = imagePaths;
-      // });
-    }
 
 
   @override

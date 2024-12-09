@@ -36,8 +36,10 @@ class _CreateItemState extends State<CreateItem> {
   String itemType = 'dress';
   String itemColour = 'blue';
   String itemSize = '6';
-  String imagePath = 'dummy';
+  List<String> imagePath = [];
   String shortDesc = 'This is my short description';
+
+  bool readyToSubmit = false;
 
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
@@ -85,14 +87,10 @@ class _CreateItemState extends State<CreateItem> {
               TextField(
                 controller: shortDescController),
               ElevatedButton(
-                onPressed: _image != null ? () {
-                  if (_image != null) {
-                    handleSubmit(itemType, itemColour, itemSize, imagePath);
-                    for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
-                      log(i.imageId[0].toString());
-                    }
-                    Navigator.pop(context);
-                  } 
+                onPressed: (readyToSubmit == true) ? () {
+                  handleSubmit(itemType, itemColour, itemSize, imagePath);
+                  readyToSubmit = false;
+                  Navigator.pop(context);
                 } : null,
                 child: const Text('SUBMIT')
                 )
@@ -102,7 +100,7 @@ class _CreateItemState extends State<CreateItem> {
         );
   }
 
-  handleSubmit(String type, String colour, String size, String imagePath) {
+  handleSubmit(String type, String colour, String size, List<String> imagePath) {
     log('handleSubmit - Adding item (addItem) to ItemStore');
     String ownerId = Provider.of<ItemStore>(context, listen: false).renter.id;
       Provider.of<ItemStore>(context, listen: false).addItem(Item(
@@ -128,7 +126,7 @@ class _CreateItemState extends State<CreateItem> {
         waist: allItems[0].waist,
         hips: allItems[0].hips,
         longDescription: allItems[0].longDescription,
-        imageId: [imagePath],
+        imageId: imagePath,
         status: 'submitted'
         // imageId: allItems[0].imageId,
     ));
@@ -162,8 +160,11 @@ class _CreateItemState extends State<CreateItem> {
     log('UPLOAD TASK${uploadTask.snapshot}');
     TaskSnapshot taskSnapshot = await uploadTask;
     // log(ref.bucket.toString());
-    imagePath = ref.fullPath.toString();
+    imagePath.add(ref.fullPath.toString());
     log('imagePath has been set, ready to handleSubmit');
+    setState( () {
+    readyToSubmit = true;
+    });
     return await taskSnapshot.ref.getDownloadURL();
   }
 

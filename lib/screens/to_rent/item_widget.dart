@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/item_image.dart';
+import 'package:revivals/services/class_store.dart';
 
 class ItemWidget extends StatefulWidget {
   const ItemWidget({super.key, required this.item, required this.itemNumber});
@@ -22,13 +24,23 @@ class _ItemWidgetState extends State<ItemWidget> {
   late String itemName;
   late String brandName;
   late String imageName;
+  late Image thisImage;
 
-  String setItemImage() {
-    itemType = toBeginningOfSentenceCase(widget.item.type.replaceAll(RegExp(' +'), '_'));
-    itemName = widget.item.name.replaceAll(RegExp(' +'), '_');
-    brandName = widget.item.brand.replaceAll(RegExp(' +'), '_');
-    imageName = 'assets/img/items2/${brandName}_${itemName}_${itemType}_${widget.itemNumber}.jpg';
-    return imageName;
+  Image setItemImage() {
+    // itemType = toBeginningOfSentenceCase(widget.item.type.replaceAll(RegExp(' +'), '_'));
+    // itemName = widget.item.name.replaceAll(RegExp(' +'), '_');
+    // brandName = widget.item.brand.replaceAll(RegExp(' +'), '_');
+    // imageName = 'assets/img/items2/${brandName}_${itemName}_${itemType}_${widget.itemNumber}.jpg';
+    // return imageName;
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      if (i.id == widget.item.imageId[widget.itemNumber-1]) {
+        setState(() {
+          thisImage = i.imageId;
+        }
+        );
+      }
+    }
+    return thisImage;
   }
 
   @override
@@ -36,7 +48,8 @@ class _ItemWidgetState extends State<ItemWidget> {
                       // String itemImage = 'assets/img/items2/${widget.item.brand}_${widget.item.name}_Item_${widget.itemNumber}.jpg';
                       // return FittedBox(
                         
-                        return Image.asset(setItemImage(), fit: BoxFit.contain);
+                        return setItemImage();
+                        // return Image.asset(setItemImage(), fit: BoxFit.contain);
                         // child: Image.asset(setItemImage(),),
                         // fit: BoxFit.fill,
                       // );

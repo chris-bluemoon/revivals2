@@ -184,7 +184,6 @@ Widget createImage(String imageName) {
       log(i.id);
     }
     // TODO: fix this
-    log('${Provider.of<ItemStore>(context, listen: false).images[0].id}');
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
       log('ItemImage i is ${i.id} and widget has first element ${widget.item.imageId[0]}');
       if (i.id == widget.item.imageId[0]) {

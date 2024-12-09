@@ -120,8 +120,8 @@ class ItemStore extends ChangeNotifier {
 
   // add character
   void addItem(Item item) async {
-    await FirestoreService.addItem(item);
     _items.add(item);
+    await FirestoreService.addItem(item);
     notifyListeners();
   }
 
@@ -168,15 +168,12 @@ class ItemStore extends ChangeNotifier {
       final snapshot = await FirestoreService.getItemsOnce();
       for (var doc in snapshot.docs) {
         _items.add(doc.data());
+        log('Added an item from Firestore to local database ${doc.toString()}');
       }
-
-      // And populating tables required by Items
       populateFavourites();
       populateFittings();
       fetchImages();
-
       notifyListeners();
-      
     }
 
 
@@ -297,7 +294,7 @@ class ItemStore extends ChangeNotifier {
           _images.add(newImage);
           log('image added to _images: ${ref.fullPath}');
         } catch (e) {
-          log(e.toString());
+          log('Image fetch error: ${e.toString()}');
         }
         // _images.add(Image.network(url));
       }
