@@ -70,7 +70,11 @@ class _ItemResultsState extends State<ItemResults> {
   void initState() {
     // TODO: implement initState
     for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
-      if (i.status == 'accepted' && widget.attribute == '') {
+      if (i.status == 'submitted' && widget.attribute == 'status') {
+        allItems.add(i);
+      } else if (i.status == 'accepted' && widget.attribute != 'status') {
+        allItems.add(i);
+      } else if (i.status == 'denied' && widget.attribute == 'status') {
         allItems.add(i);
       }
     }

@@ -108,6 +108,24 @@ class _MyAdminState extends State<MyAdmin> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const ItemResults('status', 'denied'))));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.description_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('ADMIN: VIEW DENIED', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: width * 0.05,
+                  indent: 50,
+                  color: Colors.grey[200],
+                ),
+                GestureDetector(
+                  onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const ItemResults('status', 'submitted'))));
                   },
                   child: Row(
