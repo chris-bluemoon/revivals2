@@ -121,7 +121,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                   child: Row(
                     children: [
                       SizedBox(width: width * 0.01),
-                      Icon(Icons.fact_check_outlined, size: width * 0.05),
+                      Icon(Icons.email_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
                       const StyledBody('MY MESSAGES', weight: FontWeight.normal),
                     ],
@@ -159,7 +159,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                   child: Row(
                     children: [
                       SizedBox(width: width * 0.01),
-                      Icon(Icons.fact_check_outlined, size: width * 0.05),
+                      Icon(Icons.straighten_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
                       const StyledBody('MY FITTINGS', weight: FontWeight.normal),
                     ],
@@ -170,7 +170,25 @@ class _ProfileLandingState extends State<ProfileLanding> {
                   indent: 50,
                   color: Colors.grey[200],
                 ),
-      
+                      GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const CreateItem())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.create_new_folder_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('CREATE ITEM', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: width * 0.05,
+                  indent: 50,
+                  color: Colors.grey[200],
+                ),
                 GestureDetector(
                   onTap: () {
                     shareApp();
@@ -225,37 +243,29 @@ class _ProfileLandingState extends State<ProfileLanding> {
                     ],
                   ),
                 ),
-                SizedBox(height: width * 0.06),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => (const CreateItem())));
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: width * 0.01),
-                      Icon(Icons.image_outlined, size: width * 0.05),
-                      SizedBox(width: width * 0.01),
-                      const StyledBody('CREATE ITEM', weight: FontWeight.normal),
-                    ],
-                  ),
+                                      Divider(
+                  height: width * 0.05,
+                  indent: 50,
+                  color: Colors.grey[200],
                 ),
+
                 SizedBox(height: width * 0.06),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => (const MyItems())));
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: width * 0.01),
-                      Icon(Icons.image_outlined, size: width * 0.05),
-                      SizedBox(width: width * 0.01),
-                      const StyledBody('MY ITEMS', weight: FontWeight.normal),
-                    ],
-                  ),
-                ),
-                SizedBox(height: width * 0.06),
+                // Not sure what My Items was for
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //         builder: (context) => (const MyItems())));
+                //   },
+                //   child: Row(
+                //     children: [
+                //       SizedBox(width: width * 0.01),
+                //       Icon(Icons.image_outlined, size: width * 0.05),
+                //       SizedBox(width: width * 0.01),
+                //       const StyledBody('MY ITEMS', weight: FontWeight.normal),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: width * 0.06),
                 const StyledHeading('SUPPORT',
                     weight: FontWeight.normal, color: Colors.grey),
                 SizedBox(height: width * 0.04),
