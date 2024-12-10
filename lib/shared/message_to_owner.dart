@@ -69,9 +69,7 @@ class _UserPageState extends State<UserPage> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ConstrainedBox(
-                  constraints: (showSendButton) ? BoxConstraints(minWidth: width * 0.75, maxWidth: width * 0.75) 
-                    : BoxConstraints(minWidth: width * 0.85, maxWidth: width * 0.85), 
+                Expanded(
                   child: TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
