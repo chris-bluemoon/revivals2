@@ -4,9 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/message.dart';
 import 'package:revivals/models/renter.dart';
 
 class FirestoreService {
+
+  static final refMessage = FirebaseFirestore.instance
+    .collection('message')
+    .withConverter(
+      fromFirestore: Message.fromFirestore, 
+      toFirestore: (Message d, _) => d.toFirestore()
+  );
 
   static final refItem = FirebaseFirestore.instance
     .collection('item')
@@ -35,6 +43,11 @@ class FirestoreService {
       fromFirestore: FittingRenter.fromFirestore, 
       toFirestore: (FittingRenter d, _) => d.toFirestore()
   );
+
+  // add a new message
+  static Future<void> addMessage(Message message) async {
+    await refMessage.doc(message.id).set(message);
+  }
 
   // add a new item
   static Future<void> addItem(Item item) async {
@@ -79,6 +92,10 @@ class FirestoreService {
   }
 
   // get itemRenters once
+  static Future<QuerySnapshot<Message>> getMessagesOnce() {
+    return refMessage.get();
+  }
+
   static Future<QuerySnapshot<ItemRenter>> getItemRentersOnce() {
     return refItemRenter.get();
   }
@@ -101,6 +118,15 @@ class FirestoreService {
      }
     );
   }
+
+  static Future<void> updateMessage(Message message) async {
+    await refMessage.doc(message.id).update(
+      {
+        'status': message.status,
+     }
+    );
+  }
+
   static Future<void> updateItem(Item item) async {
     await refItem.doc(item.id).update(
       {

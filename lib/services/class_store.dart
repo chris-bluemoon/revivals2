@@ -7,6 +7,7 @@ import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_image.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/message.dart';
 import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/firestore_service.dart';
 import 'package:revivals/shared/secure_repo.dart';
@@ -15,6 +16,7 @@ class ItemStore extends ChangeNotifier {
 
   final double width = WidgetsBinding.instance.platformDispatcher.views.first.physicalSize.width;
 
+  final List<Message> _messages = [];
   final List<ItemImage> _images = [];
   final List<Item> _items = [];
   final List<Item> _favourites = [];
@@ -61,6 +63,7 @@ class ItemStore extends ChangeNotifier {
   bool _loggedIn = false;
   // String _region = 'BANGKOK';
 
+  get messages => _messages;
   get images => _images;
   get items => _items;
   get favourites => _favourites;
@@ -118,7 +121,12 @@ class ItemStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // add character
+  void addMessage(Message message) async {
+    _messages.add(message);
+    await FirestoreService.addMessage(message);
+    notifyListeners();
+  }
+
   void addItem(Item item) async {
     _items.add(item);
     await FirestoreService.addItem(item);
@@ -158,10 +166,15 @@ class ItemStore extends ChangeNotifier {
     notifyListeners();
   }
 
-
-    // initially fetch items
+  void fetchMessagesOnce() async {
+    if (messages.length == 0) {
+      final snapshot = await FirestoreService.getMessagesOnce();
+      for (var doc in snapshot.docs) {
+        _messages.add(doc.data());
+      }
+    }
+  }
   void fetchItemsOnce() async {
-    // List favs = _user.favourites;
     if (items.length == 0) {
       // Temporary setting of email password once
       MyStore.writeToStore('fkwx gnet sbwl pgjb');
@@ -175,8 +188,6 @@ class ItemStore extends ChangeNotifier {
       fetchImages();
       notifyListeners();
     }
-
-
   }
     void populateFavourites() {
       List favs = _user.favourites;
@@ -330,6 +341,10 @@ class ItemStore extends ChangeNotifier {
   }
   void saveItem(Item item) async {
     await FirestoreService.updateItem(item);
+    return;
+  }
+  void saveMessage(Message message) async {
+    await FirestoreService.updateMessage(message);
     return;
   }
 }

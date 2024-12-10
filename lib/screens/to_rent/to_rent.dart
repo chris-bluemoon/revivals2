@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/renter.dart';
 import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/screens/summary/summary_purchase.dart';
 import 'package:revivals/screens/to_rent/item_widget.dart';
 import 'package:revivals/screens/to_rent/rent_this_with_date_selecter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/get_country_price.dart';
+import 'package:revivals/shared/message_to_owner.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
 
@@ -54,7 +56,9 @@ class _ToRentState extends State<ToRent> {
   String convertedRRPPrice = '-1';
   String symbol = '?';
 
+  String ownerName = 'Jane Doe';
 
+  bool isOwner = false;
 
   int getPricePerDay(noOfDays) {
     String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
@@ -91,6 +95,15 @@ class _ToRentState extends State<ToRent> {
   void initState() {
     setPrice();
     _initImages();
+    for (Renter r in Provider.of<ItemStore>(context, listen: false).renters) {
+      if (widget.item.owner == r.id) {
+        ownerName = r.name;
+      }
+      if (widget.item.owner == Provider.of<ItemStore>(context, listen: false).renter.id) {
+        isOwner = true;
+      }
+    }
+
     super.initState();
   }
 
@@ -112,38 +125,6 @@ class _ToRentState extends State<ToRent> {
     }
   }
 
-    // Future _initImages() async {
-    //   // >> To get paths you need these 2 lines
-    //   // List<String> someImages = [];
-    //   final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    
-    //   final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-    //   // >> To get paths you need these 2 lines
-
-    //   final imagePaths = manifestMap.keys
-    //       .where((String key) => key.contains('items2/'))
-    //       .toList();
-    
-    //   int counter = 0;
-    //   for (String i in imagePaths) {
-    //     String brand = widget.item.brand.replaceAll(RegExp(' +'), '_');
-    //     String name = widget.item.name.replaceAll(RegExp(' +'), '_');
-    //     String toCompare = '${brand}_$name';
-    //     if (i.contains(toCompare)) {
-    //       log('Found an image');
-    //       counter++;
-    //       items.add(counter);
-    //       dotColours.add(Colors.grey);
-    //     }
-    //     setState(() {
-    //       itemCheckComplete = true;
-    //       log('Setting itemCheckComplete to true');
-    //     });
-    //   }
-    //   // setState(() {
-    //     // someImages = imagePaths;
-    //   // });
-    // }
     Future _initImages() async {
 
       int counter = 0;
@@ -242,6 +223,18 @@ class _ToRentState extends State<ToRent> {
                 ),
               ),
             ),
+            Row(
+              children: [
+                StyledBody(ownerName),
+                SizedBox(width: width * 0.01),
+                if (!isOwner) IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
+                  },
+                  icon: const Icon(Icons.email),
+                ),
+              ],),
+            SizedBox(height: width * 0.02),
             Padding(
               padding: EdgeInsets.all(width * 0.05),
               child: StyledHeading(widget.item.description),

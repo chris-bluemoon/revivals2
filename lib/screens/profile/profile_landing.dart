@@ -7,6 +7,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/help_centre/faqs.dart';
 import 'package:revivals/screens/profile/create_item.dart';
+import 'package:revivals/screens/profile/messages/inbox.dart';
 import 'package:revivals/screens/profile/my_account.dart';
 import 'package:revivals/screens/profile/my_admin.dart';
 import 'package:revivals/screens/profile/my_fittings.dart';
@@ -104,6 +105,25 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       Icon(Icons.account_circle_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
                       const StyledBody('MY ACCOUNT', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: width * 0.05,
+                  indent: 50,
+                  color: Colors.grey[200],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const MyMessages())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.fact_check_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('MY MESSAGES', weight: FontWeight.normal),
                     ],
                   ),
                 ),

@@ -214,7 +214,7 @@ Widget createImage(String imageName) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
+
             if (!widget.isDesigner) Center(child: StyledHeading(widget.item.brand)),
             SizedBox(height: width * 0.02),
             // Image.asset('assets/img/items2/${setItemImage()}', width: 200, height: 600),

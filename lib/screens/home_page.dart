@@ -28,6 +28,8 @@ class _HomePageState extends State<HomePage> {
       .fetchFittingRentersOnce();
     Provider.of<ItemStore>(context, listen: false)
       .fetchRentersOnce();
+    Provider.of<ItemStore>(context, listen: false)
+      .fetchMessagesOnce();
     // Provider.of<ItemStore>(context, listen: false)
       // .fetchImagesOnce();
     // Provider.of<ItemStore>(context, listen: false).populateFavourites();
