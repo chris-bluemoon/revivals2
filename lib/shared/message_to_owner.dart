@@ -59,7 +59,7 @@ class _UserPageState extends State<UserPage> {
       ),),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(width * 0.1, 0, width * 0.1, 0),
+          padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +70,8 @@ class _UserPageState extends State<UserPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: width * 0.6, maxWidth: width * 0.6), 
+                  constraints: (showSendButton) ? BoxConstraints(minWidth: width * 0.75, maxWidth: width * 0.75) 
+                    : BoxConstraints(minWidth: width * 0.85, maxWidth: width * 0.85), 
                   child: TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
@@ -80,6 +81,8 @@ class _UserPageState extends State<UserPage> {
                       checkContents(text);
                     },
                     decoration: InputDecoration(
+                      // contentPadding: EdgeInsets.all(0),
+                      isDense: true,
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(10.0),
@@ -99,6 +102,7 @@ class _UserPageState extends State<UserPage> {
                     ),
                   ),
                 ),
+                SizedBox(width: width * 0.002),
                 if (showSendButton) IconButton(
               onPressed: () {
                 String author = Provider.of<ItemStore>(context, listen: false).renter.name;
@@ -111,7 +115,7 @@ class _UserPageState extends State<UserPage> {
                 Provider.of<ItemStore>(context, listen: false).addMessage(message);
                 Navigator.of(context).pop();
               },
-              icon: const Icon(Icons.arrow_circle_up_outlined)
+              icon: Icon(Icons.send, color: Colors.lightGreen, size: width * 0.07)
             )
               ],
             ),
