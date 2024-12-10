@@ -61,7 +61,7 @@ class _UserPageState extends State<UserPage> {
         child: Padding(
           padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.start,
             children: [
             StyledBody(widget.item.name),
             StyledBody('${widget.item.type}, UK ${widget.item.size}'),
@@ -102,8 +102,10 @@ class _UserPageState extends State<UserPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: width * 0.002),
+                SizedBox(width: width * 0.01),
                 if (showSendButton) IconButton(
+                 padding: EdgeInsets.zero,
+                 constraints: const BoxConstraints(), 
               onPressed: () {
                 String author = Provider.of<ItemStore>(context, listen: false).renter.name;
                 String to = widget.owner;
@@ -111,7 +113,7 @@ class _UserPageState extends State<UserPage> {
                 String subject = widget.item.name;
                 String body = messageController.text;
                 String status = 'sent';
-                Message message = Message(id: uuid.v4(), author: author, to: to, dateSent: dateSent, subject: subject, body: body, status: status);
+                Message message = Message(id: uuid.v4(), author: author, to: to, dateSent: dateSent, subject: subject, body: body, status: status, linkedId: '');
                 Provider.of<ItemStore>(context, listen: false).addMessage(message);
                 Navigator.of(context).pop();
               },

@@ -8,7 +8,8 @@ class Message {
           required this.dateSent,
           required this.subject, 
           required this.body, 
-          required this.status
+          required this.status,
+          required this.linkedId
         });
 
     String id;
@@ -18,6 +19,7 @@ class Message {
     String subject;
     String body;
     String status;
+    String linkedId;
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -26,7 +28,8 @@ class Message {
       'dateSent': dateSent,
       'subject': subject,
       'body': body,
-      'status': status
+      'status': status,
+      'linkedId': linkedId
     };
   }
 
@@ -48,6 +51,7 @@ class Message {
       subject: data['subject'],
       body: data['body'],
       status: data['status'],
+      linkedId: data['linkedId'],
     );
 
     return message;
