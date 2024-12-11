@@ -166,43 +166,6 @@ class _Register extends State<Register> {
               ],
             ),
           ),   
-      // bottomNavigationBar: Container(
-      //   // height: 300,
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     border: Border.all(color: Colors.black.withOpacity(0.3), width: 1),
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: Colors.black.withOpacity(0.2),
-      //         blurRadius: 10,
-      //         spreadRadius: 3,
-      //       )
-      //     ],
-      //   ),
-      //   padding: const EdgeInsets.all(10),
-      //   child: Row(
-      //     children: [
-      //       Expanded(
-      //         child: OutlinedButton(
-      //           onPressed: () async {
-      //             if (_formKey.currentState!.validate()) {
-      //               Navigator.of(context).push(MaterialPageRoute(builder: (context) => (RegisterName(email: email))));
-      //             }
-      //           },
-      //           style: OutlinedButton.styleFrom(
-      //             padding: const EdgeInsets.all(10),
-      //             backgroundColor: Colors.black,
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(1.0),
-      //             ),
-      //             side: const BorderSide(width: 1.0, color: Colors.black),
-      //           ),
-      //           child: const StyledHeading('CONTINUE', color: Colors.white),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

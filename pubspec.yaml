@@ -47,6 +47,7 @@ dependencies:
   booking_calendar: ^1.1.10
   image_picker: ^1.1.2
   firebase_storage: ^12.3.6
+  numpad_layout: ^0.0.3
 
 dev_dependencies:
   flutter_test:

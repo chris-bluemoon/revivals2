@@ -61,6 +61,7 @@ class ItemStore extends ChangeNotifier {
   // late final _user;
   Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG']);
   bool _loggedIn = false;
+  String _retailPrice = '0';
   // String _region = 'BANGKOK';
 
   get messages => _messages;
@@ -79,6 +80,7 @@ class ItemStore extends ChangeNotifier {
   get printsFilter => _printsFilter;
   get sleevesFilter => _sleevesFilter;
   get rangeValuesFilter => _rangeValuesFilter;
+  get retailPrice => _retailPrice;
   
   void sizesFilterSetter(sizeF) {
     _sizesFilter = sizeF;
@@ -256,6 +258,11 @@ class ItemStore extends ChangeNotifier {
     }
   }
 
+  void setRetailPrice(String retailPrice) {
+    _retailPrice = retailPrice;
+    notifyListeners();
+  }
+  
   void fetchItemRentersOnce() async {
     if (itemRenters.length == 0) {
       final snapshot = await FirestoreService.getItemRentersOnce();
