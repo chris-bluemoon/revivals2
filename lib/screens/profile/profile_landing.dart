@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/help_centre/faqs.dart';
-import 'package:revivals/screens/profile/create_item.dart';
+import 'package:revivals/screens/profile/create/create_item.dart';
 import 'package:revivals/screens/profile/messages/inbox.dart';
 import 'package:revivals/screens/profile/my_account.dart';
 import 'package:revivals/screens/profile/my_admin.dart';

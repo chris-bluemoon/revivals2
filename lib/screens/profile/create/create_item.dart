@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
-import 'package:revivals/screens/profile/dropdown_colour.dart';
-import 'package:revivals/screens/profile/dropdown_size.dart';
-import 'package:revivals/screens/profile/dropdown_type.dart';
+import 'package:revivals/screens/profile/create/dropdown_colour.dart';
+import 'package:revivals/screens/profile/create/dropdown_size.dart';
+import 'package:revivals/screens/profile/create/dropdown_type.dart';
+import 'package:revivals/screens/profile/create/type_bottom_modal.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
@@ -84,6 +85,7 @@ class _CreateItemState extends State<CreateItem> {
                   getImage();
                 },
               ),
+              TypeBottomModal(),
               DropdownType(setType),
               DropdownSize(setSize),
               DropdownColour(setColour),
