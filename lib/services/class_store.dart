@@ -345,6 +345,7 @@ class ItemStore extends ChangeNotifier {
   }
   void saveMessage(Message message) async {
     await FirestoreService.updateMessage(message);
+    notifyListeners();
     return;
   }
 }

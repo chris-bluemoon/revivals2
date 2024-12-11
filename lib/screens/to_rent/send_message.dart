@@ -1,31 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revivals/models/item.dart';
 import 'package:revivals/models/message.dart';
 import 'package:revivals/services/class_store.dart';
-import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
-
 
 var uuid = const Uuid();
 
-class UserPage extends StatefulWidget {
-  const UserPage(this.owner, this.item, {super.key});
+class SendMessage extends StatefulWidget {
+  const SendMessage(this.callback, {this.from, this.to, this.subject, super.key});
 
-  final String owner;
-  final Item item;
+  final from;
+  final to;
+  final subject;
+  final Function callback;
 
   @override
-  State<UserPage> createState() => _UserPageState();
+  State<SendMessage> createState() => _SendMessageState();
 }
 
-class _UserPageState extends State<UserPage> {
-  
-  @override
-  void initState() {
-    super.initState();
-  }
+class _SendMessageState extends State<SendMessage> {
 
   final messageController = TextEditingController();
   bool showSendButton = false;
@@ -42,34 +35,21 @@ class _UserPageState extends State<UserPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: width * 0.2,
-        centerTitle: true,
-        title: StyledTitle(widget.owner),
-        leading: IconButton(
-          icon: Icon(Icons.chevron_left, size: width*0.08),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-      ),),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            StyledBody(widget.item.name),
-            StyledBody('${widget.item.type}, UK ${widget.item.size}'),
-            SizedBox(height: width * 0.03),
+    return Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, width * 0.05, 0),
+          child: 
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(
+                  onPressed: () {
+                    widget.callback();
+                  }, 
+                  icon: Icon(Icons.close, size: width * 0.07)
+                ),
                 Expanded(
                   child: TextField(
                     keyboardType: TextInputType.multiline,
@@ -107,9 +87,9 @@ class _UserPageState extends State<UserPage> {
                  constraints: const BoxConstraints(), 
               onPressed: () {
                 String author = Provider.of<ItemStore>(context, listen: false).renter.name;
-                String to = widget.owner;
+                String to = widget.to;
                 String dateSent = DateTime.now().toString();
-                String subject = widget.item.name;
+                String subject = widget.subject;
                 String body = messageController.text;
                 String status = 'sent';
                 Message message = Message(id: uuid.v4(), author: author, to: to, dateSent: dateSent, subject: subject, body: body, status: status, linkedId: '');
@@ -119,11 +99,7 @@ class _UserPageState extends State<UserPage> {
               icon: Icon(Icons.send, color: Colors.lightGreen, size: width * 0.07)
             )
               ],
-            ),
-
-          ],),
-        )
-      ),
-      );
+    ),
+        );
   }
 }

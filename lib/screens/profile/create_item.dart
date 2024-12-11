@@ -68,12 +68,15 @@ class _CreateItemState extends State<CreateItem> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    (_images.isNotEmpty) ? SizedBox(width: 100, height: 100, child: Image.file(File(_images[0].path), width: 100))
+                    (_images.isNotEmpty) ? Image.file(File(_images[0].path), width: 100)
                     : Icon(Icons.image_outlined, size: width * 0.2), 
-                    (_images.length > 1) ? SizedBox(width: 75, height: 100, child: Image.file(File(_images[1].path), width: 100))
+                    SizedBox(width: width * 0.05),
+                    (_images.length > 1) ? Image.file(File(_images[1].path), width: 100)
                     : Icon(Icons.image_outlined, size: width * 0.2), 
+                    SizedBox(width: width * 0.05),
                     (_images.length > 2) ? Image.file(File(_images[2].path), width: 100) 
                     : Icon(Icons.image_outlined, size: width * 0.2),
+                    SizedBox(width: width * 0.05),
                     (_images.length > 3) ? Image.file(File(_images[3].path), width: 100) 
                     : Icon(Icons.image_outlined, size: width * 0.2),
                 ],),
@@ -93,6 +96,29 @@ class _CreateItemState extends State<CreateItem> {
                   Navigator.pop(context);
                 } : null,
                 child: const Text('SUBMIT')
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context, 
+                      builder: (context) {
+                                              return Wrap(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              log('Tapped Modal Bottom DELETE');
+                            },
+                            child: const ListTile(
+                              leading: Icon(Icons.delete),
+                              title: Text('Delete'),
+                            ),
+                          ),
+                        ],
+                      );
+                      }
+                    );
+                  },
+                  child: const Text('Show Modal Bottom Sheet')
                 )
             ],
           ),
@@ -133,7 +159,7 @@ class _CreateItemState extends State<CreateItem> {
   }
 
   Future getImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 100, maxHeight: 150);
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 1000, maxHeight: 1500 , imageQuality: 100);
     if (image != null) {
       _images.add(image);
     }

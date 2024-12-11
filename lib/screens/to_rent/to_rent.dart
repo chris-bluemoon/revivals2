@@ -11,9 +11,9 @@ import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/screens/summary/summary_purchase.dart';
 import 'package:revivals/screens/to_rent/item_widget.dart';
 import 'package:revivals/screens/to_rent/rent_this_with_date_selecter.dart';
+import 'package:revivals/screens/to_rent/send_message.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/get_country_price.dart';
-import 'package:revivals/shared/message_to_owner.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
 
@@ -48,6 +48,7 @@ class _ToRentState extends State<ToRent> {
   int currentIndex = 0;
   bool itemCheckComplete = false;
   List<Color> dotColours = [];
+  bool sendMessagePressed = false;
 
   CarouselSliderController buttonCarouselSliderController = CarouselSliderController();
 
@@ -64,7 +65,6 @@ class _ToRentState extends State<ToRent> {
     String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
     
     int oneDayPrice = widget.item.rentPrice;
-    log('oneDayPrice: ${widget.item.rentPrice}');
 
     if (country == 'BANGKOK') {
       oneDayPrice = widget.item.rentPrice;
@@ -111,7 +111,6 @@ class _ToRentState extends State<ToRent> {
     if (Provider.of<ItemStore>(context, listen: false).renter.settings[0] !=
         'BANGKOK') {
       String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
-      // log(widget.item.rentPrice.toString());
       convertedRentPrice = getPricePerDay(5).toString();
       // convertedRentPrice = convertFromTHB(getPricePerDay(1), country);
       convertedBuyPrice = convertFromTHB(widget.item.buyPrice, country);
@@ -125,26 +124,29 @@ class _ToRentState extends State<ToRent> {
     }
   }
 
-    Future _initImages() async {
+  Future _initImages() async {
+    int counter = 0;
+    for (String i in widget.item.imageId) {
+      log('Found an image $i');
+      counter++;
+      items.add(counter);
+      dotColours.add(Colors.grey);
+    }
+    setState(() {
+      itemCheckComplete = true;
+      log('Setting itemCheckComplete to true');
+    });
+  }
 
-      int counter = 0;
-      for (String i in widget.item.imageId) {
-          log('Found an image $i');
-          counter++;
-          items.add(counter);
-          dotColours.add(Colors.grey);
-        }
-        setState(() {
-          itemCheckComplete = true;
-          log('Setting itemCheckComplete to true');
-        });
-      }
-
+  setSendMessagePressedToFalse() {
+    setState(() {
+      sendMessagePressed = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    log('Items here is: ${items.toString()}');
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: width * 0.2,
@@ -224,16 +226,22 @@ class _ToRentState extends State<ToRent> {
               ),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 StyledBody(ownerName),
                 SizedBox(width: width * 0.01),
                 if (!isOwner) IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
+                    setState(() {
+                      sendMessagePressed = true;
+                    });
                   },
                   icon: const Icon(Icons.email),
                 ),
+                if (sendMessagePressed) Expanded(child: SendMessage(setSendMessagePressedToFalse, from: Provider.of<ItemStore>(context, listen: false).renter.name, to: ownerName, subject: widget.item.name)),
               ],),
+            // SendMessage(widget.item),
             SizedBox(height: width * 0.02),
             Padding(
               padding: EdgeInsets.all(width * 0.05),
@@ -275,7 +283,6 @@ class _ToRentState extends State<ToRent> {
                 (widget.item.bookingType == 'buy' || widget.item.bookingType == 'both') ? Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      log('Pushing to SummaryPurchase');
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SummaryPurchase(widget.item, DateTime.now(), DateTime.now(), 0, widget.item.buyPrice, 'booked', symbol))));
                     },
                       style: OutlinedButton.styleFrom(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:revivals/models/message.dart';
+import 'package:revivals/screens/to_rent/send_message.dart';
+import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 
 
@@ -17,12 +20,17 @@ class _MyMessageState extends State<MyMessage> {
   
 
   bool isDateSentToday = false;
+  bool replyPressed = false;
 
   @override
   void initState() {
     super.initState();
   }
-  
+  setReplyPressedToFalse() {
+    setState(() {
+      replyPressed = false;
+    });
+  } 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -59,13 +67,22 @@ class _MyMessageState extends State<MyMessage> {
             ),
             Row(children: [
               IconButton(
-                onPressed: () {}, 
-                icon: const Icon(Icons.delete_outlined)),
+                onPressed: () {
+                  widget.myMessage.status = 'deleted';
+                  Provider.of<ItemStore>(context, listen: false).saveMessage(widget.myMessage);
+                  Navigator.pop(context);
+                }, 
+                icon: Icon(Icons.delete_outlined, size: width * 0.05)),
               SizedBox(width: width * 0.1),
-              IconButton(
-                onPressed: () {}, 
-                icon: const Icon(Icons.reply_outlined)),
-            ],)
+              if (replyPressed != true) IconButton(
+                onPressed: () {
+                  setState(() {
+                    replyPressed = true;
+                  });
+                }, 
+                icon: Icon(Icons.reply_outlined, size: width * 0.05)),
+            if (replyPressed) Expanded(child: SendMessage(setReplyPressedToFalse, from: Provider.of<ItemStore>(context, listen: false).renter.name, to: widget.myMessage.author, subject: 're: ${widget.myMessage.subject}'))
+            ],),
           
           ],),
         )
