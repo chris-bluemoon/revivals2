@@ -9,7 +9,6 @@ import 'package:revivals/models/item.dart';
 import 'package:revivals/screens/profile/create/dropdown_colour.dart';
 import 'package:revivals/screens/profile/create/dropdown_size.dart';
 import 'package:revivals/screens/profile/create/dropdown_type.dart';
-import 'package:revivals/screens/profile/create/type_bottom_modal.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
@@ -32,6 +31,8 @@ class _CreateItemState extends State<CreateItem> {
     super.initState();
   }
 
+  List<String> productTypes = ['A','B'];
+
   final shortDescController = TextEditingController();
   
   String itemType = 'dress';
@@ -47,6 +48,9 @@ class _CreateItemState extends State<CreateItem> {
   final List<XFile> _images = [];
 
   FirebaseStorage storage = FirebaseStorage.instance;
+
+  // Modal values
+  String productTypeValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,46 @@ class _CreateItemState extends State<CreateItem> {
                   getImage();
                 },
               ),
-              TypeBottomModal(),
+
+              // Product Type bottom modal
+              Row(
+                children: [
+                  const StyledBody('Product Type'),
+                  StyledBody(productTypeValue),
+                  IconButton(
+                    onPressed: () {
+        showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return FractionallySizedBox(
+                heightFactor: 0.9,
+                child: Container(
+                  child:
+                  ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: productTypes.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                            productTypeValue = 'SET';
+                            });
+                            Navigator.pop(context);},
+                          child: SizedBox(
+                            height: 50,
+                            child: Center(child: Text('Entry ${productTypes[index]}')),
+                          ),
+                        );
+                      }
+                    )
+                ),
+              );
+            });
+                    }, 
+                    icon: const Icon(Icons.arrow_right))
+              ],),
+
               DropdownType(setType),
               DropdownSize(setSize),
               DropdownColour(setColour),
@@ -101,25 +144,16 @@ class _CreateItemState extends State<CreateItem> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                      context: context, 
-                      builder: (context) {
-                                              return Wrap(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              log('Tapped Modal Bottom DELETE');
-                            },
-                            child: const ListTile(
-                              leading: Icon(Icons.delete),
-                              title: Text('Delete'),
-                            ),
-                          ),
-                        ],
-                      );
-                      }
-                    );
-                  },
+showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return FractionallySizedBox(
+        heightFactor: 0.9,
+        child: Container(),
+      );
+    });},
+
                   child: const Text('Show Modal Bottom Sheet')
                 )
             ],
@@ -214,6 +248,7 @@ class _CreateItemState extends State<CreateItem> {
   }
 
   setType(String type) {
+    log('SetYpe');
     itemType = type;
   }
   setSize(String size) {
