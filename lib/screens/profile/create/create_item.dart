@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:numpad_layout/widgets/numpad.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
+import 'package:revivals/screens/profile/create/set_pricing.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
@@ -588,9 +589,10 @@ class _CreateItemState extends State<CreateItem> {
                 if (formComplete) Expanded(
                   child: OutlinedButton(
                     onPressed: () async {
-                      handleSubmit();
-                      Navigator.pop(context);
+                      // handleSubmit();
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, titleController.text, colourValue, retailPrice, shortDescController.text, longDescController.text, imagePath))));
                     },
+  
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
@@ -611,7 +613,6 @@ class _CreateItemState extends State<CreateItem> {
   }
 
   handleSubmit() {
-      // String type, String colour, String size, List<String> imagePath) {
     log('handleSubmit - Adding item (addItem) to ItemStore');
     String ownerId = Provider.of<ItemStore>(context, listen: false).renter.id;
     Provider.of<ItemStore>(context, listen: false).addItem(Item(

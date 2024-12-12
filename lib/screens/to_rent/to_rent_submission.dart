@@ -278,7 +278,8 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
                       // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SummaryPurchase(widget.item, DateTime.now(), DateTime.now(), 0, widget.item.buyPrice, 'booked', symbol))));
                       widget.item.status = 'denied';
                       Provider.of<ItemStore>(context, listen: false).saveItem(widget.item);
-                      Navigator.pop(context);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+
                     },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.all(10),
@@ -295,7 +296,8 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
                     onPressed: () {
                         widget.item.status = 'accepted';
                         Provider.of<ItemStore>(context, listen: false).saveItem(widget.item);
-                        Navigator.pop(context);
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+
                     },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.all(10),
