@@ -16,6 +16,7 @@ import 'package:revivals/screens/profile/settings.dart';
 import 'package:revivals/screens/profile/verify_id.dart';
 import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/services/class_store.dart';
+import 'package:revivals/shared/item_results.dart';
 import 'package:revivals/shared/line.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:revivals/shared/whatsapp.dart';
@@ -172,7 +173,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => (const CreateItem())));
+                        builder: (context) => (const CreateItem(item: null))));
                   },
                   child: Row(
                     children: [
@@ -249,22 +250,21 @@ class _ProfileLandingState extends State<ProfileLanding> {
                 ),
 
                 SizedBox(height: width * 0.06),
-                // Not sure what My Items was for
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.of(context).push(MaterialPageRoute(
-                //         builder: (context) => (const MyItems())));
-                //   },
-                //   child: Row(
-                //     children: [
-                //       SizedBox(width: width * 0.01),
-                //       Icon(Icons.image_outlined, size: width * 0.05),
-                //       SizedBox(width: width * 0.01),
-                //       const StyledBody('MY ITEMS', weight: FontWeight.normal),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(height: width * 0.06),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (ItemResults('myItems',Provider.of<ItemStore>(context, listen: false).renter.id))));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.image_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('MY ITEMS', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                SizedBox(height: width * 0.06),
                 const StyledHeading('SUPPORT',
                     weight: FontWeight.normal, color: Colors.grey),
                 SizedBox(height: width * 0.04),

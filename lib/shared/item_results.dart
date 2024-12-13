@@ -6,8 +6,9 @@ import 'package:pluralize/pluralize.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/screens/fitting/fitting.dart';
+import 'package:revivals/screens/profile/create/to_rent_submission.dart';
+import 'package:revivals/screens/profile/edit/to_rent_edit.dart';
 import 'package:revivals/screens/to_rent/to_rent.dart';
-import 'package:revivals/screens/to_rent/to_rent_submission.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/filters_page.dart';
 import 'package:revivals/shared/item_card.dart';
@@ -92,6 +93,13 @@ class _ItemResultsState extends State<ItemResults> {
 
     if (filterOn == true) {
       switch (widget.attribute) {
+        case 'myItems':
+          for (Item i in allItems) {
+            log('Checking item owner ${i.owner} with user ${widget.value}');
+            if (i.owner == widget.value) {
+              filteredItems.add(i);
+            }
+          }
         case 'brand':
           for (Item i in allItems) {
             if (i.brand == widget.value) {
@@ -149,6 +157,11 @@ class _ItemResultsState extends State<ItemResults> {
     } else {
       for (Item i in allItems) {
         switch (widget.attribute) {
+        case 'myItems':
+            log('Checking item owner ${i.owner} with user ${widget.value}');
+            if (i.owner == widget.value) {
+              finalItems.add(i);
+          }
           case 'status':
             if (i.status == widget.value) {
               finalItems.add(i);
@@ -197,6 +210,9 @@ class _ItemResultsState extends State<ItemResults> {
         }
         case 'status':  {
           title = 'SUBMISSIONS';
+        }
+        case 'myItems':  {
+          title = 'MY ITEMS';
         }
         case 'brand':  {
           title = widget.value.toUpperCase();
@@ -267,7 +283,7 @@ class _ItemResultsState extends State<ItemResults> {
                                   (widget.attribute == 'fitting') ? ItemCard(finalItems[index], false, true) :
                                   ItemCard(finalItems[index], false, false),
                                 onTap: () {
-                                  if (widget.attribute != 'fitting' && widget.attribute != 'status') {
+                                  if (widget.attribute != 'fitting' && widget.attribute != 'status' && widget.attribute != 'myItems') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           (ToRent(finalItems[index]))));
@@ -275,6 +291,11 @@ class _ItemResultsState extends State<ItemResults> {
                                     Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           (ToRentSubmission(finalItems[index]))));
+                                  } else if (widget.attribute == 'myItems') {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          (ToRentEdit(finalItems[index]))));
+
                                   }
                                 }),
                             itemCount: finalItems.length,

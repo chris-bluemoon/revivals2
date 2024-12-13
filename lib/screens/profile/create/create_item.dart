@@ -15,7 +15,11 @@ import 'package:uuid/uuid.dart';
 var uuid = const Uuid();
 
 class CreateItem extends StatefulWidget {
-  const CreateItem({super.key});
+  const CreateItem({required this.item, super.key});
+
+  final Item? item;
+
+  // final item;
 
   @override
   State<CreateItem> createState() => _CreateItemState();
@@ -89,6 +93,9 @@ class _CreateItemState extends State<CreateItem> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.item != null) {
+      log('Got sent an existing Item, going to EDIT mode');
+    }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     log('Main rebuild');
