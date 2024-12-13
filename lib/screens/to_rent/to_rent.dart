@@ -30,7 +30,7 @@ class ToRent extends StatefulWidget {
   final Item item;
   late String itemName;
   late String imageName;
-  late String itemType; 
+  late String itemType;
 
   // String setItemImage() {
   //   itemType = item.type.replaceAll(RegExp(' '), '_');
@@ -40,18 +40,17 @@ class ToRent extends StatefulWidget {
   // }
 
   // final ValueNotifier<int> rentalDays = ValueNotifier<int>(0);
-
 }
 
 class _ToRentState extends State<ToRent> {
-  
   List items = [];
   int currentIndex = 0;
   bool itemCheckComplete = false;
   List<Color> dotColours = [];
-  bool sendMessagePressed = false;
+  bool showMessageBox = false;
 
-  CarouselSliderController buttonCarouselSliderController = CarouselSliderController();
+  CarouselSliderController buttonCarouselSliderController =
+      CarouselSliderController();
 
   String convertedRentPrice = '-1';
   String convertedBuyPrice = '-1';
@@ -64,8 +63,9 @@ class _ToRentState extends State<ToRent> {
   bool isOwner = false;
 
   int getPricePerDay(noOfDays) {
-    String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
-    
+    String country =
+        Provider.of<ItemStore>(context, listen: false).renter.settings[0];
+
     int oneDayPrice = widget.item.rentPrice;
 
     if (country == 'BANGKOK') {
@@ -75,7 +75,7 @@ class _ToRentState extends State<ToRent> {
     }
 
     if (noOfDays == 3) {
-      int threeDayPrice = (oneDayPrice * 0.8).toInt()-1;
+      int threeDayPrice = (oneDayPrice * 0.8).toInt() - 1;
       if (country == 'BANGKOK') {
         return (threeDayPrice ~/ 100) * 100 + 100;
       } else {
@@ -83,7 +83,7 @@ class _ToRentState extends State<ToRent> {
       }
     }
     if (noOfDays == 5) {
-      int fiveDayPrice = (oneDayPrice * 0.6).toInt()-1;
+      int fiveDayPrice = (oneDayPrice * 0.6).toInt() - 1;
       if (country == 'BANGKOK') {
         return (fiveDayPrice ~/ 100) * 100 + 100;
       } else {
@@ -102,7 +102,8 @@ class _ToRentState extends State<ToRent> {
         ownerName = r.name;
         location = r.settings[0];
       }
-      if (widget.item.owner == Provider.of<ItemStore>(context, listen: false).renter.id) {
+      if (widget.item.owner ==
+          Provider.of<ItemStore>(context, listen: false).renter.id) {
         isOwner = true;
       }
     }
@@ -113,7 +114,8 @@ class _ToRentState extends State<ToRent> {
   void setPrice() {
     if (Provider.of<ItemStore>(context, listen: false).renter.settings[0] !=
         'BANGKOK') {
-      String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
+      String country =
+          Provider.of<ItemStore>(context, listen: false).renter.settings[0];
       convertedRentPrice = getPricePerDay(5).toString();
       // convertedRentPrice = convertFromTHB(getPricePerDay(1), country);
       convertedBuyPrice = convertFromTHB(widget.item.buyPrice, country);
@@ -143,7 +145,7 @@ class _ToRentState extends State<ToRent> {
 
   setSendMessagePressedToFalse() {
     setState(() {
-      sendMessagePressed = false;
+      showMessageBox = false;
     });
   }
 
@@ -167,7 +169,7 @@ class _ToRentState extends State<ToRent> {
         centerTitle: true,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.chevron_left, size: width*0.08),
+          icon: Icon(Icons.chevron_left, size: width * 0.08),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -175,10 +177,10 @@ class _ToRentState extends State<ToRent> {
         actions: [
           IconButton(
               onPressed: () =>
-                {Navigator.of(context).popUntil((route) => route.isFirst)},
+                  {Navigator.of(context).popUntil((route) => route.isFirst)},
               icon: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, width * 0.01, 0),
-                child: Icon(Icons.close, size: width*0.06),
+                child: Icon(Icons.close, size: width * 0.06),
               )),
         ],
         // bottom: PreferredSize(
@@ -189,81 +191,104 @@ class _ToRentState extends State<ToRent> {
         //   )
         // ),
       ),
-      body: (!itemCheckComplete) ? const Text('Loading') : SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: width * 0.01),
-            (items.length == 1) ? SizedBox(
-              height: width,
-              child: Center(child: ItemWidget(item: widget.item, itemNumber: 1)))
-            : CarouselSlider(
-              carouselController: buttonCarouselSliderController,
-              options: CarouselOptions(
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  height: width * 1,
-                  autoPlay: true),
-              items: items.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return ItemWidget(item: widget.item, itemNumber: i);
-                    // return const SizedBox(child: Text("BOX"), height: 20, width: 20);
-                  },
-                );
-              }).toList(),
-            ),
-            SizedBox(height: width * 0.03),
-            if (items.length > 1) Center(
-              child: DotsIndicator(
-                dotsCount: items.length,
-                position: currentIndex,
-                decorator: DotsDecorator(
-                  colors: dotColours,
-                  activeColor: Colors.black,
-                  // colors: [Colors.grey[300], Colors.grey[600], Colors.grey[900]], // Inactive dot colors
-                ),
+      body: (!itemCheckComplete)
+          ? const Text('Loading')
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: width * 0.01),
+                  (items.length == 1)
+                      ? SizedBox(
+                          height: width,
+                          child: Center(
+                              child:
+                                  ItemWidget(item: widget.item, itemNumber: 1)))
+                      : CarouselSlider(
+                          carouselController: buttonCarouselSliderController,
+                          options: CarouselOptions(
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                              height: width * 1,
+                              autoPlay: true),
+                          items: items.map((i) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return ItemWidget(
+                                    item: widget.item, itemNumber: i);
+                                // return const SizedBox(child: Text("BOX"), height: 20, width: 20);
+                              },
+                            );
+                          }).toList(),
+                        ),
+                  SizedBox(height: width * 0.03),
+                  if (items.length > 1)
+                    Center(
+                      child: DotsIndicator(
+                        dotsCount: items.length,
+                        position: currentIndex,
+                        decorator: DotsDecorator(
+                          colors: dotColours,
+                          activeColor: Colors.black,
+                          // colors: [Colors.grey[300], Colors.grey[600], Colors.grey[900]], // Inactive dot colors
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: width * 0.03),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(width * 0.05, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        UserCard(ownerName, location),
+                        if (!isOwner)
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showMessageBox = true;
+                              });
+                            },
+                            icon:
+                                Icon(Icons.email_outlined, size: width * 0.05),
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: width * 0.03),
+                  if (showMessageBox)
+                    SendMessage(setSendMessagePressedToFalse,
+                        from: Provider.of<ItemStore>(context, listen: false)
+                            .renter
+                            .name,
+                        to: ownerName,
+                        subject: widget.item.name),
+                  // SendMessage(widget.item),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.05),
+                    child: StyledHeading(widget.item.description),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.05, bottom: width * 0.05),
+                    child: StyledBody(
+                        'Rental price: From $convertedRentPrice$symbol'),
+                    // child: StyledBody('Rental price: ${widget.item.rentPrice.toString()} ${getCurrency()}'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.05, bottom: width * 0.05),
+                    child: StyledBody(widget.item.longDescription,
+                        weight: FontWeight.normal),
+                  ),
+                  // if (widget.item.rentPrice > 0) Padding(
+                  // padding: const EdgeInsets.only(left: 20, bottom: 10),
+                  // child: RentalDaysRadioWidget(updateRentalDays),
+                  // ),
+                ],
               ),
             ),
-            SizedBox(height: width * 0.03),
-            Padding(
-              padding: EdgeInsets.fromLTRB(width * 0.05, 0, 0, 0),
-              child: UserCard(ownerName, location, sendMessagePressed),
-            ),
-            if (!isOwner) IconButton(
-              onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
-                setState(() {
-                  sendMessagePressed = true;
-                });
-              },
-              icon: const Icon(Icons.email),
-            ),
-            if (sendMessagePressed) Expanded(child: SendMessage(setSendMessagePressedToFalse, from: Provider.of<ItemStore>(context, listen: false).renter.name, to: ownerName, subject: widget.item.name)),
-            // SendMessage(widget.item),
-            Padding(
-              padding: EdgeInsets.all(width * 0.05),
-              child: StyledHeading(widget.item.description),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: width * 0.05, bottom: width * 0.05),
-              child: StyledBody('Rental price: From $convertedRentPrice$symbol'),
-              // child: StyledBody('Rental price: ${widget.item.rentPrice.toString()} ${getCurrency()}'),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: width * 0.05, bottom: width * 0.05),
-              child: StyledBody(widget.item.longDescription, weight: FontWeight.normal),
-            ),
-            // if (widget.item.rentPrice > 0) Padding(
-              // padding: const EdgeInsets.only(left: 20, bottom: 10),
-              // child: RentalDaysRadioWidget(updateRentalDays),
-            // ),
-          ],
-        ),
-      ),
       bottomNavigationBar: Container(
         // height: 300,
         decoration: BoxDecoration(
@@ -277,79 +302,97 @@ class _ToRentState extends State<ToRent> {
             )
           ],
         ),
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-
-                (widget.item.bookingType == 'buy' || widget.item.bookingType == 'both') ? Expanded(
-                  child: OutlinedButton(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            (widget.item.bookingType == 'buy' ||
+                    widget.item.bookingType == 'both')
+                ? Expanded(
+                    child: OutlinedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SummaryPurchase(widget.item, DateTime.now(), DateTime.now(), 0, widget.item.buyPrice, 'booked', symbol))));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => (SummaryPurchase(
+                              widget.item,
+                              DateTime.now(),
+                              DateTime.now(),
+                              0,
+                              widget.item.buyPrice,
+                              'booked',
+                              symbol))));
                     },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(1.0),
                       ),
                       side: const BorderSide(width: 1.0, color: Colors.black),
-                      ),
+                    ),
                     child: const StyledHeading('BUY PRELOVED'),
-                )) : const Expanded(child: SizedBox()),
-                const SizedBox(width: 5),
-                (widget.item.bookingType == 'rental' || widget.item.bookingType == 'both') ? Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                        bool loggedIn = Provider.of<ItemStore>(context, listen: false).loggedIn;
-                        if (loggedIn) { Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => (RentThisWithDateSelecter(widget.item))
-                        // )) : goToLogin();
-                        )); } else { 
+                  ))
+                : const Expanded(child: SizedBox()),
+            const SizedBox(width: 5),
+            (widget.item.bookingType == 'rental' ||
+                    widget.item.bookingType == 'both')
+                ? Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        bool loggedIn =
+                            Provider.of<ItemStore>(context, listen: false)
+                                .loggedIn;
+                        if (loggedIn) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  (RentThisWithDateSelecter(widget.item))
+                              // )) : goToLogin();
+                              ));
+                        } else {
                           showAlertDialog(context);
                         }
-                    },
+                      },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.all(10),
                         backgroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(1.0),
+                          borderRadius: BorderRadius.circular(1.0),
+                        ),
+                        side: const BorderSide(width: 1.0, color: Colors.black),
                       ),
-                      side: const BorderSide(width: 1.0, color: Colors.black),
-                      ),
-                    child: const StyledHeading('RENT THIS', color: Colors.white),
-                  ),
-                ) : const Expanded(child: SizedBox()),
-              ],
-            ),
-          ),      
-      );
+                      child:
+                          const StyledHeading('RENT THIS', color: Colors.white),
+                    ),
+                  )
+                : const Expanded(child: SizedBox()),
+          ],
+        ),
+      ),
+    );
   }
 }
 
-showAlertDialog(BuildContext context) {  
-  // Create button  
+showAlertDialog(BuildContext context) {
+  // Create button
   double width = MediaQuery.of(context).size.width;
 
-
-  Widget okButton = ElevatedButton(  
+  Widget okButton = ElevatedButton(
     style: OutlinedButton.styleFrom(
-                          textStyle: const TextStyle(color: Colors.white),
-                          foregroundColor: Colors.white,//change background color of button
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                        ),
-                        side: const BorderSide(width: 1.0, color: Colors.black),
+      textStyle: const TextStyle(color: Colors.white),
+      foregroundColor: Colors.white, //change background color of button
+      backgroundColor: Colors.black,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
       ),
-    onPressed: () {  
-      // Navigator.of(context).pop();  
+      side: const BorderSide(width: 1.0, color: Colors.black),
+    ),
+    onPressed: () {
+      // Navigator.of(context).pop();
       // Navigator.of(context).popUntil((route) => route.isFirst);
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const GoogleSignInScreen()))); 
-
-    },  
-    child: const Center(child: StyledHeading("OK", color: Colors.white)),  
-  ); 
-    // Create AlertDialog  
-  AlertDialog alert = AlertDialog(  
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => (const GoogleSignInScreen())));
+    },
+    child: const Center(child: StyledHeading("OK", color: Colors.white)),
+  );
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
     title: const Center(child: StyledHeading("NOT LOGGED IN")),
     content: SizedBox(
       height: width * 0.2,
@@ -375,20 +418,18 @@ showAlertDialog(BuildContext context) {
           ),
         ],
       ),
-    ),  
-    actions: [  
-      okButton,  
-    ],  
-                shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0.0)),
-            ),
-  );  
-    showDialog(  
-    context: context,  
-    builder: (BuildContext context) {  
-      return alert;  
-    },  
-  );   
+    ),
+    actions: [
+      okButton,
+    ],
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(0.0)),
+    ),
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
-
-
