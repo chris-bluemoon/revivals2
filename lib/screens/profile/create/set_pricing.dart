@@ -8,10 +8,11 @@ import 'package:uuid/uuid.dart';
 var uuid = const Uuid();
 
 class SetPricing extends StatefulWidget {
-  const SetPricing(this.productType, this.title, this.colour, this.retailPrice, this.shortDesc,
+  const SetPricing(this.productType, this.brand, this.title, this.colour, this.retailPrice, this.shortDesc,
     this.longDesc, this.imagePath, {super.key});
 
 final String productType;
+final String brand;
 final String title;
 final String colour;
 final String retailPrice; 
@@ -117,7 +118,7 @@ class _SetPricingState extends State<SetPricing> {
         dateAdded: allItems[0].dateAdded,
         style: allItems[0].style,
         name: widget.title,
-        brand: allItems[0].brand,
+        brand: widget.brand,
         colour: [widget.colour],
         size: ['6'],
         length: allItems[0].length,

@@ -12,6 +12,7 @@ import 'package:revivals/screens/summary/summary_purchase.dart';
 import 'package:revivals/screens/to_rent/item_widget.dart';
 import 'package:revivals/screens/to_rent/rent_this_with_date_selecter.dart';
 import 'package:revivals/screens/to_rent/send_message.dart';
+import 'package:revivals/screens/to_rent/user_card.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/get_country_price.dart';
 import 'package:revivals/shared/styled_text.dart';
@@ -58,6 +59,7 @@ class _ToRentState extends State<ToRent> {
   String symbol = '?';
 
   String ownerName = 'Jane Doe';
+  String location = 'UK';
 
   bool isOwner = false;
 
@@ -98,6 +100,7 @@ class _ToRentState extends State<ToRent> {
     for (Renter r in Provider.of<ItemStore>(context, listen: false).renters) {
       if (widget.item.owner == r.id) {
         ownerName = r.name;
+        location = r.settings[0];
       }
       if (widget.item.owner == Provider.of<ItemStore>(context, listen: false).renter.id) {
         isOwner = true;
@@ -225,24 +228,22 @@ class _ToRentState extends State<ToRent> {
                 ),
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                StyledBody(ownerName),
-                SizedBox(width: width * 0.01),
-                if (!isOwner) IconButton(
-                  onPressed: () {
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
-                    setState(() {
-                      sendMessagePressed = true;
-                    });
-                  },
-                  icon: const Icon(Icons.email),
-                ),
-                if (sendMessagePressed) Expanded(child: SendMessage(setSendMessagePressedToFalse, from: Provider.of<ItemStore>(context, listen: false).renter.name, to: ownerName, subject: widget.item.name)),
-              ],),
+            SizedBox(height: width * 0.03),
+            Padding(
+              padding: EdgeInsets.fromLTRB(width * 0.05, 0, 0, 0),
+              child: UserCard(ownerName, location, sendMessagePressed),
+            ),
+            if (!isOwner) IconButton(
+              onPressed: () {
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (UserPage(ownerName, widget.item))));
+                setState(() {
+                  sendMessagePressed = true;
+                });
+              },
+              icon: const Icon(Icons.email),
+            ),
+            if (sendMessagePressed) Expanded(child: SendMessage(setSendMessagePressedToFalse, from: Provider.of<ItemStore>(context, listen: false).renter.name, to: ownerName, subject: widget.item.name)),
             // SendMessage(widget.item),
-            SizedBox(height: width * 0.02),
             Padding(
               padding: EdgeInsets.all(width * 0.05),
               child: StyledHeading(widget.item.description),

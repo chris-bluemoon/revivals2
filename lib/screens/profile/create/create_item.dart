@@ -7,10 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:numpad_layout/widgets/numpad.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/item_image.dart';
 import 'package:revivals/screens/profile/create/set_pricing.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid.dart'; 
 
 var uuid = const Uuid();
 
@@ -30,8 +31,29 @@ class _CreateItemState extends State<CreateItem> {
   void initState() {
     brands.sort((a, b) => a.compareTo(b));
     colours.sort((a, b) => a.compareTo(b));
+    if (widget.item != null) {
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      log('ItemImage i is ${i.id} and widget has first element ${widget.item?.imageId[0]}');
+      for (String itemImageString in widget.item!.imageId) {
+        if (i.id == itemImageString) {
+          _images.add(i.imageId);
+        }
+
+      }
+      // if (i.id == widget.item?.imageId[0]) {
+      //   // setState(() {
+      //     // thisImage = Image.asset('assets/img/items2/AJE_Breathless_Frill_Sleeves_Dress_1.jpg');
+      //     thisImage = i.imageId;
+      //     _images.add(thisImage);
+      //   // }
+      //   // );
+      // }
+    }
+    }
     super.initState();
   }
+
+  late Image thisImage;
 
   List<String> productTypes = ['Dress', 'Bag', 'Jacket', 'Suit Pant'];
   List<String> colours = [
@@ -78,7 +100,8 @@ class _CreateItemState extends State<CreateItem> {
 
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
-  final List<XFile> _images = [];
+  // final List<XFile> _images = [];
+  final List<Image> _images = [];
 
   FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -93,9 +116,6 @@ class _CreateItemState extends State<CreateItem> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.item != null) {
-      log('Got sent an existing Item, going to EDIT mode');
-    }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     log('Main rebuild');
@@ -121,19 +141,19 @@ class _CreateItemState extends State<CreateItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     (_images.isNotEmpty)
-                        ? Image.file(File(_images[0].path), width: 80)
+                        ? SizedBox(width: 80, child: _images[0])
                         : Icon(Icons.image_outlined, size: width * 0.2),
                     SizedBox(width: width * 0.02),
                     (_images.length > 1)
-                        ? Image.file(File(_images[1].path), width: 80)
+                        ? SizedBox(width: 80, child: _images[1])
                         : Icon(Icons.image_outlined, size: width * 0.2),
                     SizedBox(width: width * 0.02),
                     (_images.length > 2)
-                        ? Image.file(File(_images[2].path), width: 80)
+                        ? SizedBox(width: 80, child: _images[2])
                         : Icon(Icons.image_outlined, size: width * 0.2),
                     SizedBox(width: width * 0.02),
                     (_images.length > 3)
-                        ? Image.file(File(_images[3].path), width: 80)
+                        ? SizedBox(width: 80, child: _images[3])
                         : Icon(Icons.image_outlined, size: width * 0.2),
                   ],
                 ),
@@ -144,6 +164,7 @@ class _CreateItemState extends State<CreateItem> {
         
               // Product Type bottom modal
               SizedBox(height: width * 0.02),
+              // if (widget.item != null) thisImage,
               const Divider(),
               Row(
                 children: [
@@ -597,7 +618,7 @@ class _CreateItemState extends State<CreateItem> {
                   child: OutlinedButton(
                     onPressed: () async {
                       // handleSubmit();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, titleController.text, colourValue, retailPrice, shortDescController.text, longDescController.text, imagePath))));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPrice, shortDescController.text, longDescController.text, imagePath))));
                     },
   
                     style: OutlinedButton.styleFrom(
@@ -658,7 +679,9 @@ class _CreateItemState extends State<CreateItem> {
         maxHeight: 1500,
         imageQuality: 100);
     if (image != null) {
-      _images.add(image);
+      // Image tempImage = Image.file(File(_images[1].path), width: 80)
+      // _images.add(Image.file(File(image.path), width: 80));
+      _images.add(Image.file(File(image.path)));
     }
 
     setState(() {
