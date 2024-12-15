@@ -45,10 +45,11 @@ class _SendMessageState extends State<SendMessage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IconButton(
+                  visualDensity: VisualDensity.compact,
                   onPressed: () {
                     widget.callback();
                   }, 
-                  icon: Icon(Icons.close, size: width * 0.07)
+                  icon: Icon(Icons.close, size: width * 0.06)
                 ),
                 Expanded(
                   child: TextField(
@@ -83,8 +84,7 @@ class _SendMessageState extends State<SendMessage> {
                 ),
                 SizedBox(width: width * 0.01),
                 if (showSendButton) IconButton(
-                 padding: EdgeInsets.zero,
-                 constraints: const BoxConstraints(), 
+              visualDensity: VisualDensity.compact,
               onPressed: () {
                 String author = Provider.of<ItemStore>(context, listen: false).renter.name;
                 String to = widget.to;
@@ -96,7 +96,7 @@ class _SendMessageState extends State<SendMessage> {
                 Provider.of<ItemStore>(context, listen: false).addMessage(message);
                 Navigator.of(context).pop();
               },
-              icon: Icon(Icons.send, color: Colors.lightGreen, size: width * 0.07)
+              icon: Icon(Icons.send, color: Colors.lightGreen, size: width * 0.06)
             )
               ],
     ),
