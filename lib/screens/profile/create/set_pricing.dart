@@ -30,6 +30,10 @@ class _SetPricingState extends State<SetPricing> {
     super.initState();
   }
 
+final dailyPriceController = TextEditingController();
+
+bool postageSwitch = false;
+
   bool formComplete = true;
 
   @override
@@ -48,9 +52,161 @@ class _SetPricingState extends State<SetPricing> {
           },
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: 
+        Padding(
+          padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, 
+            children: [
+              SizedBox(height: width * 0.02),
+              const StyledBody('Based on our price analytics we have provided you with optimal pricing to maximise rentals', weight: FontWeight.normal),
+              SizedBox(height: width * 0.05),
+              const StyledBody('Daily Price'),
+              const StyledBody('Please provide a price per day for the item', weight: FontWeight.normal),
+              SizedBox(height: width * 0.03),
+              TextField(
+                        keyboardType: TextInputType.number,
+                        maxLines: null,
+                        maxLength: 10,
+                        controller: dailyPriceController,
+                        onChanged: (text) {
+                          // checkContents(text);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.black)
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Daily Price",
+                          fillColor: Colors.white70,
+                        ),
+                      ),
+              const StyledBody('Weekly Price'),
+              const StyledBody('In order to facilitate longer rentals such as holidays, we recommend offering weekly and/or monthly rental prices', weight: FontWeight.normal),
+              SizedBox(height: width * 0.03),
+              TextField(
+                        keyboardType: TextInputType.number,
+                        maxLines: null,
+                        maxLength: 10,
+                        controller: dailyPriceController,
+                        onChanged: (text) {
+                          // checkContents(text);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.black)
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Weekly Price",
+                          fillColor: Colors.white70,
+                        ),
+                      ),
+              const StyledBody('Monthly Price'),
+              SizedBox(height: width * 0.03),
+              TextField(
+                        keyboardType: TextInputType.number,
+                        maxLines: null,
+                        maxLength: 10,
+                        controller: dailyPriceController,
+                        onChanged: (text) {
+                          // checkContents(text);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.black)
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Monthly Price",
+                          fillColor: Colors.white70,
+                        ),
+                      ),
+              const StyledBody('Minimal Rental Period'),
+              const StyledBody('Tip: The most common minimum rental period is 3 days', weight: FontWeight.normal),
+              SizedBox(height: width * 0.03),
+              TextField(
+                        keyboardType: TextInputType.number,
+                        maxLines: null,
+                        maxLength: 10,
+                        controller: dailyPriceController,
+                        onChanged: (text) {
+                          // checkContents(text);
+                        },
+                        decoration: InputDecoration(
+                          isDense: true,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: Colors.black)
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: 'Minimal Rental Period (days)',
+                          fillColor: Colors.white70,
+                        ),
+                      ),
+              const StyledBody('Postage Option'),
+              const StyledBody('You can offer the option of local country tracked mail by charging a flat rate for this. The item should be received on the day the rental period begins at the very latest. The renter is in charge of sending back the item to you and icurring the fee', weight: FontWeight.normal),
+              SizedBox(height: width * 0.03),
+              Row(
+                children: [
+                  const StyledBody('Allow Postage Option'),
+                  const Expanded(child: SizedBox()),
+                  Switch(
+                    value: postageSwitch, 
+                    onChanged: (value) {
+                      setState(() {
+                        postageSwitch = value;
+                      });
+                    }),
+                ],
+              ),
+              SizedBox(height: width * 0.03),
+            ]
+            ),
+        )
         ),
-                          bottomNavigationBar: Container(
+      bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black.withOpacity(0.3), width: 1),

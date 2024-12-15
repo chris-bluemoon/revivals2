@@ -11,7 +11,7 @@ import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/screens/summary/summary_purchase.dart';
 import 'package:revivals/screens/to_rent/item_widget.dart';
 import 'package:revivals/screens/to_rent/rent_this_with_date_selecter.dart';
-import 'package:revivals/screens/to_rent/send_message.dart';
+import 'package:revivals/screens/to_rent/send_message_screen.dart';
 import 'package:revivals/screens/to_rent/user_card.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/get_country_price.dart';
@@ -47,7 +47,7 @@ class _ToRentState extends State<ToRent> {
   int currentIndex = 0;
   bool itemCheckComplete = false;
   List<Color> dotColours = [];
-  bool showMessageBox = false;
+  // bool showMessageBox = false;
 
   CarouselSliderController buttonCarouselSliderController =
       CarouselSliderController();
@@ -143,11 +143,11 @@ class _ToRentState extends State<ToRent> {
     });
   }
 
-  setSendMessagePressedToFalse() {
-    setState(() {
-      showMessageBox = false;
-    });
-  }
+  // setSendMessagePressedToFalse() {
+  //   setState(() {
+  //     showMessageBox = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +247,8 @@ class _ToRentState extends State<ToRent> {
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                showMessageBox = true;
+                                // showMessageBox = true;
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const SendMessageScreen())));
                               });
                             },
                             icon:
@@ -257,14 +258,13 @@ class _ToRentState extends State<ToRent> {
                     ),
                   ),
                   SizedBox(height: width * 0.03),
-                  if (showMessageBox)
-                    SendMessage(setSendMessagePressedToFalse,
-                        from: Provider.of<ItemStore>(context, listen: false)
-                            .renter
-                            .name,
-                        to: ownerName,
-                        subject: widget.item.name),
-                  // SendMessage(widget.item),
+                  // if (showMessageBox)
+                  //   SendMessage(setSendMessagePressedToFalse,
+                  //       from: Provider.of<ItemStore>(context, listen: false)
+                  //           .renter
+                  //           .name,
+                  //       to: ownerName,
+                  //       subject: widget.item.name),
                   Padding(
                     padding: EdgeInsets.all(width * 0.05),
                     child: StyledHeading(widget.item.description),
