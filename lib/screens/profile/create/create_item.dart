@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:numpad_layout/widgets/numpad.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_image.dart';
@@ -109,6 +108,7 @@ class _CreateItemState extends State<CreateItem> {
   String retailPrice = '';
 
   final titleController = TextEditingController();
+  final priceController = TextEditingController();
   final shortDescController = TextEditingController();
   final longDescController = TextEditingController();
 
@@ -174,6 +174,7 @@ class _CreateItemState extends State<CreateItem> {
                   IconButton(
                       onPressed: () {
                         showModalBottomSheet(
+                          backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: true,
                             builder: (context) {
@@ -250,6 +251,7 @@ class _CreateItemState extends State<CreateItem> {
                   IconButton(
                       onPressed: () {
                         showModalBottomSheet(
+                            backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: true,
                             builder: (context) {
@@ -325,6 +327,7 @@ class _CreateItemState extends State<CreateItem> {
                   IconButton(
                       onPressed: () {
                         showModalBottomSheet(
+                            backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: true,
                             builder: (context) {
@@ -408,6 +411,7 @@ class _CreateItemState extends State<CreateItem> {
                   IconButton(
                       onPressed: () {
                         showModalBottomSheet(
+                            backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: true,
                             builder: (context) {
@@ -439,37 +443,69 @@ class _CreateItemState extends State<CreateItem> {
                     padding: EdgeInsets.all(width * 0.03),
                     child: const StyledBody('The retail price of market value (if no longer in production) of the item', weight: FontWeight.normal),
                   ),
-                                
-                                                NumPad(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  onType: (value) {
-                                                    setState(() {
-                                                      if (number.isEmpty) {
-                                                        number += '\$$value';
-                                                      } else {
-                                                        (number += value); 
-                                                      }
-                                                    });
-                                                  },
-                                                  rightWidget: IconButton(
-                                                    icon: const Icon(Icons.backspace),
-                                                    onPressed: () {
-                                                      if (number.isNotEmpty) {
-                                                        setState(() {
-                                                          number = number.substring(0, number.length - 1);
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                                SizedBox(height: width * 0.1),
-                                                StyledBody(number),
-                                                const Divider(),
-                                                SizedBox(height: width * 0.1),
+                  Padding(
+                    padding: EdgeInsets.all(width * 0.03),
+                    child: TextField(
+                          keyboardType: TextInputType.number,
+                          maxLines: null,
+                          maxLength: 10,
+                          controller: priceController,
+                          onChanged: (text) {
+                            setState(() {
+                                                      Provider.of<ItemStore>(context, listen: false).setRetailPrice(text);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            isDense: true,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: const BorderSide(color: Colors.black)
+                            ),
+                            filled: true,
+                            hintStyle: TextStyle(color: Colors.grey[800]),
+                            hintText: "Daily Price",
+                            fillColor: Colors.white70,
+                          ),
+                        ),
+                  ),
+                                                // NumPad(
+                                                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                //   onType: (value) {
+                                                //     setState(() {
+                                                //       if (number.isEmpty) {
+                                                //         number += '\$$value';
+                                                //       } else {
+                                                //         (number += value); 
+                                                //       }
+                                                //     });
+                                                //   },
+                                                //   rightWidget: IconButton(
+                                                //     icon: const Icon(Icons.backspace),
+                                                //     onPressed: () {
+                                                //       if (number.isNotEmpty) {
+                                                //         setState(() {
+                                                //           number = number.substring(0, number.length - 1);
+                                                //         });
+                                                //       }
+                                                //     },
+                                                //   ),
+                                                // ),
+                                                // SizedBox(height: width * 0.1),
+                                                // StyledBody(number),
+                                                // const Divider(),
+                                                // SizedBox(height: width * 0.1),
                                                 ElevatedButton(
                                                   onPressed: () {
-                                                    retailPrice = number;
-                                                    Provider.of<ItemStore>(context, listen: false).setRetailPrice(number);
+                                                    // retailPrice = number;
+                                                    // Provider.of<ItemStore>(context, listen: false).setRetailPrice(number);
                                                     Navigator.pop(context);
                                                   }, 
                                                   child: const StyledBody('Save')),
