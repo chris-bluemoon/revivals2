@@ -59,9 +59,8 @@ class ItemStore extends ChangeNotifier {
   // final List<bool> _sizesFilter = [true, true, false, false];
   // TODO: Revert back to late initialization if get errors with this
   // late final _user;
-  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG']);
+  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], );
   bool _loggedIn = false;
-  String _retailPrice = '0';
   // String _region = 'BANGKOK';
 
   get messages => _messages;
@@ -80,7 +79,6 @@ class ItemStore extends ChangeNotifier {
   get printsFilter => _printsFilter;
   get sleevesFilter => _sleevesFilter;
   get rangeValuesFilter => _rangeValuesFilter;
-  get retailPrice => _retailPrice;
   
   void sizesFilterSetter(sizeF) {
     _sizesFilter = sizeF;
@@ -142,7 +140,6 @@ class ItemStore extends ChangeNotifier {
   }
 
   void saveRenter(Renter renter) async {
-    log(renter.fittings.toString());
     await FirestoreService.updateRenter(renter);
     // _renters[0].aditem = renter.aditem;
       // _user.aditem = renter.aditem;
@@ -163,7 +160,6 @@ class ItemStore extends ChangeNotifier {
   // add fittingRenter
   void addFittingRenter(FittingRenter fittingRenter) async {
     _fittingRenters.add(fittingRenter);
-    log('Count of fittingRenters is ${fittingRenters.length.toString()}');
     await FirestoreService.addFittingRenter(fittingRenter);
     notifyListeners();
   }
@@ -183,7 +179,6 @@ class ItemStore extends ChangeNotifier {
       final snapshot = await FirestoreService.getItemsOnce();
       for (var doc in snapshot.docs) {
         _items.add(doc.data());
-        log('Added an item from Firestore to local database ${doc.toString()}');
       }
       populateFavourites();
       populateFittings();
@@ -196,7 +191,6 @@ class ItemStore extends ChangeNotifier {
       _favourites.clear();
       for (Item d in _items) {
         if (favs.contains(d.id)) {
-          log('Adding a fav');
           _favourites.add(d);
         }
       }
@@ -219,7 +213,6 @@ class ItemStore extends ChangeNotifier {
       }
     }
     void addFitting(itemId) {
-      log('addFitting called');
       _fittings.add(itemId);
       notifyListeners();
     }
@@ -253,16 +246,11 @@ class ItemStore extends ChangeNotifier {
   void setLoggedIn(bool loggedIn) {
     _loggedIn = loggedIn;
     if (loggedIn == false) {
-      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG']);
+      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], );
       notifyListeners();
     }
   }
 
-  void setRetailPrice(String retailPrice) {
-    _retailPrice = retailPrice;
-    notifyListeners();
-  }
-  
   void fetchItemRentersOnce() async {
     if (itemRenters.length == 0) {
       final snapshot = await FirestoreService.getItemRentersOnce();
@@ -273,12 +261,9 @@ class ItemStore extends ChangeNotifier {
     }
   }
   void fetchFittingRentersOnce() async {
-    log('Fetching all FittingRentersOncea');
     if (fittingRenters.length == 0) {
-    log('Fetching all FittingRentersOnce as current size is 0');
       final snapshot = await FirestoreService.getFittingRentersOnce();
       for (var doc in snapshot.docs) {
-      log(doc.toString());
         _fittingRenters.add(doc.data());
       }
       notifyListeners();
@@ -298,11 +283,8 @@ class ItemStore extends ChangeNotifier {
   }
 
   void fetchImages() async {
-    log('FetchingImages...');
     for (Item i in items) {
-      log('Checking for owner: ${i.owner}');
       for (String j in i.imageId) {
-        log('Checking images: ${j.toString() }');
         // final ref = FirebaseStorage.instance.ref().child('ea726613-713e-46bc-a152-9fb00b243702').child('0d3e89aa-43eb-4619-bb9b-672e41b39953.png');
         final ref = FirebaseStorage.instance.ref().child(j);
         String url;
@@ -310,7 +292,6 @@ class ItemStore extends ChangeNotifier {
           url = await ref.getDownloadURL();
           ItemImage newImage = ItemImage(id: ref.fullPath,imageId: Image.network(url));
           _images.add(newImage);
-          log('image added to _images: ${ref.fullPath}');
         } catch (e) {
           log('Image fetch error: ${e.toString()}');
         }
@@ -318,10 +299,6 @@ class ItemStore extends ChangeNotifier {
       }
     }
     // await Future.delayed(const Duration(seconds: 10));
-    for (ItemImage i in images) {
-      log('Dump of images: ${i.id}');
-    }
-    log('Loading COMPLETE');
     notifyListeners();
   }
 
@@ -333,8 +310,6 @@ class ItemStore extends ChangeNotifier {
         }
       }
       setCurrentUser();
-      // log("Renters populated with length ${_renters.length}");
-      // notifyListeners();
     }
   void saveItemRenter(ItemRenter itemRenter) async {
     await FirestoreService.updateItemRenter(itemRenter);

@@ -33,10 +33,7 @@ class _MyItemsListState extends State<MyItemsList> {
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
-    log('Count of allItems is ${allItems.length.toString()}');
     for (Item i in allItems) {
-      log('i.owner: ${i.owner}');
-      log('userId: $userId');
       if (i.owner == userId) {
           myItems.add(i);
         }

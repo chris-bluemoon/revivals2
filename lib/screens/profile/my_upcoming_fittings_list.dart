@@ -35,12 +35,10 @@ class _MyUpcomingFittingsListState extends State<MyUpcomingFittingsList> {
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<FittingRenter> allFittingRenters = List.from(Provider.of<ItemStore>(context, listen: false).fittingRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
-    log('Count of fittingRenters is ${allFittingRenters.length.toString()}');
     for (FittingRenter dr in allFittingRenters) {
       DateTime convertedDate = DateFormat('yyyy-MM-ddTHH:mm:ss').parse(dr.bookingDate) ;
       if (dr.renterId == userEmail && convertedDate.isAfter(DateTime.now()) && dr.status != 'cancelled') {
           upcomingFittingsList.add(dr);
-          log('Rented: ${dr.renterId}');
         }
       }
     if (upcomingFittingsList.isEmpty) {

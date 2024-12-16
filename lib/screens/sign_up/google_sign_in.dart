@@ -18,7 +18,7 @@ import 'package:uuid/uuid.dart';
 var uuid = const Uuid();
 
 class GoogleSignInScreen extends StatefulWidget {
-  const GoogleSignInScreen({Key? key}) : super(key: key);
+  const GoogleSignInScreen({super.key});
 
   @override
   State<GoogleSignInScreen> createState() => _GoogleSignInScreenState();

@@ -74,6 +74,7 @@ class _CreateItemState extends State<CreateItem> {
   String productTypeValue = '';
   String colourValue = '';
   String brandValue = '';
+  String retailPriceValue = '';
 
   List<String> brands = [
     'BARDOT',
@@ -105,10 +106,9 @@ class _CreateItemState extends State<CreateItem> {
   FirebaseStorage storage = FirebaseStorage.instance;
 
   String number = '';
-  String retailPrice = '';
 
   final titleController = TextEditingController();
-  final priceController = TextEditingController();
+  final retailPriceController = TextEditingController();
   final shortDescController = TextEditingController();
   final longDescController = TextEditingController();
 
@@ -403,11 +403,7 @@ class _CreateItemState extends State<CreateItem> {
                 children: [
                   const StyledBody('Retail Price'),
                   const Expanded(child: SizedBox()),
-                  Consumer<ItemStore>(builder: (BuildContext context, value, Widget? child) { 
-                    return StyledBody(value.retailPrice);
-                    // return StyledBody(Provider.of<ItemStore>(context, listen: false).retailPrice);
-                   },
-                  ),
+                  StyledBody(retailPriceValue),
                   IconButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -417,7 +413,6 @@ class _CreateItemState extends State<CreateItem> {
                             builder: (context) {
                               return StatefulBuilder(
                                 builder: (BuildContext context, void Function(void Function()) setState) {  
-                              log('Building bottomshee;');
                                 return FractionallySizedBox(
                                   heightFactor: 0.9,
                                   child: Column(
@@ -449,10 +444,11 @@ class _CreateItemState extends State<CreateItem> {
                           keyboardType: TextInputType.number,
                           maxLines: null,
                           maxLength: 10,
-                          controller: priceController,
+                          controller: retailPriceController,
                           onChanged: (text) {
                             setState(() {
-                                                      Provider.of<ItemStore>(context, listen: false).setRetailPrice(text);
+                              // Provider.of<ItemStore>(context, listen: false).setRetailPrice(text);
+                              retailPriceValue = text;
                             });
                           },
                           decoration: InputDecoration(
@@ -654,7 +650,7 @@ class _CreateItemState extends State<CreateItem> {
                   child: OutlinedButton(
                     onPressed: () async {
                       // handleSubmit();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPrice, shortDescController.text, longDescController.text, imagePath))));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPriceValue, shortDescController.text, longDescController.text, imagePath))));
                     },
   
                     style: OutlinedButton.styleFrom(
@@ -674,38 +670,6 @@ class _CreateItemState extends State<CreateItem> {
             ),
           ),   
     );
-  }
-
-  handleSubmit() {
-    log('handleSubmit - Adding item (addItem) to ItemStore');
-    String ownerId = Provider.of<ItemStore>(context, listen: false).renter.id;
-    Provider.of<ItemStore>(context, listen: false).addItem(Item(
-        id: uuid.v4(),
-        owner: ownerId,
-        type: productTypeValue,
-        bookingType: allItems[0].bookingType,
-        occasion: allItems[0].occasion,
-        dateAdded: allItems[0].dateAdded,
-        style: allItems[0].style,
-        name: titleController.text,
-        brand: allItems[0].brand,
-        colour: [colourValue],
-        size: ['6'],
-        length: allItems[0].length,
-        print: allItems[0].print,
-        sleeve: allItems[0].sleeve,
-        rentPrice: int.parse(retailPrice.substring(1)),
-        buyPrice: allItems[0].buyPrice,
-        rrp: allItems[0].rrp,
-        description: shortDescController.text,
-        bust: allItems[0].bust,
-        waist: allItems[0].waist,
-        hips: allItems[0].hips,
-        longDescription: longDescController.text,
-        imageId: imagePath,
-        status: 'submitted'
-        // imageId: allItems[0].imageId,
-        ));
   }
 
   Future getImage() async {

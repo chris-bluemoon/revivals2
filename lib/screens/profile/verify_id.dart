@@ -1,14 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
-import 'package:revivals/shared/whatsapp.dart';
+import 'package:uuid/uuid.dart';
 
+var uuid = const Uuid();
 
 class VerifyId extends StatefulWidget {
   const VerifyId({super.key});
@@ -20,18 +21,18 @@ class VerifyId extends StatefulWidget {
 class _VerifyIdState extends State<VerifyId> {
   
 
-  late TextEditingController _addressController;
-  late TextEditingController _phoneNumController;
-  bool editingMode = false;
-
-  String tempCountryField = '+66';
-
   @override
   void initState() {
     super.initState();
   }
 
+  final ImagePicker _picker = ImagePicker();
+  XFile? pickedFile;
+  Image? _image;
+  String imagePath = '';
+  bool readyToSubmit = false;
 
+  FirebaseStorage storage = FirebaseStorage.instance;
   
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,63 @@ class _VerifyIdState extends State<VerifyId> {
             Navigator.pop(context);
           },
       ),),
-      body: const Text('VERIFICATION')
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
+        child: Column(
+          children: [
+            const StyledBody('In order get a verified account, please upload your ID by tapping the image below. Once we have verified your idenity, your account will be "green ticked" and shown on your account. "Green tick" accounts consistently attract more views and rentals', weight: FontWeight.normal),
+            SizedBox(height: width * 0.03),
+            GestureDetector(
+              onTap: () {
+                getImage();
+              },
+              child: (_image == null) ? Icon(Icons.image_outlined, size: width * 0.2)
+                : SizedBox(width: 100, child: _image)
+            ),
+            SizedBox(height: width * 0.03),
+            ElevatedButton(
+              onPressed: (!readyToSubmit) ? null : () {
+                log(readyToSubmit.toString());
+                Navigator.pop(context);
+              }, 
+              child: (!readyToSubmit) ? const StyledBody('CANNOT UPLOAD') :
+                const StyledBody('UPLOAD')
+            )
+        ],)
+
+      )
     );
+  }
+    Future getImage() async {
+    pickedFile = await _picker.pickImage(
+       source: ImageSource.gallery,
+        maxWidth: 1000,
+        maxHeight: 1500,
+        imageQuality: 100);
+    if (pickedFile != null) {
+      // _images.add(Image.file(File(_image.path)));
+      setState(() {
+        _image = Image.file(File(pickedFile!.path));
+      });
+      uploadFile();
+    }
+
+  }    
+  Future<String> uploadFile() async {
+    String id = Provider.of<ItemStore>(context, listen: false).renter.id;
+    String rng = uuid.v4();
+    Reference ref = storage.ref().child(id).child('$rng.png');
+    log('REFERENCE: $ref');
+    File file = File(pickedFile!.path);
+    UploadTask uploadTask = ref.putFile(file);
+    log('UPLOAD TASK${uploadTask.snapshot}');
+    TaskSnapshot taskSnapshot = await uploadTask;
+    // log(ref.bucket.toString());
+    imagePath = ref.fullPath.toString();
+    log('imagePath has been set, ready to handleSubmit');
+    setState(() {
+      readyToSubmit = true;
+    });
+    return await taskSnapshot.ref.getDownloadURL();
   }
 }

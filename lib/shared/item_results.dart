@@ -79,7 +79,6 @@ class _ItemResultsState extends State<ItemResults> {
         allItems.add(i);
       }
     }
-    log('Count of items in ItemStore: ${allItems.length}');
     super.initState();
   }
 
