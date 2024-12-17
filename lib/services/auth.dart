@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:revivals/models/renter.dart';
 
@@ -20,6 +18,7 @@ class AuthService {
       favourites: [''],
       fittings: [''],
       settings: ['BANGKOK','CM','CM','KG'],
+      verified: 'no',
     ) : null;
   }
   // Sign in anon

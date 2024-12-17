@@ -102,6 +102,7 @@ class _RegisterPassword extends State<RegisterPassword> {
           favourites: [''],
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
+          verified: 'no',
         ));
        
         // userLoggedIn = true;
@@ -116,6 +117,7 @@ class _RegisterPassword extends State<RegisterPassword> {
           favourites: [''],
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
+          verified: 'no',
         ));
       }
        

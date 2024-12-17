@@ -291,7 +291,6 @@ bool postageSwitch = false;
         longDescription: widget.longDesc,
         imageId: widget.imagePath,
         status: 'submitted'
-        // imageId: allItems[0].imageId,
         ));
   }
   

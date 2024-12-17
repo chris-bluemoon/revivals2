@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Renter {
@@ -12,6 +14,7 @@ class Renter {
           required this.favourites,
           required this.fittings,
           required this.settings,
+          required this.verified,
         }); 
 
     String id;
@@ -24,6 +27,7 @@ class Renter {
     List favourites;
     List fittings;
     List settings;
+    String verified;
 
   // item to firestore (map)
   Map<String, dynamic> toFirestore() {
@@ -37,6 +41,7 @@ class Renter {
       'favourites': favourites,
       'fittings': fittings,
       'settings': settings,
+      'verified': verified,
     };
   }
 
@@ -48,7 +53,7 @@ class Renter {
 
     // get data from snapshot
     final data = snapshot.data()!;
-
+    log('Data: ${data.toString()}');
     // make character instance
     Renter renter = Renter(
       id: snapshot.id,
@@ -61,6 +66,7 @@ class Renter {
       favourites: data['favourites'],
       fittings: data['fittings'],
       settings: data['settings'],
+      verified: data['verified'],
     );
 
     return renter;

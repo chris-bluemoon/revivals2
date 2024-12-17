@@ -80,6 +80,7 @@ class FirestoreService {
 
   // get renters once
   static Future<QuerySnapshot<Renter>> getRentersOnce() {
+    log('HERE');
     return refRenter.get();
   }
 

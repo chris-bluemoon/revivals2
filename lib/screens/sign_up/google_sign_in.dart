@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -59,7 +57,8 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       phoneNum: '',
       favourites: [''],
       fittings: [],
-      settings: ['BANGKOK','CM','CM','KG'],
+      settings: ['BANGKOK','CM','CM','KG'],   
+      verified: 'no',
     ));
    
     // userLoggedIn = true;
@@ -74,6 +73,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       favourites: [''],
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],
+      verified: 'no',
     ));
     }
    
