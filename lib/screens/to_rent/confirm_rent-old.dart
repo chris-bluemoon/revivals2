@@ -17,7 +17,7 @@ class ConfirmRentWidget extends StatefulWidget {
 class _ConfirmRentWidget extends State<ConfirmRentWidget> {
   @override
   Widget build(BuildContext context) {
-    log('Logged in: ${Provider.of<ItemStore>(context, listen: false).loggedIn}');
+   
     return Column(
       children: [
         // Text('Rent ${widget.item.name} for ${widget.item.rentPrice} Baht')

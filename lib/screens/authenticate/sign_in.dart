@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/renter.dart';
@@ -42,19 +40,19 @@ class _SignIn extends State<SignIn> {
       List<Renter> renters =
           Provider.of<ItemStore>(context, listen: false).renters;
       found = false;
-      log(renters.toString());
+     
       for (Renter r in renters) {
         if (r.email == email) {
           found = true;
-          log('Found email in renters: $email');
+         
           Provider.of<ItemStore>(context, listen: false).setCurrentUser();
         } 
       }
       if (found == false) {
-        log('User found in Google but not in database! Fix!');
+       
       }
       // if (found == false) {
-      //   log('Did not find an existing user, adding');
+      //  
       //   String jointUuid = uuid.v4();
       //   Provider.of<ItemStore>(context, listen: false).addRenter(Renter(
       //     id: jointUuid,
@@ -164,7 +162,7 @@ class _SignIn extends State<SignIn> {
             GestureDetector(
               onTap: () async {
                 bool res = await _auth.sendPasswordReset(email);
-                log('res is: ${res.toString()}');
+               
                 if (res == false) {
                   showAlertDialogError(context);
                 }
@@ -214,7 +212,7 @@ class _SignIn extends State<SignIn> {
                     setState(() => loading = true);
                     dynamic result =
                         await _auth.signInWithEmailAndPassword(email, password);
-                    log('RESULT: ${result.toString()}');
+                   
                     if (result == null) {
                       setState(() => loading = false);
                       showDialog(
@@ -262,7 +260,7 @@ class _SignIn extends State<SignIn> {
                         ),
                       );
                               setState(() {
-                                log('Setting password to nothing');
+                               
                                 _formKey.currentState!.reset();
                               });
                     } else {

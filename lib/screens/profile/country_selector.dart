@@ -38,7 +38,7 @@ class CountrySelector extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Renter toSave = Provider.of<ItemStore>(context, listen: false).renter;
-                log('toSave renter: ${toSave.name}');
+               
                 toSave.settings[0] = 'BANGKOK';
                 Provider.of<ItemStore>(context, listen: false).saveRenter(toSave);
                 // Provider.of<ItemStore>(context, listen: false).setRegion('BANGKOK');
@@ -55,7 +55,7 @@ class CountrySelector extends StatelessWidget {
               onTap: () {
                 Renter toSave = Provider.of<ItemStore>(context, listen: false).renter;
                 toSave.settings[0] = 'SINGAPORE';
-                log('toSave renter: ${toSave.name} with new region: SINGAPORE');
+               
                 Provider.of<ItemStore>(context, listen: false).saveRenter(toSave);
                 // Provider.of<ItemStore>(context, listen: false).setRegion('SINGAPORE');
                 callback(true);

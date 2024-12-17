@@ -14,7 +14,7 @@ class Sms extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.dangerous),
           onPressed: () async {
-            log('Tapped');
+           
             try {
               await openSMS(
                 phone: '+66 (62) 327-1758',

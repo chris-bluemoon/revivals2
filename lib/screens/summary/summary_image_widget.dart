@@ -30,7 +30,7 @@ class SummaryImageWidget extends StatelessWidget {
   //     int upperFigure = size + 1;
   //     sizeString = '$lowerFigure-$upperFigure';
   //   }
-  //   log('SIZE STRING: $sizeString');
+  //  
   //   return sizeString;
   // }
     String getSize(sizeArray) {
@@ -50,7 +50,7 @@ class SummaryImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width; 
-    log('Screen width: $width.toString()');
+   
     return Card(
       color: Colors.white,
       child: Row(

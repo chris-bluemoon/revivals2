@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +32,7 @@ class ProfileLanding extends StatefulWidget {
 class _ProfileLandingState extends State<ProfileLanding> {
 
   Future<void> shareApp() async {
-    log('Sharing a link');
+   
     const String appLink = 'https://my google play link';
     const String message = 'Check out my new app $appLink';
     await FlutterShare.share(
@@ -49,9 +47,9 @@ class _ProfileLandingState extends State<ProfileLanding> {
 
   goBack(context) async {
     bool result = await widget.signOutFromGoogle();
-    log('Pressed Exit 1');
+   
     if (result) {
-      log('awaited result and signed out');
+     
       userCredential.value = '';
       Provider.of<ItemStore>(context, listen: false).setLoggedIn(false);
       // setState((context) {});
@@ -63,7 +61,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
       Navigator.pop(context);
       setState(() {});
     }
-    log('Pressed Exit 2');
+   
   }
   
   bool admin = false;
@@ -73,7 +71,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
     // List<Item> allItems = Provider.of<ItemStore>(context, listen: false).items;
     String renterName = Provider.of<ItemStore>(context, listen: false).renter.name;
     if (renterName == 'uneartheduser' || renterName == 'CHRIS') {
-      log('ADMIN user found');
+     
       admin = true;
     }
     double width = MediaQuery.of(context).size.width;
@@ -403,7 +401,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
 
 // Send a LINE
 void chatWithUsLine(BuildContext context) async {
-  log('Tapped LINE send');
+ 
   try {
     await openLineApp(
       phone: '+65 91682725',
@@ -429,7 +427,7 @@ void chatWithUsLine(BuildContext context) async {
 }
 // Send a Whatsapp
 void chatWithUsWhatsApp(BuildContext context) async {
-  log('Tapped whatsapp send');
+ 
   try {
     await openWhatsApp(
       phone: '+65 91682725',

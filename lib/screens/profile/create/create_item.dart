@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -32,7 +31,7 @@ class _CreateItemState extends State<CreateItem> {
     colours.sort((a, b) => a.compareTo(b));
     if (widget.item != null) {
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-      log('ItemImage i is ${i.id} and widget has first element ${widget.item?.imageId[0]}');
+     
       for (String itemImageString in widget.item!.imageId) {
         if (i.id == itemImageString) {
           _images.add(i.imageId);
@@ -118,7 +117,7 @@ class _CreateItemState extends State<CreateItem> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    log('Main rebuild');
+   
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: width * 0.2,
@@ -689,7 +688,7 @@ class _CreateItemState extends State<CreateItem> {
       // await FirebaseStorage.instance.ref(imageRef).putFile(videoFile);
       // uploadPic();
       if (_image == null) {
-        log('IMAGE IS NULL');
+       
       }
     });
     uploadFile();
@@ -700,14 +699,14 @@ class _CreateItemState extends State<CreateItem> {
     String id = Provider.of<ItemStore>(context, listen: false).renter.id;
     String rng = uuid.v4();
     Reference ref = storage.ref().child(id).child('$rng.png');
-    log('REFERENCE: $ref');
+   
     File file = File(_image!.path);
     UploadTask uploadTask = ref.putFile(file);
-    log('UPLOAD TASK${uploadTask.snapshot}');
+   
     TaskSnapshot taskSnapshot = await uploadTask;
-    // log(ref.bucket.toString());
+    //
     imagePath.add(ref.fullPath.toString());
-    log('imagePath has been set, ready to handleSubmit');
+   
     setState(() {
       readyToSubmit = true;
     });
@@ -727,7 +726,7 @@ class _CreateItemState extends State<CreateItem> {
     }
 
     for (var item in listResult.items) {
-      log('HERE ${item.toString()}');
+     
     }
   }
 }

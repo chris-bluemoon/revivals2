@@ -29,10 +29,10 @@ class _MyPurchasesAdminBookingsListState extends State<MyPurchasesAdminBookingsL
   }
   
   void loadMyPurchasesAdminBookingsList() {
-    log('Loading loadMyPurchasesAdminBookingsList');
+   
     // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<ItemRenter> allItemRenters = List.from(Provider.of<ItemStore>(context, listen: false).itemRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
@@ -49,7 +49,7 @@ class _MyPurchasesAdminBookingsListState extends State<MyPurchasesAdminBookingsL
       }
     }
     if (myPurchasesList.isEmpty) {
-      log('You have no purchases!');
+     
     }
     myPurchasesList.sort((a, b) => a.startDate.compareTo(b.startDate));
   }

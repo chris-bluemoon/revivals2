@@ -293,7 +293,7 @@ class ItemStore extends ChangeNotifier {
           ItemImage newImage = ItemImage(id: ref.fullPath,imageId: Image.network(url));
           _images.add(newImage);
         } catch (e) {
-          log('Image fetch error: ${e.toString()}');
+         
         }
         // _images.add(Image.network(url));
       }

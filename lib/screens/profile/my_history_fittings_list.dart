@@ -41,7 +41,7 @@ class _MyHistoryFittingsListState extends State<MyHistoryFittingsList> {
         }
       }
     if (historyFittingsList.isEmpty) {
-      log('You have no rentals!');
+     
     }
     historyFittingsList.sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
   }

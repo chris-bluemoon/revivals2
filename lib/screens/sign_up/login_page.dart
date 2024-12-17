@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
 
   /// Show a simple "___ Button Pressed" indicator
   void _showButtonPressDialog(BuildContext context, String provider) {
-    log(provider);
+   
   }
 
   /// Normally the signin buttons should be contained in the LoginPage

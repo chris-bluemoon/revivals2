@@ -163,7 +163,7 @@ class _SummaryRentalState extends State<SummaryRental> {
           ValueListenableBuilder(
               valueListenable: widget.deliveryPrice,
               builder: (BuildContext context, int val, Widget? child) {
-                log('Deliver fee being sent as val to RentalPriceSummary is: $val');
+               
                 return RentalPriceSummary(
                     widget.price, widget.noOfDays, val, widget.symbol);
               }),

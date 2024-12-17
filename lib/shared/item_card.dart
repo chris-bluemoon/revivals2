@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
@@ -168,9 +166,8 @@ String capitalize(string) {
 Widget createImage(String imageName) {
   // final ref = FirebaseStorage.instance.ref().child('testimage');
   // var url = await ref.getDownloadURL();
-  // log('URL $url');
+  //
   // return Image.network(url);
-  if (myImage == null) log("creating image as myImage is null");
   return Image.asset(imageName,
       errorBuilder: (context, object, stacktrace) =>
           Image.asset('assets/img/items2/No_Image_Available.jpg'));
@@ -179,15 +176,15 @@ Widget createImage(String imageName) {
   Widget build(BuildContext context) {
     // List<ItemImage> cardImage = widget.item.imageId;
 
-    log('Length of images is: ${Provider.of<ItemStore>(context, listen: false).images.length}');
+   
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-      log(i.id);
+     
     }
     // TODO: fix this
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-      log('ItemImage i is ${i.id} and widget has first element ${widget.item.imageId[0]}');
+     
       if (i.id == widget.item.imageId[0]) {
-        log('FOUND AN IMAGE MATCH');
+       
         setState(() {
           // thisImage = Image.asset('assets/img/items2/AJE_Breathless_Frill_Sleeves_Dress_1.jpg');
           thisImage = i.imageId;

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -64,7 +63,7 @@ class _VerifyIdState extends State<VerifyId> {
             SizedBox(height: width * 0.03),
             ElevatedButton(
               onPressed: (!readyToSubmit) ? null : () {
-                log(readyToSubmit.toString());
+               
                 Navigator.pop(context);
               }, 
               child: (!readyToSubmit) ? const StyledBody('CANNOT UPLOAD') :
@@ -94,14 +93,14 @@ class _VerifyIdState extends State<VerifyId> {
     String id = Provider.of<ItemStore>(context, listen: false).renter.id;
     String rng = uuid.v4();
     Reference ref = storage.ref().child(id).child('$rng.png');
-    log('REFERENCE: $ref');
+   
     File file = File(pickedFile!.path);
     UploadTask uploadTask = ref.putFile(file);
-    log('UPLOAD TASK${uploadTask.snapshot}');
+   
     TaskSnapshot taskSnapshot = await uploadTask;
-    // log(ref.bucket.toString());
+    //
     imagePath = ref.fullPath.toString();
-    log('imagePath has been set, ready to handleSubmit');
+   
     setState(() {
       readyToSubmit = true;
     });

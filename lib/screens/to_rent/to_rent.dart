@@ -132,14 +132,14 @@ class _ToRentState extends State<ToRent> {
   Future _initImages() async {
     int counter = 0;
     for (String i in widget.item.imageId) {
-      log('Found an image $i');
+     
       counter++;
       items.add(counter);
       dotColours.add(Colors.grey);
     }
     setState(() {
       itemCheckComplete = true;
-      log('Setting itemCheckComplete to true');
+     
     });
   }
 

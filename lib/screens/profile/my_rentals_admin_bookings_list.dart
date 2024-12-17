@@ -29,19 +29,19 @@ class _MyRentalsAdminBookingsListState extends State<MyRentalsAdminBookingsList>
   }
   
   void loadMyRentalsAdminBookingsList() {
-    log('Loading loadMyRentalsAdminBookingsList');
+   
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
     List<ItemRenter> allItemRenters = List.from(Provider.of<ItemStore>(context, listen: false).itemRenters);
     for (ItemRenter dr in allItemRenters) {
       if (dr.renterId == userEmail) {
         if (dr.transactionType == 'rental') {
           myRentalsList.add(dr);
-          log('Rented: ${dr.itemId}');
+         
         }
       }
     }
     if (myRentalsList.isEmpty) {
-      log('You have no rentals!');
+     
     }
     myRentalsList.sort((a, b) => a.startDate.compareTo(b.startDate));
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +29,7 @@ class _MyUpcomingFittingsListState extends State<MyUpcomingFittingsList> {
   void loadMyUpcomingFittingsList() {
     // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<FittingRenter> allFittingRenters = List.from(Provider.of<ItemStore>(context, listen: false).fittingRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
@@ -42,7 +40,7 @@ class _MyUpcomingFittingsListState extends State<MyUpcomingFittingsList> {
         }
       }
     if (upcomingFittingsList.isEmpty) {
-      log('You have no fittings!');
+     
     }
     upcomingFittingsList.sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
   }

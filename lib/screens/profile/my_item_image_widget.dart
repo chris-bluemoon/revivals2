@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:revivals/models/item.dart';
@@ -28,7 +26,7 @@ class _MyItemImageWidgetState extends State<MyItemImageWidget> {
   
   getImageFromFirebase() async {
     List<String> elementIds = widget.item.imageId[0].split('/');
-  log(elementIds[0]);
+ 
     final ref = FirebaseStorage.instance.ref().child(elementIds[0]).child(elementIds[1]);
     var url = await ref.getDownloadURL();
     setState(() {
@@ -40,7 +38,7 @@ class _MyItemImageWidgetState extends State<MyItemImageWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    log('MyItemImageWidget Build called');
+   
     return Card(
       margin: EdgeInsets.only(bottom: width*0.04),
       shape: BeveledRectangleBorder(

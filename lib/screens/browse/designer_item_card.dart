@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
@@ -38,7 +36,7 @@ class _DesignerItemCardState extends State<DesignerItemCard> {
   }
 
   bool isAFav(Item d, List favs) {
-    log(favs.toString());
+   
     if (favs.contains(d)) {
       return true;
     } else {
@@ -77,7 +75,7 @@ class _DesignerItemCardState extends State<DesignerItemCard> {
     String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
     
     int oneDayPrice = widget.item.rentPrice;
-    log('oneDayPrice: ${widget.item.rentPrice}');
+   
 
     if (country == 'BANGKOK') {
       oneDayPrice = widget.item.rentPrice;
@@ -144,13 +142,13 @@ class _DesignerItemCardState extends State<DesignerItemCard> {
                 isFav ?  IconButton(
                   icon: Icon(Icons.favorite, size: width*0.06), color: Colors.red,
                   onPressed: () {
-                    log('Pressed Fav');
+                   
                       // isFav = false;
                       _toggleFav();
                       // Provider.of<ItemStore>(context, listen: false)
                       //   .toggleItemFav(item);
                       Renter toSave = Provider.of<ItemStore>(context, listen: false).renter;
-                      log('toSave renter: ${toSave.name}');
+                     
                       toSave.favourites.remove(widget.item.id);
                       Provider.of<ItemStore>(context, listen: false).saveRenter(toSave);
 
@@ -158,13 +156,13 @@ class _DesignerItemCardState extends State<DesignerItemCard> {
                   IconButton(
                     icon: Icon(Icons.favorite_border_outlined, size: width*0.06),
                     onPressed: () {
-                      log('Pressed empty Fav on item ID: ${widget.item.id}');
+                     
                       // isFav = true;
                       _toggleFav();
                       // Provider.of<ItemStore>(context, listen: false)
                       //   .toggleItemFav(item);
                       Renter toSave = Provider.of<ItemStore>(context, listen: false).renter;
-                      log('toSave renter: ${toSave.name}');
+                     
                       toSave.favourites.add(widget.item.id);
                       Provider.of<ItemStore>(context, listen: false).saveRenter(toSave);
                     }

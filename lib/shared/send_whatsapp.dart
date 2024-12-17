@@ -13,7 +13,7 @@ class SendWhatsapp extends StatelessWidget {
     return Center(
       child: IconButton(
         onPressed: () async {
-          log('Tapped whatsapp send');
+         
       try {
         await openWhatsApp(
           phone: '+65 91682725',

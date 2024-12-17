@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
@@ -42,7 +40,7 @@ bool postageSwitch = false;
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    log('widget.retailPrice: ${widget.retailPrice}');
+   
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: width * 0.2,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,10 +27,10 @@ class _MyPurchasesListState extends State<MyPurchasesList> {
   }
   
   void loadMyPurchasesList() {
-    log('Loading loadMyPurchasesList');
+   
     // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<ItemRenter> allItemRenters = List.from(Provider.of<ItemStore>(context, listen: false).itemRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
@@ -49,7 +47,7 @@ class _MyPurchasesListState extends State<MyPurchasesList> {
       }
     }
     if (myPurchasesList.isEmpty) {
-      log('You have no purchases!');
+     
     }
     myPurchasesList.sort((a, b) => a.startDate.compareTo(b.startDate));
   }

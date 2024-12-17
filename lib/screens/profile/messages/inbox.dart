@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -29,14 +27,14 @@ class _MyMessagesState extends State<MyMessages> {
 
   getMyMessages() {
     myMessages.clear();
-    log('GETTING MYMESSAGESA');
+   
     for (Message i in Provider.of<ItemStore>(context, listen: false).messages) {
-      log('Message from user id is: ${i.to}');
-      log('Renter id: ${Provider.of<ItemStore>(context, listen: false).renter.name}');
+     
+     
       if (i.to == Provider.of<ItemStore>(context, listen: false).renter.name &&
           i.status != 'deleted') {
         myMessages.add(i);
-        log('Added a message to inbox');
+       
       }
     }
     myMessages.sort((a, b) => b.dateSent.compareTo(a.dateSent));

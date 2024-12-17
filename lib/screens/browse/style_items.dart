@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
@@ -41,9 +39,9 @@ class _StyleItemsState extends State<StyleItems> {
     // getCurrentUser();
         double width = MediaQuery.of(context).size.width;
     List<Item> allItems = Provider.of<ItemStore>(context, listen: false).items;
-    log('Size of allItems: ${allItems.length}');
+   
     for (Item i in allItems) {
-      log('checking: ${widget.style} vs database stored style: ${i.style}');
+     
       if (widget.style == i.style) {
         styleItems.add(i);
       }
@@ -101,8 +99,8 @@ class _StyleItemsState extends State<StyleItems> {
                     itemBuilder: (_, index) => GestureDetector(
                         child: ItemCard(styleItems[index], false, false),
                         onTap: () {
-                          log(styleItems[0].toString());
-                            // log('About to rent ${value.brandItemes[index].name}');
+                         
+                            //
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => (ToRent(styleItems[index]))));
                         }),
                     itemCount: styleItems.length,

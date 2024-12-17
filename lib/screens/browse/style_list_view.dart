@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:revivals/screens/browse/style_items.dart';
 import 'package:revivals/shared/styled_text.dart';
@@ -11,7 +9,7 @@ class StyleListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final leftRightPadding = screenWidth * 0.15;
-    log('Width: ${screenWidth.toString()}');
+   
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[

@@ -94,7 +94,7 @@ class _ItemResultsState extends State<ItemResults> {
       switch (widget.attribute) {
         case 'myItems':
           for (Item i in allItems) {
-            log('Checking item owner ${i.owner} with user ${widget.value}');
+           
             if (i.owner == widget.value) {
               filteredItems.add(i);
             }
@@ -119,7 +119,7 @@ class _ItemResultsState extends State<ItemResults> {
           }
         case 'bookingType':
           for (Item i in allItems) {
-            log('bookingType: ${i.bookingType}');
+           
             if (i.bookingType == widget.value || i.bookingType == 'both') {
               filteredItems.add(i);
             }
@@ -135,7 +135,7 @@ class _ItemResultsState extends State<ItemResults> {
           }
         case 'fitting':
           for (Item i in allItems) {
-          log('Adding filtered item');
+         
               filteredItems.add(i);
           }
       }
@@ -157,7 +157,7 @@ class _ItemResultsState extends State<ItemResults> {
       for (Item i in allItems) {
         switch (widget.attribute) {
         case 'myItems':
-            log('Checking item owner ${i.owner} with user ${widget.value}');
+           
             if (i.owner == widget.value) {
               finalItems.add(i);
           }

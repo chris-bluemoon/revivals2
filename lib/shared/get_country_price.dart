@@ -30,7 +30,7 @@ String convertFromTHB (int value, String country) {
       roundedFinalValue = (convertedCurrency / 5).ceil() * 5;
       break;
   }
-  // log('Given value was ${value.toString()}');
-  // log('Rounded return value: ${roundedFinalValue.toString()}');
+  //
+  //
   return roundedFinalValue.toString();
 }

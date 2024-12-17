@@ -53,7 +53,7 @@ class _DeliveryRadioWidget extends State<DeliveryRadioWidget> {
                   setState(() {
                     selectedOption = value!;
                     widget.updatePrice(deliveryPrice);
-                    log("Button value: $value");
+                   
                   });
                 },
               ),
@@ -69,7 +69,7 @@ class _DeliveryRadioWidget extends State<DeliveryRadioWidget> {
                   setState(() {
                     selectedOption = value2!;
                     widget.updatePrice(0);
-                    log("Button value: $value2");
+                   
                   });
                 },
               ),

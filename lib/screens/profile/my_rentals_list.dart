@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,24 +27,24 @@ class _MyRentalsListState extends State<MyRentalsList> {
   }
   
   void loadMyRentalsList() {
-    log('Loading loadMyRentalsList');
+   
     // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<ItemRenter> allItemRenters = List.from(Provider.of<ItemStore>(context, listen: false).itemRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
     for (ItemRenter dr in allItemRenters) {
-      log('Checking all itemrenters from allItemRenters');
+     
       if (dr.renterId == userEmail) {
         if (dr.transactionType == 'rental') {
           myRentalsList.add(dr);
-          log('Rented: ${dr.itemId}');
+         
         }
       }
     }
     if (myRentalsList.isEmpty) {
-      log('You have no rentals!');
+     
     }
     myRentalsList.sort((a, b) => a.startDate.compareTo(b.startDate));
   }

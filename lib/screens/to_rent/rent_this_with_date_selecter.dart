@@ -65,7 +65,7 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
   }
 
   List<DateTime> getBlackoutDates(String itemId, int daysToRent) {
-    // log(itemId);
+    //
     List<ItemRenter> itemRenters =
         Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<DateTime> tempList = [];
@@ -123,7 +123,7 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
     // rebuildAllChildren(context);
     String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
     symbol = getCurrencySymbol(country);
-        log('Settings: ${Provider.of<ItemStore>(context, listen: false).renter.settings.toString()}');
+       
         double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -248,11 +248,11 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
                           startDate = pickedDate;
                           endDate = pickedDate
                               .add(Duration(days: noOfDays));
-                          log("Button value: $pickedDate");
-                          log('state of showConfirm: $showConfirm');
-                          log(startDate.toString());
-                          log(endDate.toString());
-                          log(noOfDays.toString());
+                         
+                         
+                         
+                         
+                         
                           selectedOption = -1;
                           showConfirm = true;
                           bool loggedIn = Provider.of<ItemStore>(context, listen: false).loggedIn;
@@ -343,11 +343,11 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
                       startDate = pickedDate;
                       endDate = pickedDate
                           .add(Duration(days: noOfDays));
-                      log("Button value: $pickedDate");
-                      log('state of showConfirm: $showConfirm');
-                      log(startDate.toString());
-                      log(endDate.toString());
-                      log(noOfDays.toString());
+                     
+                     
+                     
+                     
+                     
                       selectedOption = -1;
                       showConfirm = true;
                           bool loggedIn = Provider.of<ItemStore>(context, listen: false).loggedIn;
@@ -363,7 +363,7 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
                   // } else {
                   //  setState(() {
                   //   newDate = pickedDate;
-                  //   log("2nd Button value: $pickedDate");
+                  //  
                   //  });
                   // }
                 },
@@ -443,11 +443,11 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
                       startDate = pickedDate;
                       endDate = pickedDate
                           .add(Duration(days: noOfDays));
-                      log("Button value: $pickedDate");
-                      log('state of showConfirm: $showConfirm');
-                      log(startDate.toString());
-                      log(endDate.toString());
-                      log(noOfDays.toString());
+                     
+                     
+                     
+                     
+                     
                       selectedOption = -1;
                       showConfirm = true;
                           bool loggedIn = Provider.of<ItemStore>(context, listen: false).loggedIn;
@@ -463,7 +463,7 @@ class _RentThisWithDateSelecterState extends State<RentThisWithDateSelecter> {
                   // } else {
                   //  setState(() {
                   //   newDate = pickedDate;
-                  //   log("2nd Button value: $pickedDate");
+                  //  
                   //  });
                   // }
                 },

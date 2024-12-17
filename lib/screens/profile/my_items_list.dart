@@ -29,7 +29,7 @@ class _MyItemsListState extends State<MyItemsList> {
   void loadMyItemsList() {
     // get current user
     String userId = Provider.of<ItemStore>(context, listen: false).renter.id;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
@@ -39,7 +39,7 @@ class _MyItemsListState extends State<MyItemsList> {
         }
       }
     if (myItems.isEmpty) {
-      log('You have no items!');
+     
     }
     // .sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
   }

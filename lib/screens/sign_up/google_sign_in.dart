@@ -32,14 +32,14 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
   late bool found = false;
 
   void handleNewLogIn(String email, String name) {
-    log('Adding renter if not exists!');
+   
     Provider.of<ItemStore>(context, listen: false).setLoggedIn(true);
     List<Renter> renters = Provider.of<ItemStore>(context, listen: false).renters;
-    log('Current Provider of renters list is: ${renters.toString()}');
+   
     for (Renter r in renters) {
       if (r.email == email) {
         found = true;
-        log('User ${r.email} already found, not adding');
+       
         Provider.of<ItemStore>(context, listen: false).setCurrentUser();
         break; // fixed this
       } else {
@@ -47,7 +47,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       }
     }
     if (found == false) {
-    log('Adding user to DB for first time');
+   
     String jointUuid = uuid.v4();
     Provider.of<ItemStore>(context, listen: false).addRenter(Renter(
       id: jointUuid,
@@ -61,7 +61,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],
     ));
-    log('Assigning user');
+   
     // userLoggedIn = true;
     Provider.of<ItemStore>(context, listen: false).assignUser(Renter(
       id: jointUuid,
@@ -76,9 +76,9 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       settings: ['BANGKOK','CM','CM','KG'],
     ));
     }
-    log('Populating favs');
+   
     Provider.of<ItemStore>(context, listen: false).populateFavourites();
-    log('Populating fits');
+   
     Provider.of<ItemStore>(context, listen: false).populateFittings();
   }
 
@@ -149,8 +149,8 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
                         userCredential.value = await signInWithGoogle();
                         if (userCredential.value != null) {
                           hideProgressDialogue(context);
-                          log(userCredential.value.user!.email);
-                          log(userCredential.value.user!.displayName);
+                         
+                         
                           handleNewLogIn(userCredential.value.user!.email,
                               userCredential.value.user!.displayName);
                           // Navigator.pop(context);
@@ -209,7 +209,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
               )],
               );
             } else {
-              // log('loggin id');
+              //
               return const Text('');
               // showSuccessfulLogin();
             }
@@ -240,7 +240,7 @@ Future<dynamic> signInWithGoogle() async {
   } on Exception catch (e) {
     // TODO
     print('exception->$e');
-    log('exception->$e');
+   
   }
 }
 

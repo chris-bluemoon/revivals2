@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
@@ -26,7 +24,7 @@ class _MyAdminState extends State<MyAdmin> {
     super.initState();
   }
     void handleItemsDelete() {
-      log('Deleting all items');
+     
       Provider.of<ItemStore>(context, listen: false).deleteItems();
     }
       void handleItemRentersDelete() {
@@ -38,7 +36,7 @@ class _MyAdminState extends State<MyAdmin> {
     void handleSubmit() {
     
     for (var i = 0; i < allItems.length; i++) {
-      log(allItems[i].owner);
+     
       Provider.of<ItemStore>(context, listen: false).addItem(Item(
         id: uuid.v4(),
         owner: allItems[i].owner,

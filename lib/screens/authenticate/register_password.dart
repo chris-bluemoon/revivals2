@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +45,7 @@ class _RegisterPassword extends State<RegisterPassword> {
       });
     } else if (password.length < 6) {
       setState(() {
-    log(password);
+   
         strength = 1 / 4;
         ready = false;
       });
@@ -72,18 +70,18 @@ class _RegisterPassword extends State<RegisterPassword> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    log(ready.toString());
+   
 
     void handleNewLogIn(String email, String name) {
-      log('Adding renter if not exists!');
+     
       Provider.of<ItemStore>(context, listen: false).setLoggedIn(true);
       List<Renter> renters =
           Provider.of<ItemStore>(context, listen: false).renters;
-      log('Current Provider of renters list is: ${renters.toString()}');
+     
       for (Renter r in renters) {
         if (r.email == email) {
           found = true;
-          log('User ${r.email} already found, not adding');
+         
           Provider.of<ItemStore>(context, listen: false).setCurrentUser();
           break; // fixed this
         } else {
@@ -91,7 +89,7 @@ class _RegisterPassword extends State<RegisterPassword> {
         }
       }
       if (found == false) {
-        log('Adding user to DB for first time');
+       
         String jointUuid = uuid.v4();
         Provider.of<ItemStore>(context, listen: false).addRenter(Renter(
           id: jointUuid,
@@ -105,7 +103,7 @@ class _RegisterPassword extends State<RegisterPassword> {
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
         ));
-        log('Assigning user');
+       
         // userLoggedIn = true;
         Provider.of<ItemStore>(context, listen: false).assignUser(Renter(
           id: jointUuid,
@@ -120,9 +118,9 @@ class _RegisterPassword extends State<RegisterPassword> {
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
         ));
       }
-        log('Populating favs');
+       
         Provider.of<ItemStore>(context, listen: false).populateFavourites();
-        log('Populating fits');
+       
         Provider.of<ItemStore>(context, listen: false).populateFittings();
     }
 
@@ -256,12 +254,12 @@ class _RegisterPassword extends State<RegisterPassword> {
             //               validator: (val) =>
             //                   val!.isEmpty ? 'Enter a valid password' : null,
             //               onChanged: (value) {
-            //                   log('Password value: $value');
-            //                   log('Password : ${passNotifier.value}');
+            //                  
+            //                  
             //                   passNotifier.value = PasswordStrength.calculate(text: value);
             //                   password = value;
             //                   if (PasswordStrength.calculate(text: value) == PasswordStrength.medium) {
-            //                     log('Strong password');
+            //                    
             //                     ready = true;
             //                   } else {
             //                     ready = false;
@@ -311,15 +309,15 @@ class _RegisterPassword extends State<RegisterPassword> {
                 if (ready) Expanded(
                   child: OutlinedButton(
                                    onPressed: () async {
-                      log('PRESSED');
-                  log(_formKey.currentState.toString());
+                     
+                 
                   // if (_formKey.currentState!.validate()) {
                   if (strength == 1) {
                     setState(() => loading = true);
                     dynamic result =
                         await _auth.registerWithEmailAndPassword(widget.email, password);
                     if (result == null) {
-                      log(result);
+                     
                       setState(() => loading = false);
                       showDialog(
                         barrierDismissible: false,
@@ -363,12 +361,12 @@ class _RegisterPassword extends State<RegisterPassword> {
                         ),
                       );
                               setState(() {
-                                log('Setting password to nothing');
+                               
                                 _formKey.currentState!.reset();
                               });
                     } else {
                       handleNewLogIn(widget.email, widget.name);
-                      log('handleNewLogIn called');
+                     
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     }
                   }

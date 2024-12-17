@@ -29,10 +29,10 @@ class _MyFittingsAdminListState extends State<MyFittingsAdminList> {
   }
   
   void loadMyFittingsAdminList() {
-    log('Loading loadMyFittingsAdminList');
+   
     // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    // log('User email: $userEmail');
+    //
     // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
     List<FittingRenter> allFittingRenters = List.from(Provider.of<ItemStore>(context, listen: false).fittingRenters);
     // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
@@ -42,7 +42,7 @@ class _MyFittingsAdminListState extends State<MyFittingsAdminList> {
       }
     }
     if (myFittingsList.isEmpty) {
-      log('You have no fittings!');
+     
     }
     myFittingsList.sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/renter.dart';
@@ -41,7 +39,7 @@ List<Text> weights = <Text>[
 
   void setEditingMode(editMode) {
                             setState(() {
-                              log('Setting edit mode to $editMode');
+                             
     // editingMode = editMode;
                               // The button that is tapped is set to true, and the others to false.
                               editingMode = editMode;
@@ -68,7 +66,7 @@ List<Text> weights = <Text>[
   @override
   Widget build(BuildContext context) {
 
-    log("Building...");
+   
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +83,7 @@ List<Text> weights = <Text>[
       body: Consumer<ItemStore>(
         builder: (context, value, child) {
           String region = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
-          // log(Provider.of<ItemStore>(context, listen: false).renter.settings[0]);
+          //
           if (region == 'BANGKOK') {
             flag = Container(
               decoration: BoxDecoration(
@@ -284,14 +282,14 @@ List<Text> weights = <Text>[
                 if (editingMode) Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                          log('SAVED PRESSED');
+                         
                           for (int i = 0; i < selectedLength.length; i++) {
                                   if (selectedLength[i] == true) {
                                   Renter toSave = Provider.of<ItemStore>(
                                           context,
                                           listen: false)
                                       .renter;
-                                  log('Saving Length: ${lengths[i].data}');
+                                 
                                   toSave.settings[1] = lengths[i].data;
                                   Provider.of<ItemStore>(context, listen: false)
                                       .saveRenter(toSave);
@@ -303,20 +301,20 @@ List<Text> weights = <Text>[
                                           context,
                                           listen: false)
                                       .renter;
-                                  log('Saving Height: ${heights[i].data}');
+                                 
                                   toSave.settings[2] = heights[i].data;
                                   Provider.of<ItemStore>(context, listen: false)
                                       .saveRenter(toSave);
                                   }
                           }
                           for (int i = 0; i < selectedWeight.length; i++) {
-                                  log('Weight values are: ${selectedWeight[i].toString()}');
+                                 
                                   if (selectedWeight[i] == true) {
                                   Renter toSave = Provider.of<ItemStore>(
                                           context,
                                           listen: false)
                                       .renter;
-                                  log('Saving Weight: ${weights[i].data}');
+                                 
                                   toSave.settings[3] = weights[i].data;
                                   Provider.of<ItemStore>(context, listen: false)
                                       .saveRenter(toSave);

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:revivals/screens/authenticate/register_name.dart';
 import 'package:revivals/services/auth.dart';
@@ -32,7 +30,7 @@ class _Register extends State<Register> {
 
   bool isValidEmail(emailString) {
     final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailString);
-    log('Email valid is $emailValid');
+   
     // return emailValid;
     return emailValid;
   }
@@ -98,8 +96,8 @@ class _Register extends State<Register> {
                             setState(() {
                               email = val.trim();
                               if (val.isNotEmpty && isValidEmail(val.trim())) {
-                                log(isValidEmail(val.trim()).toString());
-                                log('Setting ready to true');
+                               
+                               
                                 ready = true;
                               }
                             });

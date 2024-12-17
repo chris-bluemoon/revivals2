@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/to_rent/to_rent.dart';
@@ -54,8 +52,8 @@ class _FavouritesState extends State<Favourites> {
             child: Consumer<ItemStore>(
                 // child not required
                 builder: (context, value, child) {
-                  log('Building Favourites');
-                  log('Favs size: ${value.favourites.length}');
+                 
+                 
                   return (value.favourites.length != 0) ? GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,10 +62,10 @@ class _FavouritesState extends State<Favourites> {
                         child: ItemCard(value.favourites[index], true, false),
                         onTap: () {
                           // if (Provider.of<ItemStore>(context, listen: false).renters.length == 0) {
-                          // log('Not logged in, cannot rent, redirecting');
+                          //
                           // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (GoogleSignInScreen())));
                           // } else {
-                          // log('About to rent ${value.items[index].name}');
+                          //
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   (ToRent(value.favourites[index]))));

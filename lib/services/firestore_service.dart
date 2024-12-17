@@ -139,9 +139,9 @@ class FirestoreService {
   static deleteItems() {
   FirebaseFirestore.instance
     .collection('item').get().then((snapshot) {
-      log('Deleting items firestore service');
+     
       for (DocumentSnapshot i in snapshot.docs) {
-        log('DELETED ITEMS');
+       
         i.reference.delete();
       }
     });
@@ -150,7 +150,7 @@ class FirestoreService {
   FirebaseFirestore.instance
     .collection('itemRenter').get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
-        log('DELETED ITEMRENTER');
+       
         ds.reference.delete();
       }
     });
@@ -159,7 +159,7 @@ class FirestoreService {
   FirebaseFirestore.instance
     .collection('fittingRenter').get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
-        log('DELETED FITTINGRENTER');
+       
         ds.reference.delete();
       }
     });

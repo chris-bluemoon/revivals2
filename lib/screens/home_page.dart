@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               // getCurrentUser();
               _pageIndex = index;
               // bool loggedIn = Provider.of<ItemStore>(context, listen: false).loggedIn;
-              // log('Logged in is set to $loggedIn');
+              //
               // if (index == 3 && loggedIn == false) {
               //   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const Profile())));
               //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => (const GoogleSignInScreen())));

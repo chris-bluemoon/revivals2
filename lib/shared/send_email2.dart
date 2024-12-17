@@ -74,7 +74,7 @@ class EmailComposer2 {
 
   Future<void> sendEmail2() async {
     String? myvar = await MyStore.readFromStore();
-    log('token: $myvar');
+   
     final smtpServer = SmtpServer('smtp.gmail.com',
         username: 'chris@unearthedcollections.com', password: myvar);
 
@@ -92,11 +92,11 @@ class EmailComposer2 {
     try {
       final sendReport = await send(message, smtpServer);
       // print('Message sent: ${sendReport.sent}');
-      log(body);
-      log('Message sent: ${sendReport.toString()}');
+     
+     
       // Additional code for feedback to the user
     } catch (e) {
-      log('Error occurred while sending email: $e');
+     
       // Additional code for error handling
     }
   }
@@ -115,10 +115,10 @@ class EmailComposer2 {
     try {
       final sendReport = await send(message, smtpServer);
       // print('Message sent: ${sendReport.sent}');
-      log('Message sent: ${sendReport.toString()}');
+     
       // Additional code for feedback to the user
     } catch (e) {
-      log('Error occurred while sending email: $e');
+     
       // Additional code for error handling
     }
   }

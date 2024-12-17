@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:booking_calendar/booking_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -50,7 +48,7 @@ class _FittingState extends State<Fitting> {
     late Item i;
     late String imageName = '';
     for (i in allItemsWithID) {
-      // log('Checking item ids ${i.id} == $itemId');
+      //
       if (i.id == itemId) {
         String itemType = toBeginningOfSentenceCase(i.type.replaceAll(RegExp(' +'), '_'));
         String itemName = i.name.replaceAll(RegExp(' +'), '_');
@@ -67,9 +65,9 @@ class _FittingState extends State<Fitting> {
 
     for (Item dress in allItemsWithID) {
       for (String fittingId in fittingIds) {
-        log('Checkign IDS $fittingId vs ${dress.id}');
+       
         if (dress.id == fittingId) {
-          log('Adding dress named ${dress.name}');
+         
           allNames.add(dress.name);
         }
       }
@@ -101,7 +99,7 @@ class _FittingState extends State<Fitting> {
       {required DateTime end, required DateTime start}) {
         var value;
         Stream.value([]).listen(value);
-        log(value.toString());
+       
     return Stream.value([]);
   }
 
@@ -119,7 +117,7 @@ class _FittingState extends State<Fitting> {
     String uname = Provider.of<ItemStore>(context, listen: false).renter.name;
     handleSubmit(email, fittingIds, bookingDate, 100, 'booked');
 
-    log('${newBooking.toJson()} has been uploaded');
+   
     Provider.of<ItemStore>(context, listen: false).clearFittings();
     EmailComposer2(emailAddress: email, userName: uname, bookingDate: '$dateString1 at $dateString2', dresses: getDressNames()).sendFittingEmail();
     showAlertDialog(context);

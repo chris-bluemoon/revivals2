@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -182,11 +180,11 @@ class _MyAccountState extends State<MyAccount> {
              ),
              languageCode: "en",
              onChanged: (phone) {
-               log(phone.completeNumber);
-              //  log(tempPhoneField);
+              
+              // 
              },
              onCountryChanged: (country) {
-               log('Country changed to: ${country.code}');
+              
                tempCountryField = country.name;
              },
            ),
@@ -283,7 +281,7 @@ class _MyAccountState extends State<MyAccount> {
   // }
   // Send a Whatsapp
 void chatWithUsMessage(BuildContext context) async {
-      log('Tapped whatsapp send');
+     
       try {
         await openWhatsApp(
           phone: '+65 91682725',

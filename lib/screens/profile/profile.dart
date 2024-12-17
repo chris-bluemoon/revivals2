@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,8 +19,8 @@ class _Profile extends State<Profile> {
   // initState() {
     // getCurrentUser();
     // List<Renter> renters = Provider.of<ItemStore>(context, listen: false).renters;
-    // log('Renters in Provider DB now:');
-    // log(renters.length.toString());
+    //
+    //
     // super.initState();
   // }
 
@@ -33,11 +31,11 @@ class _Profile extends State<Profile> {
 // Firebase.Auth.FirebaseUser user = auth.CurrentUser;
     // User? asda = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      log('Setting uname: ${user.displayName}');
+     
       uname = user.displayName.toString();
       // Insert user to Provider here?
     } else {
-      log('Not logged in');
+     
       signInWithGoogle();
       // const LoginPage();
     }
@@ -79,7 +77,7 @@ Future<dynamic> signInWithGoogle() async {
   } on Exception catch (e) {
     // TODO
     print('exception->$e');
-    log('exception->$e');
+   
   }
 }
 

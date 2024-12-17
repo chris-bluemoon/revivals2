@@ -49,7 +49,7 @@ class MyTransactionsAdminImageWidget extends StatelessWidget {
     // yMMMMd('en_US')
     for (Item d in allItems) {
       if (d.id == itemId) {
-        log('Found rented item, ${d.id} matches $itemId');
+       
         item = d;
       }
     } 
@@ -99,7 +99,7 @@ class MyTransactionsAdminImageWidget extends StatelessWidget {
         0,
       ]);
     } else {
-      log('greyscale set to transparent');
+     
       greyscale = const ColorFilter.mode(Colors.transparent, BlendMode.multiply);
     }
     return Card(

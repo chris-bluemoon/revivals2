@@ -56,13 +56,13 @@ class _SummaryPurchaseState extends State<SummaryPurchase> {
         price: price,
         status: status,
       ));
-      log('Added a purchase to ItemRenter as status $status');
+     
     }
 
 
     
     void updateDeliveryPrice(int newDeliveryPrice) {
-      log('DELIVERY PRICE CHANGED to $newDeliveryPrice');
+     
       setState(() {
         widget.deliveryPrice.value = newDeliveryPrice;
       });

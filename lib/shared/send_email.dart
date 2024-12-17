@@ -26,10 +26,10 @@ class EmailComposer extends StatefulWidget {
     try {
       final sendReport = await send(message, smtpServer);
       // print('Message sent: ${sendReport.sent}');
-      log('Message sent: ${sendReport.toString()}');
+     
       // Additional code for feedback to the user
     } catch (e) {
-      log('Error occurred xwhile sending email: $e');
+     
       // Additional code for error handling
     }
   }
@@ -49,7 +49,7 @@ class _EmailComposerState extends State<EmailComposer> {
   Future<void> sendEmail() async {
     Future myToken = MyStore.readFromStore();
     String? myvar = await MyStore.readFromStore();
-    log('Token here A is: ${myToken.toString()}');
+   
     final smtpServer = SmtpServer('smtp.gmail.com',
         username: 'uneartheduser@gmail.com', password: myvar);
 
@@ -63,10 +63,10 @@ class _EmailComposerState extends State<EmailComposer> {
     try {
       final sendReport = await send(message, smtpServer);
       // print('Message sent: ${sendReport.sent}');
-      log('Message sent: ${sendReport.toString()}');
+     
       // Additional code for feedback to the user
     } catch (e) {
-      log('Error occurred xwhile sending email: $e');
+     
       // Additional code for error handling
     }
   }
@@ -120,7 +120,7 @@ class _EmailComposerState extends State<EmailComposer> {
               onPressed: () async
               {
                 String? myvar = await MyStore.readFromStore();
-                log(myvar!);
+               
               },
               child: const Text('Get Token'),
             ),

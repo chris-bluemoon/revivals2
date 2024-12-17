@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +46,7 @@ class MyTransactionsImageWidget extends StatelessWidget {
     // yMMMMd('en_US')
     for (Item d in allItems) {
       if (d.id == itemId) {
-        log('Found rented item, ${d.id} matches $itemId');
+       
         item = d;
       }
     } 

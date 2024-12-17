@@ -32,7 +32,7 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch(e) {
-      log("Sign in error: $e");
+     
       return null;
     }
   }
@@ -42,23 +42,23 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      log('User creation successful');
-      log('Returning${_userFromFirebaseUser(user)}');
+     
+     
       return _userFromFirebaseUser(user);
     } catch(e) {
-      log('User creation error ${e.toString()}');
+     
       return null;
     }
   }
 
   // Register with email
   Future sendPasswordReset(String email) async {
-    log('Sending password reset to email: $email');
+   
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return true;
     } catch(e) {
-      log('Possible email not found: ${e.toString()}');
+     
       return false;
     }
   }
@@ -67,11 +67,11 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      log(result.toString());
+     
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch(e) {
-      log('User sign in error ${e.toString()}');
+     
       return null;
     }
 

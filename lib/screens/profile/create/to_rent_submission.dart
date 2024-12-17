@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +56,7 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
     String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
     
     int oneDayPrice = widget.item.rentPrice;
-    log('oneDayPrice: ${widget.item.rentPrice}');
+   
 
     if (country == 'BANGKOK') {
       oneDayPrice = widget.item.rentPrice;
@@ -96,7 +94,7 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
     if (Provider.of<ItemStore>(context, listen: false).renter.settings[0] !=
         'BANGKOK') {
       String country = Provider.of<ItemStore>(context, listen: false).renter.settings[0];
-      // log(widget.item.rentPrice.toString());
+      //
       convertedRentPrice = getPricePerDay(5).toString();
       // convertedRentPrice = convertFromTHB(getPricePerDay(1), country);
       convertedBuyPrice = convertFromTHB(widget.item.buyPrice, country);
@@ -114,14 +112,14 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
 
       int counter = 0;
       for (String i in widget.item.imageId) {
-          log('Found an image $i');
+         
           counter++;
           items.add(counter);
           dotColours.add(Colors.grey);
         }
         setState(() {
           itemCheckComplete = true;
-          log('Setting itemCheckComplete to true');
+         
         });
       }
     // Future _initImages() async {
@@ -138,14 +136,14 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
     //     String name = widget.item.name.replaceAll(RegExp(' +'), '_');
     //     String toCompare = '${brand}_$name';
     //     if (i.contains(toCompare)) {
-    //       log('Found an image');
+    //      
     //       counter++;
     //       items.add(counter);
     //       dotColours.add(Colors.grey);
     //     }
     //     setState(() {
     //       itemCheckComplete = true;
-    //       log('Setting itemCheckComplete to true');
+    //      
     //     });
     //   }
       // setState(() {
@@ -157,7 +155,7 @@ class _ToRentSubmissionState extends State<ToRentSubmission> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    log('Items here is: ${items.toString()}');
+   
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: width * 0.2,
