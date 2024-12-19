@@ -1,4 +1,4 @@
-package sg.bluemoon.revivals
+package sg.bluemoon.revivals2
 
 import io.flutter.embedding.android.FlutterActivity
 

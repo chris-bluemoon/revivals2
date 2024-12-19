@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -283,7 +285,6 @@ class ItemStore extends ChangeNotifier {
   void fetchImages() async {
     for (Item i in items) {
       for (String j in i.imageId) {
-        // final ref = FirebaseStorage.instance.ref().child('ea726613-713e-46bc-a152-9fb00b243702').child('0d3e89aa-43eb-4619-bb9b-672e41b39953.png');
         final ref = FirebaseStorage.instance.ref().child(j);
         String url;
         try {
@@ -291,12 +292,10 @@ class ItemStore extends ChangeNotifier {
           ItemImage newImage = ItemImage(id: ref.fullPath,imageId: Image.network(url));
           _images.add(newImage);
         } catch (e) {
-         
+          log(e.toString());
         }
-        // _images.add(Image.network(url));
       }
     }
-    // await Future.delayed(const Duration(seconds: 10));
     notifyListeners();
   }
 

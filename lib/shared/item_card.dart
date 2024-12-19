@@ -164,34 +164,21 @@ String capitalize(string) {
 
   Image thisImage = Image.asset('assets/img/items2/No_Image_Available.jpg');
 Widget createImage(String imageName) {
-  // final ref = FirebaseStorage.instance.ref().child('testimage');
-  // var url = await ref.getDownloadURL();
-  //
-  // return Image.network(url);
   return Image.asset(imageName,
       errorBuilder: (context, object, stacktrace) =>
           Image.asset('assets/img/items2/No_Image_Available.jpg'));
 }
   @override
   Widget build(BuildContext context) {
-    // List<ItemImage> cardImage = widget.item.imageId;
-
-   
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-     
-    }
-    // TODO: fix this
-    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-     
       if (i.id == widget.item.imageId[0]) {
-       
         setState(() {
-          // thisImage = Image.asset('assets/img/items2/AJE_Breathless_Frill_Sleeves_Dress_1.jpg');
           thisImage = i.imageId;
         }
         );
       }
     }
+
     double width = MediaQuery.of(context).size.width;
     List currListOfFavs =
         Provider.of<ItemStore>(context, listen: false).favourites;

@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:962384191254:android:2b5e7a1de55fd8ff67ba37",
         "android_client_info": {
-          "package_name": "sg.bluemoon.revivals"
+          "package_name": "sg.bluemoon.revivals2"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "962384191254-hm413sgcmr8e79l0cfhl6eq34sp7n900.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sg.bluemoon.revivals"
+                "bundle_id": "sg.bluemoon.revivals2"
               }
             }
           ]

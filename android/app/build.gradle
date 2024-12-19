@@ -27,7 +27,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "sg.bluemoon.revivals"
+    namespace = "sg.bluemoon.revivals2"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
