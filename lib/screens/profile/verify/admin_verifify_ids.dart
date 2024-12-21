@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revivals/screens/profile/my_fittings_admin_list.dart';
+import 'package:revivals/screens/profile/verify/my_verify_admin_list.dart';
 import 'package:revivals/shared/styled_text.dart';
 
 class AdminVerifyIds extends StatefulWidget {
@@ -35,7 +36,8 @@ class _AdminVerifyIdsState extends State<AdminVerifyIds> {
         ),
         body: const TabBarView(
             children: [
-              MyFittingsAdminList(),
+              MyVerifyAdminList(),
+              MyVerifyAdminList(),
             ],
           )
         ),

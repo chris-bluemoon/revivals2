@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/screens/profile/admin_bookings.dart';
 import 'package:revivals/screens/profile/admin_fittings.dart';
-import 'package:revivals/screens/profile/admin_verifify_ids.dart';
+import 'package:revivals/screens/profile/verify/admin_verifify_ids.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/item_results.dart';
 import 'package:revivals/shared/styled_text.dart';
