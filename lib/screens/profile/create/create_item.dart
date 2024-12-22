@@ -698,7 +698,7 @@ class _CreateItemState extends State<CreateItem> {
   Future<String> uploadFile() async {
     String id = Provider.of<ItemStore>(context, listen: false).renter.id;
     String rng = uuid.v4();
-    Reference ref = storage.ref().child(id).child('$rng.png');
+    Reference ref = storage.ref().child('items').child(id).child('$rng.png');
    
     File file = File(_image!.path);
     UploadTask uploadTask = ref.putFile(file);

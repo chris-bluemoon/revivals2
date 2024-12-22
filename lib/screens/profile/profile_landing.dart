@@ -11,7 +11,7 @@ import 'package:revivals/screens/profile/my_admin.dart';
 import 'package:revivals/screens/profile/my_fittings.dart';
 import 'package:revivals/screens/profile/my_transactions.dart';
 import 'package:revivals/screens/profile/settings.dart';
-import 'package:revivals/screens/profile/verify_id.dart';
+import 'package:revivals/screens/profile/verify/verify_id.dart';
 import 'package:revivals/screens/sign_up/google_sign_in.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/item_results.dart';

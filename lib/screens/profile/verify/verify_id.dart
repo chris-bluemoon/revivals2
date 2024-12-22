@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -92,14 +93,17 @@ class _VerifyIdState extends State<VerifyId> {
   Future<String> uploadFile() async {
     String id = Provider.of<ItemStore>(context, listen: false).renter.id;
     String rng = uuid.v4();
-    Reference ref = storage.ref().child(id).child('$rng.png');
+    Reference ref = storage.ref().child('ids').child(id).child('$rng.png');
+    // Reference ref = storage.ref().child(id).child('$rng.png');
    
     File file = File(pickedFile!.path);
     UploadTask uploadTask = ref.putFile(file);
+    log(file.toString());
    
     TaskSnapshot taskSnapshot = await uploadTask;
     //
     imagePath = ref.fullPath.toString();
+    log(imagePath.toString());
    
     setState(() {
       readyToSubmit = true;
