@@ -19,6 +19,7 @@ class AuthService {
       fittings: [''],
       settings: ['BANGKOK','CM','CM','KG'],
       verified: 'no',
+      imagePath: '',
     ) : null;
   }
   // Sign in anon

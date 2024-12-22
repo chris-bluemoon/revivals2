@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
 import 'package:revivals/models/item.dart';
@@ -38,18 +37,18 @@ String capitalize(string) {
   return string.codeUnitAt(0).toUpperCase() + string.substring(1).toLowerCase();
 }
 
-  String setItemImage() {
-    itemType = toBeginningOfSentenceCase(widget.item.type.replaceAll(RegExp(' +'), '_'));
-    // itemType = widget.item.type.replaceAll(RegExp(' +'), '_');
-    itemName = widget.item.name.replaceAll(RegExp(' +'), '_');
-    brandName = widget.item.brand.replaceAll(RegExp(' +'), '_');
-    try {
-      imageName = '${brandName}_${itemName}_${itemType}_1.jpg';
-    } catch(e) {
-      imageName = 'SUNDRESS_Emilia_Dress_1.jpg';
-    }
-    return imageName;
-  }
+  // String setItemImage() {
+  //   itemType = toBeginningOfSentenceCase(widget.item.type.replaceAll(RegExp(' +'), '_'));
+  //   // itemType = widget.item.type.replaceAll(RegExp(' +'), '_');
+  //   itemName = widget.item.name.replaceAll(RegExp(' +'), '_');
+  //   brandName = widget.item.brand.replaceAll(RegExp(' +'), '_');
+  //   try {
+  //     imageName = '${brandName}_${itemName}_${itemType}_1.jpg';
+  //   } catch(e) {
+  //     imageName = 'SUNDRESS_Emilia_Dress_1.jpg';
+  //   }
+  //   return imageName;
+  // }
 
   bool isAFav(Item d, List favs) {
     if (favs.contains(d)) {

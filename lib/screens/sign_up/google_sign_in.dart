@@ -59,6 +59,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],   
       verified: 'no',
+      imagePath: '',
     ));
    
     // userLoggedIn = true;
@@ -74,6 +75,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],
       verified: 'no',
+      imagePath: '',
     ));
     }
    

@@ -73,7 +73,8 @@ class FirestoreService {
         'favourites': renter.favourites,
         'fittings': renter.fittings,
         'settings': renter.settings,
-        // 'verified': renter.verified,
+        'verified': renter.verified,
+        'imagePath': renter.imagePath,
      }
     );
   }

@@ -103,6 +103,7 @@ class _RegisterPassword extends State<RegisterPassword> {
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
           verified: 'no',
+          imagePath: '',
         ));
        
         // userLoggedIn = true;
@@ -118,6 +119,7 @@ class _RegisterPassword extends State<RegisterPassword> {
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
           verified: 'no',
+          imagePath: '',
         ));
       }
        

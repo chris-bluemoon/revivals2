@@ -15,6 +15,7 @@ class Renter {
           required this.fittings,
           required this.settings,
           required this.verified,
+          required this.imagePath,
         }); 
 
     String id;
@@ -28,6 +29,7 @@ class Renter {
     List fittings;
     List settings;
     String verified;
+    String imagePath;
 
   // item to firestore (map)
   Map<String, dynamic> toFirestore() {
@@ -42,6 +44,7 @@ class Renter {
       'fittings': fittings,
       'settings': settings,
       'verified': verified,
+      'imagePath': imagePath,
     };
   }
 
@@ -67,6 +70,7 @@ class Renter {
       fittings: data['fittings'],
       settings: data['settings'],
       verified: data['verified'],
+      imagePath: data['imagePath'],
     );
 
     return renter;

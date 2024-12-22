@@ -59,7 +59,7 @@ class ItemStore extends ChangeNotifier {
   // final List<bool> _sizesFilter = [true, true, false, false];
   // TODO: Revert back to late initialization if get errors with this
   // late final _user;
-  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '');
+  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', );
   bool _loggedIn = false;
   // String _region = 'BANGKOK';
 
@@ -118,6 +118,7 @@ class ItemStore extends ChangeNotifier {
   void assignUser(Renter user) async {
     // await FirestoreService.addItem(item);
     _user = user;
+    log('Phone user now has image path set: ${user.imagePath}');
     notifyListeners();
   }
 
@@ -182,7 +183,7 @@ class ItemStore extends ChangeNotifier {
       }
       populateFavourites();
       populateFittings();
-      fetchImages();
+      // fetchImages();
       notifyListeners();
     }
   }
@@ -246,7 +247,7 @@ class ItemStore extends ChangeNotifier {
   void setLoggedIn(bool loggedIn) {
     _loggedIn = loggedIn;
     if (loggedIn == false) {
-      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '');
+      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', );
       notifyListeners();
     }
   }
@@ -283,6 +284,7 @@ class ItemStore extends ChangeNotifier {
   }
 
   void fetchImages() async {
+    log('fetchImages called');
     for (Item i in items) {
       for (String j in i.imageId) {
         final ref = FirebaseStorage.instance.ref().child(j);
@@ -292,9 +294,27 @@ class ItemStore extends ChangeNotifier {
           ItemImage newImage = ItemImage(id: ref.fullPath,imageId: Image.network(url));
           _images.add(newImage);
         } catch (e) {
-          log(e.toString());
+          log('Item load error: ${e.toString()}');
         }
       }
+    }
+    log('Size of renters: ${renters.length}');
+    for (Renter r in renters) {
+    log('Checking: ${r.email} from renters with _user email: ${_user.email}');
+    if (r.email == _user.email) {
+    String verifyImagePath = r.imagePath;
+    log(verifyImagePath);
+    final refVerifyImage = FirebaseStorage.instance.ref().child(verifyImagePath);
+    String verifyUrl;
+    try {
+      verifyUrl = await refVerifyImage.getDownloadURL();
+      ItemImage newImage = ItemImage(id: refVerifyImage.fullPath,imageId: Image.network(verifyUrl));
+        _images.add(newImage);
+        log('VERIFY IMAGE ADDED AT fetchImages');
+      } catch (e) {
+      log('VerifyImage load error: ${e.toString()}');
+    }
+    } else {log('No renter match!');}
     }
     notifyListeners();
   }
@@ -307,6 +327,7 @@ class ItemStore extends ChangeNotifier {
         }
       }
       setCurrentUser();
+      fetchImages();
     }
   void saveItemRenter(ItemRenter itemRenter) async {
     await FirestoreService.updateItemRenter(itemRenter);

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart';
@@ -24,6 +25,12 @@ class _VerifyIdState extends State<VerifyId> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Widget createImage(String imageName) {
+  return Image.asset(imageName,
+      errorBuilder: (context, object, stacktrace) =>
+          Image.asset('assets/img/items2/No_Image_Available.jpg'));
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -64,7 +71,10 @@ class _VerifyIdState extends State<VerifyId> {
             SizedBox(height: width * 0.03),
             ElevatedButton(
               onPressed: (!readyToSubmit) ? null : () {
-               
+                Renter renter = Provider.of<ItemStore>(context, listen: false).renter;
+                renter.imagePath = imagePath;
+                log('Saving renter with new field populated with imagePath: $imagePath');
+                Provider.of<ItemStore>(context, listen: false).saveRenter(renter);
                 Navigator.pop(context);
               }, 
               child: (!readyToSubmit) ? const StyledBody('CANNOT UPLOAD') :
@@ -98,7 +108,6 @@ class _VerifyIdState extends State<VerifyId> {
    
     File file = File(pickedFile!.path);
     UploadTask uploadTask = ref.putFile(file);
-    log(file.toString());
    
     TaskSnapshot taskSnapshot = await uploadTask;
     //
