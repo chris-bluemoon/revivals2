@@ -73,6 +73,7 @@ class _VerifyIdState extends State<VerifyId> {
               onPressed: (!readyToSubmit) ? null : () {
                 Renter renter = Provider.of<ItemStore>(context, listen: false).renter;
                 renter.imagePath = imagePath;
+                renter.verified = 'pending';
                 log('Saving renter with new field populated with imagePath: $imagePath');
                 Provider.of<ItemStore>(context, listen: false).saveRenter(renter);
                 Navigator.pop(context);

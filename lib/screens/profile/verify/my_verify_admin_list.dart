@@ -3,16 +3,15 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revivals/models/item.dart';
-import 'package:revivals/models/item_renter.dart';
 import 'package:revivals/models/renter.dart';
-import 'package:revivals/screens/profile/my_transactions_admin_image_widget.dart';
 import 'package:revivals/screens/profile/verify/my_verify_admin_image_widget.dart';
 import 'package:revivals/services/class_store.dart';
 
 
 class MyVerifyAdminList extends StatefulWidget {
-  const MyVerifyAdminList({super.key});
+  const MyVerifyAdminList(this.status, {super.key});
+
+  final String status;
 
   @override
   State<MyVerifyAdminList> createState() => _MyVerifyAdminListState();
@@ -35,7 +34,7 @@ class _MyVerifyAdminListState extends State<MyVerifyAdminList> {
    
     List<Renter> allRenters = List.from(Provider.of<ItemStore>(context, listen: false).renters);
     for (Renter r in allRenters) {
-      if (r.verified == 'pending') {
+      if (r.verified == widget.status) {
           myVerifyList.add(r);
       }
     }

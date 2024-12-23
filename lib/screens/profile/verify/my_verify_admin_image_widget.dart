@@ -53,15 +53,25 @@ class _MyVerifyAdminImageWidgetState extends State<MyVerifyAdminImageWidget> {
                   height: width * 0.25,
                   width: width * 0.2,
                   child: thisImage),
-                    // fit: BoxFit.fitHeight,
-                    // height: width*0.25,
-                    // width: width*0.2)),
             ),
             const SizedBox(width: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StyledBody(widget.renter.name, weight: FontWeight.normal,),
+                Row(
+                  children: [
+                    StyledBody(widget.renter.name, weight: FontWeight.normal,),
+                    SizedBox(width: width * 0.3),
+                    if (widget.renter.verified == 'pending') ElevatedButton(
+                      onPressed: () {
+                        Renter r = widget.renter;
+                        r.verified = 'verified';
+                        Provider.of<ItemStore>(context, listen: false).saveRenter(r);
+                      }, 
+                      child: const StyledBody('APPROVE')
+                    )
+                  ],
+                ),
                 const SizedBox(height: 5),
                 Row(
                   children: [
@@ -76,7 +86,7 @@ class _MyVerifyAdminImageWidgetState extends State<MyVerifyAdminImageWidget> {
                   children: [
                     SizedBox(
                       width: width * 0.2,
-                      child: const StyledBody('Locatiom', color: Colors.grey, weight: FontWeight.normal)),
+                      child: const StyledBody('Location', color: Colors.grey, weight: FontWeight.normal)),
                     SizedBox(width: width * 0.01),
                     StyledBody(widget.renter.settings[0], color: Colors.grey, weight: FontWeight.normal),
                   ],
@@ -90,11 +100,15 @@ class _MyVerifyAdminImageWidgetState extends State<MyVerifyAdminImageWidget> {
                     StyledBody(widget.renter.creationDate, color: Colors.grey, weight: FontWeight.normal),
                   ],
                 ),
-                SizedBox(
-                  width: width * 0.2,
-                  child: const StyledBody('Status', color: Colors.grey, weight: FontWeight.normal)),
-                SizedBox(width: width * 0.01),
-                // StyledBody('Price ${price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: width * 0.2,
+                      child: const StyledBody('Status', color: Colors.grey, weight: FontWeight.normal)),
+                      SizedBox(width: width * 0.01),
+                      StyledBody(widget.renter.verified, color: Colors.grey, weight: FontWeight.normal),
+                    ],
+                ),
               ],
             )
           ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:revivals/screens/profile/my_fittings_admin_list.dart';
 import 'package:revivals/screens/profile/verify/my_verify_admin_list.dart';
 import 'package:revivals/shared/styled_text.dart';
 
@@ -15,7 +14,7 @@ class _AdminVerifyIdsState extends State<AdminVerifyIds> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: width * 0.2,
@@ -37,11 +36,11 @@ class _AdminVerifyIdsState extends State<AdminVerifyIds> {
         ),
         body: const TabBarView(
             children: [
-              MyVerifyAdminList(),
-              MyVerifyAdminList(),
-              MyVerifyAdminList(),
+              MyVerifyAdminList('pending'),
+              MyVerifyAdminList('not started'),
+              MyVerifyAdminList('verified'),
             ],
-          )
+          ),
         ),
       );
   }

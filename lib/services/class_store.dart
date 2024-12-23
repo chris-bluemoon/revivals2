@@ -300,8 +300,8 @@ class ItemStore extends ChangeNotifier {
     }
     log('Size of renters: ${renters.length}');
     for (Renter r in renters) {
-      log('Checking: ${r.email} from renters with _user email: ${_user.email}');
-      if (r.email == _user.email) {
+      // log('Checking: ${r.email} from renters with _user email: ${_user.email}');
+      // if (r.email == _user.email) {
         String verifyImagePath = r.imagePath;
         log(verifyImagePath);
         final refVerifyImage =
@@ -316,9 +316,9 @@ class ItemStore extends ChangeNotifier {
         } catch (e) {
           log('VerifyImage load error: ${e.toString()}');
         }
-      } else {
-        log('No renter match! Maybe not logged in?');
-      }
+      // } else {
+        // log('No renter match! Maybe not logged in?');
+      // }
     }
     notifyListeners();
   }
@@ -331,6 +331,7 @@ class ItemStore extends ChangeNotifier {
         }
       }
       setCurrentUser();
+      fetchImages();
     }
   void saveItemRenter(ItemRenter itemRenter) async {
     await FirestoreService.updateItemRenter(itemRenter);
