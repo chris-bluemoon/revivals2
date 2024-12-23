@@ -48,7 +48,10 @@ class _MyVerifyAdminImageWidgetState extends State<MyVerifyAdminImageWidget> {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: thisImage,
+                child: SizedBox(
+                  height: width * 0.25,
+                  width: width * 0.2,
+                  child: thisImage),
                     // fit: BoxFit.fitHeight,
                     // height: width*0.25,
                     // width: width*0.2)),
