@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Renter {
@@ -59,7 +57,6 @@ class Renter {
 
     // get data from snapshot
     final data = snapshot.data()!;
-    log('Data: ${data.toString()}');
     // make character instance
     Renter renter = Renter(
       id: snapshot.id,

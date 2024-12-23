@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -74,7 +73,6 @@ class _VerifyIdState extends State<VerifyId> {
                 Renter renter = Provider.of<ItemStore>(context, listen: false).renter;
                 renter.imagePath = imagePath;
                 renter.verified = 'pending';
-                log('Saving renter with new field populated with imagePath: $imagePath');
                 Provider.of<ItemStore>(context, listen: false).saveRenter(renter);
                 Navigator.pop(context);
               }, 
@@ -113,7 +111,6 @@ class _VerifyIdState extends State<VerifyId> {
     TaskSnapshot taskSnapshot = await uploadTask;
     //
     imagePath = ref.fullPath.toString();
-    log(imagePath.toString());
    
     setState(() {
       readyToSubmit = true;

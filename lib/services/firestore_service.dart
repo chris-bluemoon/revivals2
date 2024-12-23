@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
@@ -81,7 +79,6 @@ class FirestoreService {
 
   // get renters once
   static Future<QuerySnapshot<Renter>> getRentersOnce() {
-    log('HERE');
     return refRenter.get();
   }
 

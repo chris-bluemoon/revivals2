@@ -118,7 +118,6 @@ class ItemStore extends ChangeNotifier {
   void assignUser(Renter user) async {
     // await FirestoreService.addItem(item);
     _user = user;
-    log('Phone user now has image path set: ${user.imagePath}');
     notifyListeners();
   }
 
@@ -141,7 +140,6 @@ class ItemStore extends ChangeNotifier {
   }
 
   void saveRenter(Renter renter) async {
-    log('Saving new user info with imagePath set to ${renter.imagePath}');
     await FirestoreService.updateRenter(renter);
     // _renters[0].aditem = renter.aditem;
       // _user.aditem = renter.aditem;
@@ -285,7 +283,6 @@ class ItemStore extends ChangeNotifier {
   }
 
   void fetchImages() async {
-    log('fetchImages called');
     for (Item i in items) {
       for (String j in i.imageId) {
         final ref = FirebaseStorage.instance.ref().child(j);
@@ -299,12 +296,8 @@ class ItemStore extends ChangeNotifier {
         }
       }
     }
-    log('Size of renters: ${renters.length}');
     for (Renter r in renters) {
-      // log('Checking: ${r.email} from renters with _user email: ${_user.email}');
-      // if (r.email == _user.email) {
         String verifyImagePath = r.imagePath;
-        log(verifyImagePath);
         final refVerifyImage =
             FirebaseStorage.instance.ref().child(verifyImagePath);
         String verifyUrl;
@@ -313,13 +306,9 @@ class ItemStore extends ChangeNotifier {
           ItemImage newImage = ItemImage(
               id: refVerifyImage.fullPath, imageId: Image.network(verifyUrl));
           _images.add(newImage);
-          log('VERIFY IMAGE ADDED AT fetchImages');
         } catch (e) {
           log('VerifyImage load error: ${e.toString()}');
         }
-      // } else {
-        // log('No renter match! Maybe not logged in?');
-      // }
     }
     notifyListeners();
   }

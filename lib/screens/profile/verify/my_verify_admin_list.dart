@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +23,6 @@ class _MyVerifyAdminListState extends State<MyVerifyAdminList> {
 
   @override
   void initState() {
-    log('initState MyVerifyAdminList');
     loadMyVerifyAdminList();
     super.initState();
   }
@@ -38,11 +35,6 @@ class _MyVerifyAdminListState extends State<MyVerifyAdminList> {
           myVerifyList.add(r);
       }
     }
-    if (myVerifyList.isEmpty) {
-      log('Verify List is Empty');
-    }
-    log('VERIFY LIST IS SIZE ${myVerifyList.length}');
-    // myVerifyList.sort((a, b) => a.startDate.compareTo(b.startDate));
   }
   @override
   Widget build(BuildContext context) {
