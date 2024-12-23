@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/renter.dart';
@@ -102,8 +103,9 @@ class _RegisterPassword extends State<RegisterPassword> {
           favourites: [''],
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
-          verified: 'no',
+          verified: 'not started',
           imagePath: '',
+          creationDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         ));
        
         // userLoggedIn = true;
@@ -118,8 +120,9 @@ class _RegisterPassword extends State<RegisterPassword> {
           favourites: [''],
           fittings: [],
           settings: ['BANGKOK', 'CM', 'CM', 'KG'],
-          verified: 'no',
+          verified: 'not started',
           imagePath: '',
+          creationDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()) 
         ));
       }
        

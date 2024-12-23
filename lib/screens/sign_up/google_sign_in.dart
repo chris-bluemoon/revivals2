@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/renter.dart';
 import 'package:revivals/screens/authenticate/authenticate.dart';
@@ -58,8 +59,9 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       favourites: [''],
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],   
-      verified: 'no',
+      verified: 'not started',
       imagePath: '',
+      creationDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
     ));
    
     // userLoggedIn = true;
@@ -74,8 +76,9 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
       favourites: [''],
       fittings: [],
       settings: ['BANGKOK','CM','CM','KG'],
-      verified: 'no',
+      verified: 'not started',
       imagePath: '',
+      creationDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
     ));
     }
    

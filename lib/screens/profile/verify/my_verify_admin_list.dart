@@ -35,7 +35,7 @@ class _MyVerifyAdminListState extends State<MyVerifyAdminList> {
    
     List<Renter> allRenters = List.from(Provider.of<ItemStore>(context, listen: false).renters);
     for (Renter r in allRenters) {
-      if (r.verified == 'no') {
+      if (r.verified == 'pending') {
           myVerifyList.add(r);
       }
     }
@@ -55,7 +55,7 @@ class _MyVerifyAdminListState extends State<MyVerifyAdminList> {
         padding: EdgeInsets.all(width*0.01),
         itemCount: myVerifyList.length,
         itemBuilder: (BuildContext context, int index) {
-          return MyVerifyAdminImageWidget(myVerifyList[index].name);
+          return MyVerifyAdminImageWidget(myVerifyList[index]);
       }
     );});
 

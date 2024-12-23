@@ -59,7 +59,7 @@ class ItemStore extends ChangeNotifier {
   // final List<bool> _sizesFilter = [true, true, false, false];
   // TODO: Revert back to late initialization if get errors with this
   // late final _user;
-  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', );
+  Renter _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, address: '', countryCode: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', creationDate: '');
   bool _loggedIn = false;
   // String _region = 'BANGKOK';
 
@@ -231,7 +231,7 @@ class ItemStore extends ChangeNotifier {
       Future<dynamic> setCurrentUser() async {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        List<Renter> renters = this.renters;
+        // List<Renter> renters = this.renters;
         for (Renter r in renters) {
           if (r.email == user.email) {
             assignUser(r);
@@ -247,7 +247,7 @@ class ItemStore extends ChangeNotifier {
   void setLoggedIn(bool loggedIn) {
     _loggedIn = loggedIn;
     if (loggedIn == false) {
-      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', );
+      _user = Renter(id: '0000', email: 'dummy', name: 'no_user', size: 0, countryCode: '', address: '', phoneNum: '', favourites: [], fittings: [], settings: ['BANGKOK','CM','CM','KG'], verified: '', imagePath: '', creationDate: '');
       notifyListeners();
     }
   }
@@ -300,21 +300,25 @@ class ItemStore extends ChangeNotifier {
     }
     log('Size of renters: ${renters.length}');
     for (Renter r in renters) {
-    log('Checking: ${r.email} from renters with _user email: ${_user.email}');
-    if (r.email == _user.email) {
-    String verifyImagePath = r.imagePath;
-    log(verifyImagePath);
-    final refVerifyImage = FirebaseStorage.instance.ref().child(verifyImagePath);
-    String verifyUrl;
-    try {
-      verifyUrl = await refVerifyImage.getDownloadURL();
-      ItemImage newImage = ItemImage(id: refVerifyImage.fullPath,imageId: Image.network(verifyUrl));
-        _images.add(newImage);
-        log('VERIFY IMAGE ADDED AT fetchImages');
-      } catch (e) {
-      log('VerifyImage load error: ${e.toString()}');
-    }
-    } else {log('No renter match!');}
+      log('Checking: ${r.email} from renters with _user email: ${_user.email}');
+      if (r.email == _user.email) {
+        String verifyImagePath = r.imagePath;
+        log(verifyImagePath);
+        final refVerifyImage =
+            FirebaseStorage.instance.ref().child(verifyImagePath);
+        String verifyUrl;
+        try {
+          verifyUrl = await refVerifyImage.getDownloadURL();
+          ItemImage newImage = ItemImage(
+              id: refVerifyImage.fullPath, imageId: Image.network(verifyUrl));
+          _images.add(newImage);
+          log('VERIFY IMAGE ADDED AT fetchImages');
+        } catch (e) {
+          log('VerifyImage load error: ${e.toString()}');
+        }
+      } else {
+        log('No renter match! Maybe not logged in?');
+      }
     }
     notifyListeners();
   }
@@ -327,7 +331,6 @@ class ItemStore extends ChangeNotifier {
         }
       }
       setCurrentUser();
-      fetchImages();
     }
   void saveItemRenter(ItemRenter itemRenter) async {
     await FirestoreService.updateItemRenter(itemRenter);

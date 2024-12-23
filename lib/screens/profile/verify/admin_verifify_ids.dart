@@ -22,7 +22,8 @@ class _AdminVerifyIdsState extends State<AdminVerifyIds> {
           bottom: TabBar(
             labelStyle: TextStyle(fontSize: width*0.03),
             tabs: const [
-              Tab(text: 'VERIFY IDS'),
+              Tab(text: 'PENDING IDS'),
+              Tab(text: 'UNVERFIED IDS'),
               Tab(text: 'VERIFIED IDS')
             ],
           ),
@@ -36,6 +37,7 @@ class _AdminVerifyIdsState extends State<AdminVerifyIds> {
         ),
         body: const TabBarView(
             children: [
+              MyVerifyAdminList(),
               MyVerifyAdminList(),
               MyVerifyAdminList(),
             ],

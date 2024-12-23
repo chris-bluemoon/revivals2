@@ -261,7 +261,9 @@ class _SignIn extends State<SignIn> {
                       );
                               setState(() {
                                
+                                if (_formKey.currentState != null) {
                                 _formKey.currentState!.reset();
+                                }
                               });
                     } else {
                       handleFoundLogIn(email);

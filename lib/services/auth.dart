@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:revivals/models/renter.dart';
 
 
@@ -20,6 +21,7 @@ class AuthService {
       settings: ['BANGKOK','CM','CM','KG'],
       verified: 'no',
       imagePath: '',
+      creationDate: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
     ) : null;
   }
   // Sign in anon
