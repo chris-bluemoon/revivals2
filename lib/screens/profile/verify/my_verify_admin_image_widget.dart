@@ -30,10 +30,11 @@ class _MyVerifyAdminImageWidgetState extends State<MyVerifyAdminImageWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    log('ItemImage size: ${Provider.of<ItemStore>(context, listen: false).images.length}');
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
       log('ItemImage path: ${i.id}');
-      log('Renter path: ${Provider.of<ItemStore>(context, listen: false).renter.imagePath}');
-      if (i.id == Provider.of<ItemStore>(context, listen: false).renter.imagePath) {
+      log('Renter path: ${widget.renter.imagePath}');
+      if (i.id == widget.renter.imagePath) {
         setState(() {
           thisImage = i.imageId;
         }

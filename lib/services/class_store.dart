@@ -141,6 +141,7 @@ class ItemStore extends ChangeNotifier {
   }
 
   void saveRenter(Renter renter) async {
+    log('Saving new user info with imagePath set to ${renter.imagePath}');
     await FirestoreService.updateRenter(renter);
     // _renters[0].aditem = renter.aditem;
       // _user.aditem = renter.aditem;
