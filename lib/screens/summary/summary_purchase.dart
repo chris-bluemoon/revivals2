@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
@@ -42,13 +40,14 @@ class _SummaryPurchaseState extends State<SummaryPurchase> {
     
     // int pricePerDay = widget.price~/widget.noOfDays;
 
-    void handleSubmit(String renterId, String itemId, String startDate,
+    void handleSubmit(String renterId, String ownerId, String itemId, String startDate,
         String endDate, int price, String status) {
       
       Provider.of<ItemStore>(context, listen: false)
           .addItemRenter(ItemRenter(
         id: uuid.v4(),
         renterId: renterId,
+        ownerId: ownerId,
         itemId: itemId,
         transactionType: 'purchase',
         startDate: startDate,
@@ -168,7 +167,7 @@ class _SummaryPurchaseState extends State<SummaryPurchase> {
                     String email = Provider.of<ItemStore>(context, listen: false).renter.email;
                     String startDateText = widget.startDate.toString();
                     String endDateText = widget.endDate.toString();
-                    handleSubmit(email, widget.item.id, startDateText, endDateText,
+                    handleSubmit(email, widget.item.owner, widget.item.id, startDateText, endDateText,
                         widget.item.buyPrice, widget.status);
                     showAlertDialog(context, widget.item.type, width);  
                     // Navigator.of(context).push(MaterialPageRoute(

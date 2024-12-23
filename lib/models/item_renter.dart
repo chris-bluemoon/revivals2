@@ -4,6 +4,7 @@ class ItemRenter {
   
   ItemRenter({required this.id, 
           required this.renterId, 
+          required this.ownerId, 
           required this.itemId,
           required this.transactionType, 
           required this.startDate, 
@@ -14,6 +15,7 @@ class ItemRenter {
 
     String id;
     String renterId;
+    String ownerId;
     String itemId;
     String transactionType;
     String startDate;
@@ -25,6 +27,7 @@ class ItemRenter {
   Map<String, dynamic> toFirestore() {
     return {
       'renterId': renterId,
+      'ownerId': ownerId,
       'itemId': itemId,
       'transactionType': transactionType,
       'startDate': startDate,
@@ -47,6 +50,7 @@ class ItemRenter {
     ItemRenter itemRenter = ItemRenter(
       id: snapshot.id,
       renterId: data['renterId'],
+      ownerId: data['ownerId'],
       itemId: data['itemId'],
       transactionType: data['transactionType'],
       startDate: data['startDate'],
@@ -60,13 +64,3 @@ class ItemRenter {
   
   
 }
-
-// List<Item> items = [
-//   Item(id: 1, name: 'Mathilde Bubble', brand: 'AJE', size: 52, rentPrice: 1200, rrp: 12000, image: 'AJE_Mathilde_Bubble_Item.webp'),
-//   Item(id: 2, name: 'Carla', brand: 'ELIYA', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-//   Item(id: 3, name: 'Elinor', brand: 'ELIYA', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-//   Item(id: 4, name: 'Francesca Mini', brand: 'ELIYA', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-//   Item(id: 5, name: 'Dione', brand: 'LEXI', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-//   Item(id: 6, name: 'Riley Chiffon', brand: 'LEXI', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-//   Item(id: 7, name: 'Sheena', brand: 'LEXI', size: 52, rentPrice: 1200, rrp: 12000, image: '3_item.jpg'),
-// ];

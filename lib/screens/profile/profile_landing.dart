@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/help_centre/faqs.dart';
+import 'package:revivals/screens/profile/accounts/accounts.dart';
 import 'package:revivals/screens/profile/create/create_item.dart';
 import 'package:revivals/screens/profile/messages/inbox.dart';
 import 'package:revivals/screens/profile/my_account.dart';
@@ -103,7 +104,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       SizedBox(width: width * 0.01),
                       Icon(Icons.account_circle_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
-                      const StyledBody('MY ACCOUNT', weight: FontWeight.normal),
+                      const StyledBody('USER PROFILE', weight: FontWeight.normal),
                     ],
                   ),
                 ),
@@ -122,7 +123,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       SizedBox(width: width * 0.01),
                       Icon(Icons.email_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
-                      const StyledBody('MY MESSAGES', weight: FontWeight.normal),
+                      const StyledBody('MESSAGES', weight: FontWeight.normal),
                     ],
                   ),
                 ),
@@ -141,7 +142,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       SizedBox(width: width * 0.01),
                       Icon(Icons.fact_check_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
-                      const StyledBody('MY BOOKINGS', weight: FontWeight.normal),
+                      const StyledBody('BOOKINGS', weight: FontWeight.normal),
                     ],
                   ),
                 ),
@@ -160,7 +161,7 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       SizedBox(width: width * 0.01),
                       Icon(Icons.straighten_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
-                      const StyledBody('MY FITTINGS', weight: FontWeight.normal),
+                      const StyledBody('FITTINGS', weight: FontWeight.normal),
                     ],
                   ),
                 ),
@@ -222,13 +223,12 @@ class _ProfileLandingState extends State<ProfileLanding> {
                     ],
                   ),
                 ),
-                      Divider(
+                if (Provider.of<ItemStore>(context, listen: false).renter.verified == 'not started') Divider(
                   height: width * 0.05,
                   indent: 50,
                   color: Colors.grey[200],
                 ),
-      
-                GestureDetector(
+                if (Provider.of<ItemStore>(context, listen: false).renter.verified == 'not started') GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => (const VerifyId())));
@@ -242,13 +242,11 @@ class _ProfileLandingState extends State<ProfileLanding> {
                     ],
                   ),
                 ),
-                                      Divider(
+                Divider(
                   height: width * 0.05,
                   indent: 50,
                   color: Colors.grey[200],
                 ),
-
-                SizedBox(height: width * 0.06),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -260,6 +258,25 @@ class _ProfileLandingState extends State<ProfileLanding> {
                       Icon(Icons.image_outlined, size: width * 0.05),
                       SizedBox(width: width * 0.01),
                       const StyledBody('MY ITEMS', weight: FontWeight.normal),
+                    ],
+                  ),
+                ),
+                Divider(
+                  height: width * 0.05,
+                  indent: 50,
+                  color: Colors.grey[200],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => (const Accounts())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.01),
+                      Icon(Icons.image_outlined, size: width * 0.05),
+                      SizedBox(width: width * 0.01),
+                      const StyledBody('ACCOUNTS', weight: FontWeight.normal),
                     ],
                   ),
                 ),

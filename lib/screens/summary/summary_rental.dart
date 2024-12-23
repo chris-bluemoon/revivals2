@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/renter.dart';
 import 'package:revivals/screens/summary/delivery_radio_widget.dart';
 import 'package:revivals/screens/summary/rental_price_summary.dart';
 import 'package:revivals/screens/summary/summary_image_widget.dart';
@@ -36,15 +35,18 @@ class SummaryRental extends StatefulWidget {
 
 class _SummaryRentalState extends State<SummaryRental> {
   // final int i;
+
+
   @override
   Widget build(BuildContext context) {
     int pricePerDay = widget.price ~/ widget.noOfDays;
 
-    void handleSubmit(String renterId, String itemId, String startDate,
+    void handleSubmit(String renterId, String ownerId, String itemId, String startDate,
         String endDate, int price, String status) {
       Provider.of<ItemStore>(context, listen: false).addItemRenter(ItemRenter(
         id: uuid.v4(),
         renterId: renterId,
+        ownerId: ownerId,
         itemId: itemId,
         transactionType: 'rental',
         startDate: startDate,
@@ -191,7 +193,14 @@ class _SummaryRentalState extends State<SummaryRental> {
                         .name;
                     String startDateText = widget.startDate.toString();
                     String endDateText = widget.endDate.toString();
-                    handleSubmit(email, widget.item.id, startDateText,
+                    String ownerEmail = '';
+                    for (Renter r in Provider.of<ItemStore>(context, listen: false).renters) {
+                      if (r.id ==  widget.item.owner) {
+                        ownerEmail = r.email;
+                      }
+                    }
+
+                    handleSubmit(email, ownerEmail, widget.item.id, startDateText,
                         endDateText, widget.item.rentPrice, widget.status);
                     String startDateTextForEmail =
                         DateFormat('yMMMd').format(widget.startDate);

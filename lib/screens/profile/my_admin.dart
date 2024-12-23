@@ -160,7 +160,7 @@ class _MyAdminState extends State<MyAdmin> {
                   indent: 50,
                   color: Colors.grey[200],
                 ),
-                GestureDetector(
+                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => (const AdminVerifyIds())));
