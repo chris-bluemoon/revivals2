@@ -48,6 +48,8 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
   String mostRented = '';
   List<String> brands = [];
 
+  final value = NumberFormat("#,##0", "en_US");
+
   void setMonthlyAccounts() {
     // Get earliest date
     List<ItemRenter> allAccountsHistory = Provider.of<ItemStore>(context, listen: false).itemRenters;
@@ -157,7 +159,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
                     child: ListTile(
                       // dense: true,
                       title: const StyledBody('Total Sales', weight: FontWeight.normal),
-                      subtitle: StyledBody(totalSales.toString()),
+                      subtitle: StyledBody('\$${value.format(totalSales)}'),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Colors.grey,),
                         borderRadius: BorderRadius.circular(10),
@@ -186,7 +188,21 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
                     child: ListTile(
                       // dense: true,
                       title: const StyledBody('Value of Listings', weight: FontWeight.normal),
-                      subtitle: StyledBody('\$${valueOfListings.toString()}'),
+                      subtitle: StyledBody('\$${value.format(valueOfListings)}'),
+                      // subtitle: Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     const StyledBody('\$'),
+                      //     AnimatedDigitWidget(
+                      //       // key: const ValueKey('teal'),
+                      //       value: value.format(valueOfListings),
+                      //       textStyle: const TextStyle( 
+                      //         fontSize: 30,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Colors.grey,),
                         borderRadius: BorderRadius.circular(10),
@@ -246,7 +262,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
                     const Expanded(child: SizedBox()),
                     Icon(Icons.chevron_right_outlined, size: width * 0.05),
                   ],),
-              )
+              ),
         ]);
 
   }}
