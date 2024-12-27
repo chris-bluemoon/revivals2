@@ -30,22 +30,20 @@ class _CreateItemState extends State<CreateItem> {
     brands.sort((a, b) => a.compareTo(b));
     colours.sort((a, b) => a.compareTo(b));
     if (widget.item != null) {
+    productTypeValue = widget.item!.type;
+    colourValue = widget.item!.colour[0];
+    brandValue = widget.item!.brand;
+    retailPriceValue = widget.item!.rrp.toString();
+    shortDescController.text = widget.item!.description.toString();
+    longDescController.text = widget.item!.longDescription.toString();
+    titleController.text = widget.item!.name.toString();
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-     
       for (String itemImageString in widget.item!.imageId) {
         if (i.id == itemImageString) {
           _images.add(i.imageId);
         }
 
       }
-      // if (i.id == widget.item?.imageId[0]) {
-      //   // setState(() {
-      //     // thisImage = Image.asset('assets/img/items2/AJE_Breathless_Frill_Sleeves_Dress_1.jpg');
-      //     thisImage = i.imageId;
-      //     _images.add(thisImage);
-      //   // }
-      //   // );
-      // }
     }
     }
     super.initState();
@@ -93,7 +91,6 @@ class _CreateItemState extends State<CreateItem> {
 
 
   List<String> imagePath = [];
-  String shortDesc = 'This is my short description';
 
   bool readyToSubmit = false;
 

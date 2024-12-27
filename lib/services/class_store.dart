@@ -307,6 +307,7 @@ class ItemStore extends ChangeNotifier {
           ItemImage newImage = ItemImage(
               id: refVerifyImage.fullPath, imageId: Image.network(verifyUrl));
           _images.add(newImage);
+          log('VerifyImage load success');
         } catch (e) {
           log('VerifyImage load error: ${e.toString()}');
         }

@@ -123,35 +123,6 @@ class _ToRentEditState extends State<ToRentEdit> {
          
         });
       }
-    // Future _initImages() async {
-    //   // >> To get paths you need these 2 lines
-    //   // List<String> someImages = [];
-    //   final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    
-    //   final Map<String, dynamic> manifestMap = json.decode(manifestContent);
-    //   // >> To get paths you need these 2 lines
-
-    //   int counter = 0;
-    //   for (String i in widget.item.imageId) {
-    //     String brand = widget.item.brand.replaceAll(RegExp(' +'), '_');
-    //     String name = widget.item.name.replaceAll(RegExp(' +'), '_');
-    //     String toCompare = '${brand}_$name';
-    //     if (i.contains(toCompare)) {
-    //      
-    //       counter++;
-    //       items.add(counter);
-    //       dotColours.add(Colors.grey);
-    //     }
-    //     setState(() {
-    //       itemCheckComplete = true;
-    //      
-    //     });
-    //   }
-      // setState(() {
-        // someImages = imagePaths;
-      // });
-    // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -164,11 +135,6 @@ class _ToRentEditState extends State<ToRentEdit> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             StyledTitle(widget.item.name.toUpperCase()),
-            // Image.asset(
-            //   'assets/logos/unearthed_logo_2.png',
-            //   fit: BoxFit.contain,
-            //   height: 200,
-            // ),
           ],
         ),
         centerTitle: true,
@@ -188,13 +154,6 @@ class _ToRentEditState extends State<ToRentEdit> {
                 child: Icon(Icons.close, size: width*0.06),
               )),
         ],
-        // bottom: PreferredSize(
-        //   preferredSize: const Size.fromHeight(4.0),
-        //   child: Container(
-        //     color: Colors.grey[300],
-        //     height: 1.0,
-        //   )
-        // ),
       ),
       body: (!itemCheckComplete) ? const Text('Loading') : SingleChildScrollView(
         child: Column(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +83,6 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     final sortedItems = Map.fromEntries(itemMap.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
     mostRentedItem = sortedItems.keys.toList().first;
     mostRentedItemItem = Provider.of<ItemStore>(context, listen: false).items.where((i) => i.id == mostRentedItem).toList()[0];
-    log('Most rented item: ${mostRentedItemItem.id}');
 
     Map<String, int> map = {};
     for (var x in brands) {
@@ -93,8 +90,6 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     }
     // final sortedBrands = SplayTreeMap<String,dynamic>.from(map, (a, b) => a.compareTo(b));
     final sortedBrands = Map.fromEntries(map.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
-    log('SORTED BRANDS');
-    log(sortedBrands.toString());
     mostRentedBrand = sortedBrands.keys.toList().first;
 
     for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
