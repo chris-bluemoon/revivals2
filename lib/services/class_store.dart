@@ -181,6 +181,7 @@ class ItemStore extends ChangeNotifier {
       for (var doc in snapshot.docs) {
         _items.add(doc.data());
       }
+      log('ENDING FETCHITEMSONCE');
       populateFavourites();
       populateFittings();
       // fetchImages();
@@ -284,24 +285,28 @@ class ItemStore extends ChangeNotifier {
   }
 
   void fetchImages() async {
+    log('Item count is: ${items.length}');
     for (Item i in items) {
       for (String j in i.imageId) {
+        log(j);
         final ref = FirebaseStorage.instance.ref().child(j);
-        String url;
+        String url = '';
         try {
           url = await ref.getDownloadURL();
           ItemImage newImage = ItemImage(id: ref.fullPath,imageId: Image.network(url));
           _images.add(newImage);
+          log('Item image added (for url $url), size now ${_images.length}');
         } catch (e) {
-          log('Item load error: ${e.toString()}');
+          log('Item load error: ${e.toString()} for url: $url');
         }
       }
     }
     for (Renter r in renters) {
         String verifyImagePath = r.imagePath;
+        if (verifyImagePath != '') {
         final refVerifyImage =
             FirebaseStorage.instance.ref().child(verifyImagePath);
-        String verifyUrl;
+        String verifyUrl = '';
         try {
           verifyUrl = await refVerifyImage.getDownloadURL();
           ItemImage newImage = ItemImage(
@@ -309,7 +314,9 @@ class ItemStore extends ChangeNotifier {
           _images.add(newImage);
           log('VerifyImage load success');
         } catch (e) {
-          log('VerifyImage load error: ${e.toString()}');
+          log('Item load error: ${e.toString()} for url: $verifyUrl');
+        }} else {
+          log('No image to load for user, not verified?');
         }
     }
     notifyListeners();
