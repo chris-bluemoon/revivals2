@@ -173,6 +173,7 @@ class ItemStore extends ChangeNotifier {
     }
   }
   void fetchItemsOnce() async {
+    log('CALLING FETCHITEMSONCE');
     if (items.length == 0) {
       // Temporary setting of email password once
       MyStore.writeToStore('fkwx gnet sbwl pgjb');

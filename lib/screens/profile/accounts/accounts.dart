@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revivals/screens/profile/accounts/accounts_history_list%20copy.dart';
-import 'package:revivals/screens/profile/accounts/accounts_insights_list.dart';
-import 'package:revivals/screens/profile/my_history_fittings_list.dart';
-import 'package:revivals/screens/profile/my_upcoming_fittings_list.dart';
+import 'package:revivals/screens/profile/accounts/accounts_insights.dart';
 import 'package:revivals/shared/styled_text.dart';
 
 class Accounts extends StatelessWidget {
