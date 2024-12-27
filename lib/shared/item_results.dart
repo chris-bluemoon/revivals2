@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pluralize/pluralize.dart';
@@ -61,7 +59,6 @@ class _ItemResultsState extends State<ItemResults> {
   }
 
   void setFilter(bool filter, int noOfFilters) {
-    log('Setting filter to $filter');
     filterOn = filter;
     numOfFilters = noOfFilters;
     setState(() {});
@@ -150,7 +147,6 @@ class _ItemResultsState extends State<ItemResults> {
         //     i.rentPrice > ranges.start &&
         //     i.rentPrice < ranges.end) {
         if (coloursSet.intersection(colourSet).isNotEmpty) {
-              log('Added final item');
               finalItems.add(i);
         }
       }
