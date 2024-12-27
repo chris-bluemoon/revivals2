@@ -1,10 +1,11 @@
-import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/screens/profile/edit/to_rent_edit.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -35,6 +36,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     // _SalesData('Jun', 40)
   ];
 
+  // late Item mostRentedItem;
   List<ItemRenter> myAccountsHistory = [];
 
   Map<String, int> accountMapMonthly = {};
@@ -45,8 +47,11 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
   int valueOfListings = 0;
   int responseRate = 0;
   int acceptanceRate = 0;
-  String mostRented = '';
+  String mostRentedBrand = '';
+  String mostRentedItem = '';
+  late Item mostRentedItemItem;
   List<String> brands = [];
+  List<String> items = [];
 
   final value = NumberFormat("#,##0", "en_US");
 
@@ -63,17 +68,34 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
           if (i.id == ir.itemId) {
             brands.add(i.brand);
         }
+        }
+        for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
+          if (i.id == ir.itemId) {
+            items.add(i.id);
+        }
       }
       }
     }
+
+    Map<String, int> itemMap = {};
+    for (var x in items) {
+      itemMap[x] = !itemMap.containsKey(x) ? (1) : (itemMap[x]! + 1);
+    }
+    // final sortedItems = SplayTreeMap<String,dynamic>.from(itemMap, (a, b) => a.compareTo(b));
+    final sortedItems = Map.fromEntries(itemMap.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
+    mostRentedItem = sortedItems.keys.toList().first;
+    mostRentedItemItem = Provider.of<ItemStore>(context, listen: false).items.where((i) => i.id == mostRentedItem).toList()[0];
+    log('Most rented item: ${mostRentedItemItem.id}');
 
     Map<String, int> map = {};
     for (var x in brands) {
       map[x] = !map.containsKey(x) ? (1) : (map[x]! + 1);
     }
-    final sorted = SplayTreeMap<String,dynamic>.from(map, (b, a) => a.compareTo(b));
-    mostRented = sorted.keys.toList().first;
-
+    // final sortedBrands = SplayTreeMap<String,dynamic>.from(map, (a, b) => a.compareTo(b));
+    final sortedBrands = Map.fromEntries(map.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
+    log('SORTED BRANDS');
+    log(sortedBrands.toString());
+    mostRentedBrand = sortedBrands.keys.toList().first;
 
     for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
       if (i.owner == Provider.of<ItemStore>(context, listen: false).renter.id) {
@@ -117,153 +139,163 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Column(children: [
-          //Initialize the chart widget
-          SfCartesianChart(
-              primaryXAxis: const CategoryAxis(),
-              // Chart title
-              title: const ChartTitle(text: 'All Sales'),
-              // Enable legend
-              legend: const Legend(isVisible: true),
-              // Enable tooltip
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <CartesianSeries<_SalesData, String>>[
-                LineSeries<_SalesData, String>(
-                    dataSource: data,
-                    xValueMapper: (_SalesData sales, _) => sales.month,
-                    yValueMapper: (_SalesData sales, _) => sales.sales,
-                    name: 'Sales',
-                    // Enable data label
-                    // dataLabelSettings: const DataLabelSettings(isVisible: true)
-                )
-              ]),
-              const Divider(indent: 50, endIndent: 50),
-              SizedBox(height: width * 0.04),
-              Row(children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: const StyledBody('Total Rentals', weight: FontWeight.normal),
-                      subtitle: StyledBody(totalRentals.toString()),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey,),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      // dense: true,
-                      title: const StyledBody('Total Sales', weight: FontWeight.normal),
-                      subtitle: StyledBody('\$${value.format(totalSales)}'),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey,),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
-              ],),
-              Row(children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: const StyledBody('Return on Investment', weight: FontWeight.normal),
-                      subtitle: const StyledBody('15%'),
+    return SingleChildScrollView(
+      child: Column(children: [
+            //Initialize the chart widget
+            SizedBox(height: width * 0.04),
+            SfCartesianChart(
+                primaryXAxis: const CategoryAxis(),
+                // Chart title
+                title: const ChartTitle(text: 'All Rental Income Per Month'),
+                // Enable legend
+                legend: const Legend(isVisible: true),
+                // Enable tooltip
+                tooltipBehavior: TooltipBehavior(enable: true),
+                series: <CartesianSeries<_SalesData, String>>[
+                  LineSeries<_SalesData, String>(
+                      dataSource: data,
+                      xValueMapper: (_SalesData sales, _) => sales.month,
+                      yValueMapper: (_SalesData sales, _) => sales.sales,
+                      name: 'Income',
+                      // Enable data label
+                      // dataLabelSettings: const DataLabelSettings(isVisible: true)
+                  )
+                ]),
+                Divider(indent: width * 0.1, endIndent: width * 0.1),
+                SizedBox(height: width * 0.04),
+                Row(children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        title: const StyledBody('Total Rentals', weight: FontWeight.normal),
+                        subtitle: StyledBody(totalRentals.toString()),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: Colors.grey,),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      // dense: true,
-                      title: const StyledBody('Value of Listings', weight: FontWeight.normal),
-                      subtitle: StyledBody('\$${value.format(valueOfListings)}'),
-                      // subtitle: Row(
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     const StyledBody('\$'),
-                      //     AnimatedDigitWidget(
-                      //       // key: const ValueKey('teal'),
-                      //       value: value.format(valueOfListings),
-                      //       textStyle: const TextStyle( 
-                      //         fontSize: 30,
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey,),
-                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
-                ),
-              ],),
-              Row(children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: const StyledBody('Response Rate', weight: FontWeight.normal),
-                      subtitle: const StyledBody('94%'),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        // dense: true,
+                        title: const StyledBody('Total Sales', weight: FontWeight.normal),
+                        subtitle: StyledBody('\$${value.format(totalSales)}'),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: Colors.grey,),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      // dense: true,
-                      title: const StyledBody('Acceptance Rate', weight: FontWeight.normal),
-                      subtitle: const StyledBody('85%'),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey,),
-                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
+                ],),
+                Row(children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        title: const StyledBody('Return on Investment', weight: FontWeight.normal),
+                        subtitle: const StyledBody('15%'),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(color: Colors.grey,),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        // dense: true,
+                        title: const StyledBody('Value of Listings', weight: FontWeight.normal),
+                        subtitle: StyledBody('\$${value.format(valueOfListings)}'),
+                        // subtitle: Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     const StyledBody('\$'),
+                        //     AnimatedDigitWidget(
+                        //       // key: const ValueKey('teal'),
+                        //       value: value.format(valueOfListings),
+                        //       textStyle: const TextStyle( 
+                        //         fontSize: 30,
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.grey,),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],),
+                Row(children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        title: const StyledBody('Response Rate', weight: FontWeight.normal),
+                        subtitle: const StyledBody('94%'),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(color: Colors.grey,),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(width * 0.02),
+                      child: ListTile(
+                        // dense: true,
+                        title: const StyledBody('Acceptance Rate', weight: FontWeight.normal),
+                        subtitle: const StyledBody('85%'),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.grey,),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],),
+                // SizedBox(height: width * 0.04),
+                Divider(height: width * 0.1, indent: width * 0.1, endIndent: width * 0.1),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
+                  child: Row(
+                    children: [
+                      const StyledBody('Your most rented brand', weight: FontWeight.normal,),
+                      const Expanded(child: SizedBox()),
+                      StyledBody(mostRentedBrand),
+                    ],),
                 ),
-              ],),
-              // const Divider(indent: 50, endIndent: 50),
-              SizedBox(height: width * 0.04),
-              const Divider(height: 50, indent: 50, endIndent: 50),
-              Padding(
-                padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
-                child: Row(
-                  children: [
-                    const StyledBody('Your most rented brand'),
-                    const Expanded(child: SizedBox()),
-                    StyledBody(mostRented),
-                  ],),
-              ),
-              const Divider(height: 50, indent : 50, endIndent: 50),
-              // SizedBox(height: width * 0.01),
-              Padding(
-                padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
-                child: Row(
-                  children: [
-                    const StyledBody('Your most popular listing'),
-                    const Expanded(child: SizedBox()),
-                    Icon(Icons.chevron_right_outlined, size: width * 0.05),
-                  ],),
-              ),
-        ]);
+                // Divider(height: width * 0.1, indent : width * 0.1, endIndent: width * 0.1),
+                SizedBox(height: width * 0.01),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
+                  child: Row(
+                    children: [
+                      const StyledBody('Your most popular listing', weight: FontWeight.normal,),
+                      const Expanded(child: SizedBox()),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          (ToRentEdit(mostRentedItemItem))));
+                        },
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.chevron_right_outlined, size: width * 0.08)
+                      ),
+                    ],),
+                ),
+          ]),
+    );
 
   }}
 

@@ -171,6 +171,7 @@ class _FiltersPage extends State<FiltersPage> {
 
   bool filterOn = false;
   bool getFilterOn() {
+    log('Colour filter is: ${colourFilter.toString()}');
     if (colourFilter == false && sizeFilter == false && (rangeVals.start == 0 && rangeVals.end == 10000) && lengthFilter == false && printFilter == false && sleeveFilter == false) {
       filterOn = false;
       return filterOn;
@@ -195,6 +196,9 @@ class _FiltersPage extends State<FiltersPage> {
             break;
           case Colors.blue:
             returnColours.add('Blue');
+            break;
+          case Colors.red:
+            returnColours.add('Red');
             break;
           case Colors.green:
             returnColours.add('Green');
@@ -239,6 +243,9 @@ class _FiltersPage extends State<FiltersPage> {
             break;
           case Colors.blue:
             returnColours.add('Blue');
+            break;
+          case Colors.red:
+            returnColours.add('Red');
             break;
           case Colors.green:
             returnColours.add('Green');

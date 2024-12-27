@@ -61,6 +61,7 @@ class _ItemResultsState extends State<ItemResults> {
   }
 
   void setFilter(bool filter, int noOfFilters) {
+    log('Setting filter to $filter');
     filterOn = filter;
     numOfFilters = noOfFilters;
     setState(() {});
@@ -86,10 +87,12 @@ class _ItemResultsState extends State<ItemResults> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     // getCurrentUser();
+    log('BUILDING');
     List<Item> finalItems = [];
     filteredItems.clear();
 
 
+    log('FILTER IS $filterOn');
     if (filterOn == true) {
       switch (widget.attribute) {
         case 'myItems':
@@ -119,7 +122,6 @@ class _ItemResultsState extends State<ItemResults> {
           }
         case 'bookingType':
           for (Item i in allItems) {
-           
             if (i.bookingType == widget.value || i.bookingType == 'both') {
               filteredItems.add(i);
             }
@@ -140,16 +142,19 @@ class _ItemResultsState extends State<ItemResults> {
           }
       }
       for (Item i in filteredItems) {
-        // if (i.filteredItems.contains(widget.value)
         Set colourSet = {...i.colour};
+        log('Colourset from items: ${colourSet.toString()}');
+        log('Coloursset: ${coloursSet.toString()}');
         Set sizeSet = {...i.size};
-        if (lengths.contains(i.length.toString()) &&
-            prints.contains(i.print.toString()) &&
-            sleeves.contains(i.sleeve.toString()) &&
-            coloursSet.intersection(colourSet).isNotEmpty &&
-            sizesSet.intersection(sizeSet).isNotEmpty &&
-            i.rentPrice > ranges.start &&
-            i.rentPrice < ranges.end) {
+        // if (lengths.contains(i.length.toString()) &&
+        //     prints.contains(i.print.toString()) &&
+        //     sleeves.contains(i.sleeve.toString()) &&
+        //     coloursSet.intersection(colourSet).isNotEmpty &&
+        //     sizesSet.intersection(sizeSet).isNotEmpty &&
+        //     i.rentPrice > ranges.start &&
+        //     i.rentPrice < ranges.end) {
+        if (coloursSet.intersection(colourSet).isNotEmpty) {
+              log('Added final item');
               finalItems.add(i);
         }
       }
