@@ -182,6 +182,8 @@ class ItemStore extends ChangeNotifier {
         _items.add(doc.data());
       }
       log('ENDING FETCHITEMSONCE');
+      fetchRentersOnce();
+      fetchImages(); // FIXED AS fetchRenters now done here, KEEP AN EYE ON THIS, ARE WE FETCHING BEFORE USERS VERIFY IMAGE IS SET
       populateFavourites();
       populateFittings();
       // fetchImages();
@@ -330,7 +332,6 @@ class ItemStore extends ChangeNotifier {
         }
       }
       setCurrentUser();
-      fetchImages();
     }
   void saveItemRenter(ItemRenter itemRenter) async {
     await FirestoreService.updateItemRenter(itemRenter);
