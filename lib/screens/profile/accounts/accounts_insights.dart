@@ -81,8 +81,10 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     }
     // final sortedItems = SplayTreeMap<String,dynamic>.from(itemMap, (a, b) => a.compareTo(b));
     final sortedItems = Map.fromEntries(itemMap.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
-    mostRentedItem = sortedItems.keys.toList().first;
-    mostRentedItemItem = Provider.of<ItemStore>(context, listen: false).items.where((i) => i.id == mostRentedItem).toList()[0];
+    if (sortedItems.length > 0) {
+      mostRentedItem = sortedItems.keys.toList().first;
+      mostRentedItemItem = Provider.of<ItemStore>(context, listen: false).items.where((i) => i.id == mostRentedItem).toList()[0];
+    }
 
     Map<String, int> map = {};
     for (var x in brands) {
@@ -90,7 +92,9 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     }
     // final sortedBrands = SplayTreeMap<String,dynamic>.from(map, (a, b) => a.compareTo(b));
     final sortedBrands = Map.fromEntries(map.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
-    mostRentedBrand = sortedBrands.keys.toList().first;
+    if (sortedBrands.length > 0) {
+      mostRentedBrand = sortedBrands.keys.toList().first;
+    }
 
     for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
       if (i.owner == Provider.of<ItemStore>(context, listen: false).renter.id) {
@@ -98,6 +102,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
       }
     }
 
+    if (myAccountsHistory.length > 0) {
     String earliestDateString = myAccountsHistory[0].endDate;
     String earliestMonthString = earliestDateString.substring(0,7);
     String nowMonth = DateFormat('yyyy-MM').format(DateTime.now().add(const Duration(days: 31)));
@@ -106,6 +111,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
       accountMapMonthly[bucketMonth] = 0;
       DateTime nextMonth = DateFormat('yyyy-MM').parse(bucketMonth).add(const Duration(days: 31));
       bucketMonth = DateFormat('yyyy-MM').format(nextMonth);
+    }
     }
   }
 

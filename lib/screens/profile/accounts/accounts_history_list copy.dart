@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/item_renter.dart';
 import 'package:revivals/screens/profile/accounts/accounts_history_image_widget.dart';
+import 'package:revivals/screens/profile/accounts/ledger_entry_widget.dart';
 import 'package:revivals/screens/profile/my_fittings_admin_image_widget.dart';
 import 'package:revivals/services/class_store.dart';
 
@@ -20,7 +22,7 @@ class AccountsHistoryList extends StatefulWidget {
 class _AccountsHistoryListState extends State<AccountsHistoryList> {
   
 
-  List<FittingRenter> myFittingsList = [];
+  List<ItemRenter> myItemRenters = [];
   List<Item> myItems = [];
 
   @override
@@ -30,23 +32,17 @@ class _AccountsHistoryListState extends State<AccountsHistoryList> {
   }
   
   void loadAccountsHistoryList() {
-   
-    // get current user
     String userEmail = Provider.of<ItemStore>(context, listen: false).renter.email;
-    //
-    // List<ItemRenter> myItemRenters = Provider.of<ItemStore>(context, listen: false).itemRenters;
-    List<FittingRenter> allFittingRenters = List.from(Provider.of<ItemStore>(context, listen: false).fittingRenters);
-    // List<Item> allItems = List.from(Provider.of<ItemStore>(context, listen: false).items);
-    for (FittingRenter dr in allFittingRenters) {
-      if (dr.renterId == userEmail) {
-          myFittingsList.add(dr);
+    List<ItemRenter> allItemRenters = List.from(Provider.of<ItemStore>(context, listen: false).itemRenters);
+    for (ItemRenter ir in allItemRenters) {
+      if (ir.ownerId == userEmail) {
+          log('Added ir');
+          myItemRenters.add(ir);
       }
     }
-    if (myFittingsList.isEmpty) {
-     
-    }
-    myFittingsList.sort((a, b) => a.bookingDate.compareTo(b.bookingDate));
+    myItemRenters.sort((a, b) => a.endDate.compareTo(b.endDate));
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -56,10 +52,11 @@ class _AccountsHistoryListState extends State<AccountsHistoryList> {
         builder: (context, value, child) {
         return ListView.builder(
           padding: EdgeInsets.all(width*0.01),
-          itemCount: myFittingsList.length,
+          itemCount: myItemRenters.length,
           itemBuilder: (BuildContext context, int index) {
             // return MyPurchasesAdminImageWidget(myPurchasesList[index].itemId, myPurchasesList[index].startDate, myPurchasesList[index].endDate, myPurchasesList[index].price);
-            return AccountsHistoryImageWidget(myFittingsList[index], myFittingsList[index].bookingDate, myFittingsList[index].price, myFittingsList[index].status);
+            return LedgerEntryWidget(myItemRenters[index]);
+            // return AccountsHistoryImageWidget(myFittingsList[index], myFittingsList[index].bookingDate, myFittingsList[index].price, myFittingsList[index].status);
         }
         );}
       );
