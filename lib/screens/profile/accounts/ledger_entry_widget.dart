@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 
@@ -14,11 +15,17 @@ class LedgerEntryWidget extends StatelessWidget {
 
   late String itemType;
   late String itemName;
+  late String renterName;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     DateTime convertedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(itemRenter.endDate) ;
+    for (Renter r in Provider.of<ItemStore>(context, listen: false).renters) {
+      if (r.email == itemRenter.renterId) {
+        renterName = r.name;
+      }
+    }
     for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
       if (i.id == itemRenter.itemId) {
         itemType = i.type;
@@ -41,7 +48,7 @@ class LedgerEntryWidget extends StatelessWidget {
                     ),
                     SizedBox(
                       width: width * 0.55,
-                      child: StyledBody('$itemType from ${itemRenter.renterId}', color: Colors.grey, weight: FontWeight.normal)
+                      child: StyledBody('$itemType from $renterName', color: Colors.grey, weight: FontWeight.normal)
                      ),
                     SizedBox(
                       width: width * 0.1,
