@@ -81,7 +81,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     }
     // final sortedItems = SplayTreeMap<String,dynamic>.from(itemMap, (a, b) => a.compareTo(b));
     final sortedItems = Map.fromEntries(itemMap.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
-    if (sortedItems.length > 0) {
+    if (sortedItems.isNotEmpty) {
       mostRentedItem = sortedItems.keys.toList().first;
       mostRentedItemItem = Provider.of<ItemStore>(context, listen: false).items.where((i) => i.id == mostRentedItem).toList()[0];
     }
@@ -92,7 +92,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     }
     // final sortedBrands = SplayTreeMap<String,dynamic>.from(map, (a, b) => a.compareTo(b));
     final sortedBrands = Map.fromEntries(map.entries.toList()..sort((e2, e1) => e1.value.compareTo(e2.value)));
-    if (sortedBrands.length > 0) {
+    if (sortedBrands.isNotEmpty) {
       mostRentedBrand = sortedBrands.keys.toList().first;
     }
 
@@ -102,7 +102,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
       }
     }
 
-    if (myAccountsHistory.length > 0) {
+    if (myAccountsHistory.isNotEmpty) {
     String earliestDateString = myAccountsHistory[0].endDate;
     String earliestMonthString = earliestDateString.substring(0,7);
     String nowMonth = DateFormat('yyyy-MM').format(DateTime.now().add(const Duration(days: 31)));

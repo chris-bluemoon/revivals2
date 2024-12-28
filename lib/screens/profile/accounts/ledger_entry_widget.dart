@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:revivals/globals.dart' as globals;
-import 'package:revivals/models/fitting_renter.dart';
+import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
@@ -13,72 +12,49 @@ class LedgerEntryWidget extends StatelessWidget {
 
   final ItemRenter itemRenter;
 
+  late String itemType;
+  late String itemName;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
-    return Card(
-      margin: EdgeInsets.only(bottom: width*0.04),
-      shape: BeveledRectangleBorder(
-    borderRadius: BorderRadius.circular(0.0),),
-        color: Colors.white,
-        child: Row(
+    DateTime convertedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(itemRenter.endDate) ;
+    for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
+      if (i.id == itemRenter.itemId) {
+        itemType = i.type;
+        itemName = i.name;
+      }
+    }
+    return Row(
+      children: [
+        Column(
           children: [
-            // ClipRRect(
-            //     borderRadius: BorderRadius.circular(8),
-            //     child: Image.asset(
-            //         'assets/img/items2/${setItemImage()}',
-            //         fit: BoxFit.fitHeight,
-            //         height: width*0.25,
-            //         width: width*0.2)),
-            const SizedBox(width: 30),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // StyledBody('${item.name} from ${item.brand}', weight: FontWeight.normal,),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: width * 0.6,
-                      child: StyledBody(itemRenter.renterId, color: Colors.grey, weight: FontWeight.normal)),
-                    SizedBox(width: width * 0.01),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
+            Padding(
+              padding: EdgeInsets.fromLTRB(width * 0.05, width * 0.01, width * 0.05, 0),
+              child: Container(
+                color: Colors.grey[100],
+                child: Row(
                   children: [
                     SizedBox(
                       width: width * 0.2,
-                      child: const StyledBody('Date', color: Colors.grey, weight: FontWeight.normal)),
-                    SizedBox(width: width * 0.01),
-                    StyledBody(DateFormat('E, d MMMM y').format(DateTime.now()), color: Colors.grey, weight: FontWeight.normal),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
+                      child: StyledBody(DateFormat('yMd').format(convertedDate), color: Colors.grey, weight: FontWeight.normal)
+                    ),
                     SizedBox(
-                      width: width * 0.2,
-                      child: const StyledBody('Time', color: Colors.grey, weight: FontWeight.normal)),
-                    SizedBox(width: width * 0.01),
-                    StyledBody(DateFormat('HH:mm').format(DateTime.now()), color: Colors.grey, weight: FontWeight.normal),
-
-                  ],
-                ),
-                Row(
-                  children: [
+                      width: width * 0.55,
+                      child: StyledBody('$itemType from ${itemRenter.renterId}', color: Colors.grey, weight: FontWeight.normal)
+                     ),
                     SizedBox(
-                      width: width * 0.2,
-                      child: const StyledBody('Price', color: Colors.grey, weight: FontWeight.normal)),
-                    SizedBox(width: width * 0.01),
-                    // StyledBody('${price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
+                      width: width * 0.1,
+                      child: StyledBody(itemRenter.price.toString(), color: Colors.grey, weight: FontWeight.normal)
+                    ),
                   ],
                 ),
-                // StyledBody('Price ${price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
-              ],
-            )
+              ),
+            ),
+            // StyledBody('Price ${price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
           ],
-        ));
+        )
+      ],
+    );
   }
 }

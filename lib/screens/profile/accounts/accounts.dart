@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:revivals/screens/profile/accounts/accounts_history_list%20copy.dart';
+import 'package:revivals/screens/profile/accounts/accounts_history_list.dart';
 import 'package:revivals/screens/profile/accounts/accounts_insights.dart';
 import 'package:revivals/shared/styled_text.dart';
 
