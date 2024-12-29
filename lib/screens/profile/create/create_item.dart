@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,7 @@ import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_image.dart';
 import 'package:revivals/screens/profile/create/set_pricing.dart';
 import 'package:revivals/services/class_store.dart';
+import 'package:revivals/shared/black_button.dart';
 import 'package:revivals/shared/styled_text.dart';
 import 'package:uuid/uuid.dart'; 
 
@@ -26,6 +28,7 @@ class CreateItem extends StatefulWidget {
 
 class _CreateItemState extends State<CreateItem> {
   @override
+
   void initState() {
     brands.sort((a, b) => a.compareTo(b));
     colours.sort((a, b) => a.compareTo(b));
@@ -96,6 +99,10 @@ class _CreateItemState extends State<CreateItem> {
 
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
+  late final Image _image1 = Image.asset('assets/img/icons/upload.png');
+  late final Image _image2 = Image.asset('assets/img/icons/upload.png');
+  late final Image _image3 = Image.asset('assets/img/icons/upload.png');
+  late final Image _image4 = Image.asset('assets/img/icons/upload.png');
   // final List<XFile> _images = [];
   final List<Image> _images = [];
 
@@ -132,31 +139,90 @@ class _CreateItemState extends State<CreateItem> {
           padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
           child: Column(
             children: [
-              GestureDetector(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    (_images.isNotEmpty)
-                        ? SizedBox(width: 80, child: _images[0])
-                        : Icon(Icons.image_outlined, size: width * 0.2),
-                    SizedBox(width: width * 0.02),
-                    (_images.length > 1)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    child: (_images.isNotEmpty) 
+                      ? SizedBox(width: 80, child: _images[0])
+                      : Icon(Icons.image_outlined, size: width * 0.2),
+                    onTap: () {
+                      if (_images.isNotEmpty) {
+                        log('remove iamge');
+                        removeImage(1);
+                      } else {
+                        getImage();
+                      }
+                    },
+                  ),
+                  SizedBox(width: width * 0.02),
+                  GestureDetector(
+                    child: (_images.length > 1)
                         ? SizedBox(width: 80, child: _images[1])
                         : Icon(Icons.image_outlined, size: width * 0.2),
-                    SizedBox(width: width * 0.02),
-                    (_images.length > 2)
-                        ? SizedBox(width: 80, child: _images[2])
-                        : Icon(Icons.image_outlined, size: width * 0.2),
-                    SizedBox(width: width * 0.02),
-                    (_images.length > 3)
-                        ? SizedBox(width: 80, child: _images[3])
-                        : Icon(Icons.image_outlined, size: width * 0.2),
-                  ],
-                ),
-                onTap: () {
-                  getImage();
-                },
-              ),
+                    onTap: () {
+                      if (_images.length > 1) {
+                        log('remove iamge');
+                        removeImage(2);
+                      } else {
+                        getImage();
+                      }
+                    },
+                  ),
+                  SizedBox(width: width * 0.02),
+                  GestureDetector(
+                    child: (_images.length > 2) 
+                      ? SizedBox(width: 80, child: _images[2])
+                      : Icon(Icons.image_outlined, size: width * 0.2),
+                    onTap: () {
+                      if (_images.length > 2) {
+                        log('remove iamge');
+                        removeImage(3);
+                      } else {
+                        getImage();
+                      }
+                    },
+                  ),
+                  SizedBox(width: width * 0.02),
+                  GestureDetector(
+                    child: (_images.length > 3)
+                      ? SizedBox(width: 80, child: _images[3])
+                      : Icon(Icons.image_outlined, size: width * 0.2),
+                    onTap: () {
+                      if (_images.length > 3) {
+                        log('remove iamge');
+                        removeImage(4);
+                      } else {
+                        getImage();
+                      }
+                    },
+                  ),
+              ],),
+              // GestureDetector(
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       (_images.isNotEmpty)
+              //           ? SizedBox(width: 80, child: _images[0])
+              //           : Icon(Icons.image_outlined, size: width * 0.2),
+              //       SizedBox(width: width * 0.02),
+              //       (_images.length > 1)
+              //           ? SizedBox(width: 80, child: _images[1])
+              //           : Icon(Icons.image_outlined, size: width * 0.2),
+              //       SizedBox(width: width * 0.02),
+              //       (_images.length > 2)
+              //           ? SizedBox(width: 80, child: _images[2])
+              //           : Icon(Icons.image_outlined, size: width * 0.2),
+              //       SizedBox(width: width * 0.02),
+              //       (_images.length > 3)
+              //           ? SizedBox(width: 80, child: _images[3])
+              //           : Icon(Icons.image_outlined, size: width * 0.2),
+              //     ],
+              //   ),
+              //   onTap: () {
+              //     getImage();
+              //   },
+              // ),
         
               // Product Type bottom modal
               SizedBox(height: width * 0.02),
@@ -402,6 +468,7 @@ class _CreateItemState extends State<CreateItem> {
                   StyledBody(retailPriceValue),
                   IconButton(
                       onPressed: () {
+                        log('Pressed');
                         showModalBottomSheet(
                             backgroundColor: Colors.white,
                             context: context,
@@ -468,39 +535,7 @@ class _CreateItemState extends State<CreateItem> {
                           ),
                         ),
                   ),
-                                                // NumPad(
-                                                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                //   onType: (value) {
-                                                //     setState(() {
-                                                //       if (number.isEmpty) {
-                                                //         number += '\$$value';
-                                                //       } else {
-                                                //         (number += value); 
-                                                //       }
-                                                //     });
-                                                //   },
-                                                //   rightWidget: IconButton(
-                                                //     icon: const Icon(Icons.backspace),
-                                                //     onPressed: () {
-                                                //       if (number.isNotEmpty) {
-                                                //         setState(() {
-                                                //           number = number.substring(0, number.length - 1);
-                                                //         });
-                                                //       }
-                                                //     },
-                                                //   ),
-                                                // ),
-                                                // SizedBox(height: width * 0.1),
-                                                // StyledBody(number),
-                                                // const Divider(),
-                                                // SizedBox(height: width * 0.1),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    // retailPrice = number;
-                                                    // Provider.of<ItemStore>(context, listen: false).setRetailPrice(number);
-                                                    Navigator.pop(context);
-                                                  }, 
-                                                  child: const StyledBody('Save')),
+                                                BlackButton('SAVE', width * 0.1, () {Navigator.pop(context);}),
                                     ],
                                   ),
                                 );}
@@ -668,6 +703,11 @@ class _CreateItemState extends State<CreateItem> {
     );
   }
 
+  Future removeImage(n) async {
+      setState(() {
+        _images.removeAt(n-1);
+      });
+  }
   Future getImage() async {
     final XFile? image = await _picker.pickImage(
         source: ImageSource.gallery,
@@ -675,8 +715,6 @@ class _CreateItemState extends State<CreateItem> {
         maxHeight: 1500,
         imageQuality: 100);
     if (image != null) {
-      // Image tempImage = Image.file(File(_images[1].path), width: 80)
-      // _images.add(Image.file(File(image.path), width: 80));
       _images.add(Image.file(File(image.path)));
     }
 

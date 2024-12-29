@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/screens/browse/browse.dart';
 import 'package:revivals/screens/favourites/favourites.dart';
@@ -18,8 +21,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  void initialization() async {
+    log('pausing..');
+    await Future.delayed(const Duration(seconds: 3));
+    log('unpausing...');
+    FlutterNativeSplash.remove();
+  }
+
   @override
   void initState() {
+    super.initState();
+    initialization();
+    
     Provider.of<ItemStore>(context, listen: false)
       .fetchItemsOnce();
     Provider.of<ItemStore>(context, listen: false)
@@ -39,7 +52,6 @@ class _HomePageState extends State<HomePage> {
     // Provider.of<ItemStore>(context, listen: false).addAllFavourites();
     
     // getCurrentUser();
-    super.initState();
   }
 
   int _pageIndex = 0;

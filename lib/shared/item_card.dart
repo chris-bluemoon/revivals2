@@ -96,7 +96,15 @@ String capitalize(string) {
     // List currListOfFavs =
     //     Provider.of<ItemStore>(context, listen: false).favourites;
     // isFav = isAFav(widget.item, currListOfFavs);
-    Future.delayed(const Duration(seconds: 5));
+    // Future.delayed(const Duration(seconds: 5));
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      if (i.id == widget.item.imageId[0]) {
+        setState(() {
+          thisImage = i.imageId;
+        }
+        );
+      }
+    }
     super.initState();
   }
 
@@ -162,21 +170,14 @@ String capitalize(string) {
   }
 
   Image thisImage = Image.asset('assets/img/items2/No_Image_Available.jpg');
-Widget createImage(String imageName) {
-  return Image.asset(imageName,
-      errorBuilder: (context, object, stacktrace) =>
-          Image.asset('assets/img/items2/No_Image_Available.jpg'));
-}
+// Widget createImage(String imageName) {
+//   return Image.asset(imageName,
+//       errorBuilder: (context, object, stacktrace) =>
+//           Image.asset('assets/img/items2/No_Image_Available.jpg'));
+// }
   @override
   Widget build(BuildContext context) {
-    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
-      if (i.id == widget.item.imageId[0]) {
-        setState(() {
-          thisImage = i.imageId;
-        }
-        );
-      }
-    }
+
 
     double width = MediaQuery.of(context).size.width;
     List currListOfFavs =

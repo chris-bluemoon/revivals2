@@ -51,6 +51,7 @@ dependencies:
   rename_app: ^1.6.1
   syncfusion_flutter_charts: ^27.2.5
   animated_digit: ^3.2.3
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -83,3 +84,15 @@ flutter:
       - assets/img/items2/
       - assets/img/backgrounds/
       - assets/img/icons/
+
+flutter_native_splash:
+  android: true
+  ios: true
+
+  background_image: "assets/logos/beige_background.png"
+  branding: "assets/logos/unearthed_logo_3.png"
+
+  android_12: 
+    color: "#ebe2e2"
+    image: "assets/logos/revive.png"
+    branding: "assets/logos/unearthed_logo_3.png"
