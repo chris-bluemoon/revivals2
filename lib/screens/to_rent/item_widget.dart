@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -34,8 +36,9 @@ class _ItemWidgetState extends State<ItemWidget> {
     // return imageName;
     for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
       if (i.id == widget.item.imageId[widget.itemNumber-1]) {
+        log(widget.item.imageId[widget.itemNumber-1].toString());
         setState(() {
-          thisImage = i.imageId;
+          thisImage = i.imageId; 
         }
         );
       }

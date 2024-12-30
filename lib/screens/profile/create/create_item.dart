@@ -99,10 +99,7 @@ class _CreateItemState extends State<CreateItem> {
 
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
-  late final Image _image1 = Image.asset('assets/img/icons/upload.png');
-  late final Image _image2 = Image.asset('assets/img/icons/upload.png');
-  late final Image _image3 = Image.asset('assets/img/icons/upload.png');
-  late final Image _image4 = Image.asset('assets/img/icons/upload.png');
+  final List<XFile> _imageFiles = [];
   // final List<XFile> _images = [];
   final List<Image> _images = [];
 
@@ -681,7 +678,8 @@ class _CreateItemState extends State<CreateItem> {
                   child: OutlinedButton(
                     onPressed: () async {
                       // handleSubmit();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPriceValue, shortDescController.text, longDescController.text, imagePath))));
+                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPriceValue, shortDescController.text, longDescController.text, imagePath, _imageFiles))));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => (SetPricing(productTypeValue, brandValue, titleController.text, colourValue, retailPriceValue, shortDescController.text, longDescController.text, const [], _imageFiles))));
                     },
   
                     style: OutlinedButton.styleFrom(
@@ -706,6 +704,7 @@ class _CreateItemState extends State<CreateItem> {
   Future removeImage(n) async {
       setState(() {
         _images.removeAt(n-1);
+        _imageFiles.removeAt(n-1);
       });
   }
   Future getImage() async {
@@ -716,21 +715,17 @@ class _CreateItemState extends State<CreateItem> {
         imageQuality: 100);
     if (image != null) {
       _images.add(Image.file(File(image.path)));
+      _imageFiles.add(image);
+      log('Added imageFile: ${image.path.toString()}');
     }
 
     setState(() {
-      _image = image;
-      // await FirebaseStorage.instance.ref(imageRef).putFile(videoFile);
-      // uploadPic();
-      if (_image == null) {
-       
-      }
     });
-    uploadFile();
+    // uploadFile();
     // handleSubmit();
   }
 
-  Future<String> uploadFile() async {
+  uploadFile() async {
     String id = Provider.of<ItemStore>(context, listen: false).renter.id;
     String rng = uuid.v4();
     Reference ref = storage.ref().child('items').child(id).child('$rng.png');
@@ -738,14 +733,15 @@ class _CreateItemState extends State<CreateItem> {
     File file = File(_image!.path);
     UploadTask uploadTask = ref.putFile(file);
    
-    TaskSnapshot taskSnapshot = await uploadTask;
+    await uploadTask;
     //
     imagePath.add(ref.fullPath.toString());
+    log('Added imagePath of: ${ref.fullPath.toString()}');
    
     setState(() {
       readyToSubmit = true;
     });
-    return await taskSnapshot.ref.getDownloadURL();
+    // return await taskSnapshot.ref.getDownloadURL();
   }
 
   listFiles() async {

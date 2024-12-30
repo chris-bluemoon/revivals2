@@ -1,4 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/services/class_store.dart';
@@ -9,7 +14,7 @@ var uuid = const Uuid();
 
 class SetPricing extends StatefulWidget {
   const SetPricing(this.productType, this.brand, this.title, this.colour, this.retailPrice, this.shortDesc,
-    this.longDesc, this.imagePath, {super.key});
+    this.longDesc, this.imagePath, this.imageFiles, {super.key});
 
 final String productType;
 final String brand;
@@ -19,6 +24,8 @@ final String retailPrice;
 final String shortDesc;
 final String longDesc;
 final List<String> imagePath;
+final List<XFile> imageFiles;
+
 
   @override
   State<SetPricing> createState() => _SetPricingState();
@@ -30,12 +37,15 @@ class _SetPricingState extends State<SetPricing> {
     super.initState();
   }
 
+List<String> imagePaths = [];
+
 final dailyPriceController = TextEditingController();
 
 bool postageSwitch = false;
 
   bool formComplete = true;
 
+  FirebaseStorage storage = FirebaseStorage.instance;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -264,8 +274,31 @@ bool postageSwitch = false;
           ),   
       );
   }
+    uploadFile(passedFile) {
+    String id = Provider.of<ItemStore>(context, listen: false).renter.id;
+    String rng = uuid.v4();
+    Reference ref = storage.ref().child('items').child(id).child('$rng.png');
+   
+    File file = File(passedFile.path);
+    UploadTask uploadTask = ref.putFile(file);
+   
+    uploadTask;
+    //
+      imagePaths.add(ref.fullPath.toString());
+    // log('Added imagePath of: ${ref.fullPath.toString()}');
+   
+    // setState(() {
+      // readyToSubmit = true;
+    // });
+    // return await taskSnapshot.ref.getDownloadURL();
+  }
   handleSubmit() {
     String ownerId = Provider.of<ItemStore>(context, listen: false).renter.id;
+    
+    for (XFile passedFile in widget.imageFiles) {
+      log('Uploading passedFile: ${passedFile.path.toString()}');
+      uploadFile(passedFile);
+    }
     Provider.of<ItemStore>(context, listen: false).addItem(Item(
         id: uuid.v4(),
         owner: ownerId,
@@ -289,7 +322,7 @@ bool postageSwitch = false;
         waist: allItems[0].waist,
         hips: allItems[0].hips,
         longDescription: widget.longDesc,
-        imageId: widget.imagePath,
+        imageId: imagePaths,
         status: 'submitted'
         ));
   }

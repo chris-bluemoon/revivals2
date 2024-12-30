@@ -212,11 +212,11 @@ class _ToRentState extends State<ToRent> {
                               },
                               height: width * 1,
                               autoPlay: true),
-                          items: items.map((i) {
+                          items: items.map((index) {
                             return Builder(
                               builder: (BuildContext context) {
                                 return ItemWidget(
-                                    item: widget.item, itemNumber: i);
+                                    item: widget.item, itemNumber: index);
                                 // return const SizedBox(child: Text("BOX"), height: 20, width: 20);
                               },
                             );
