@@ -24,8 +24,10 @@ class _MyAdminState extends State<MyAdmin> {
   void initState() {
     super.initState();
   }
+    void handleLedgersDelete() {
+      Provider.of<ItemStore>(context, listen: false).deleteLedgers();
+    }
     void handleItemsDelete() {
-     
       Provider.of<ItemStore>(context, listen: false).deleteItems();
     }
       void handleItemRentersDelete() {
@@ -189,6 +191,17 @@ class _MyAdminState extends State<MyAdmin> {
                     showAlertDialog(context, handleItemsDelete);
                   },
                   child: const Text('DELETE ITEMS'),
+                ),
+                const Divider(height: 20),
+                ElevatedButton (
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(Colors.red),
+                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  ),
+                  onPressed: () {
+                    showAlertDialog(context, handleLedgersDelete);
+                  },
+                  child: const Text('DELETE LEDGER ENTRIES'),
                 ),
                 const Divider(height: 20),
                 ElevatedButton (

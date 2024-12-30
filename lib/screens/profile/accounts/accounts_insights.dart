@@ -51,6 +51,10 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
   List<String> brands = [];
   List<String> items = [];
 
+  String zeroMonthString = '';
+  DateTime zeroMonth = DateTime.now();
+  bool longXseries = false;
+
   final value = NumberFormat("#,##0", "en_US");
 
   void setMonthlyAccounts() {
@@ -59,7 +63,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     for (ItemRenter ir in allAccountsHistory) {
       if (ir.ownerId == Provider.of<ItemStore>(context, listen: false).renter.email) {
         myAccountsHistory.add(ir);
-        myAccountsHistory.sort((a, b) => a.endDate.compareTo(b.endDate));
+        // myAccountsHistory.sort((a, b) => a.endDate.compareTo(b.endDate));
         totalRentals++;
         totalSales = totalSales + ir.price;
         for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
@@ -73,6 +77,7 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
         }
       }
       }
+      myAccountsHistory.sort((a, b) => a.endDate.compareTo(b.endDate));
     }
 
     Map<String, int> itemMap = {};
@@ -105,7 +110,18 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
     if (myAccountsHistory.isNotEmpty) {
     String earliestDateString = myAccountsHistory[0].endDate;
     String earliestMonthString = earliestDateString.substring(0,7);
+    // String nowMonth = DateFormat('yyyy-MM').format(DateTime.now());
     String nowMonth = DateFormat('yyyy-MM').format(DateTime.now().add(const Duration(days: 31)));
+    zeroMonth = DateFormat('yyyy-MM').parse(earliestDateString).subtract(const Duration(days: 1));
+    DateTime tempMonth = DateTime(zeroMonth.year, zeroMonth.month + 12, zeroMonth.day);
+    if (tempMonth.isBefore(DateTime.now())) {
+      zeroMonthString = DateFormat('MMM yyyy').format(zeroMonth);
+      longXseries = true;
+    } else {
+      zeroMonthString = DateFormat('MMM').format(zeroMonth);
+    }
+
+    // zeroMonthString = DateFormat('yyyy-MM').format(zeroMonth);
     String bucketMonth = earliestMonthString;
     while (bucketMonth != nowMonth) {
       accountMapMonthly[bucketMonth] = 0;
@@ -125,10 +141,16 @@ class _AccountsInsightsPageState extends State<AccountsInsightsPage> {
         }
       }
     }
+    data.add(_SalesData(zeroMonthString, 0));
     accountMapMonthly.forEach((key, value) {
       DateTime month = DateFormat('yyyy-MM').parse(key);
-      String stringMonth1 = DateFormat('yMMM').format(month);
-      String stringMonth2 = DateFormat('MMM').format(month);
+      String stringMonth1 = '';
+      String stringMonth2 = '';
+      if (longXseries == true) {
+        stringMonth1 = DateFormat('MMM yyyy').format(month);
+      } else {
+        stringMonth2 = DateFormat('MMM').format(month);
+      }
       if (accountMapMonthly.length > 12) {
         data.add(_SalesData(stringMonth1, value));
       } else {

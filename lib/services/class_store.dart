@@ -65,6 +65,7 @@ class ItemStore extends ChangeNotifier {
   bool _loggedIn = false;
   // String _region = 'BANGKOK';
 
+  get ledgers => _ledgers;
   get messages => _messages;
   get images => _images;
   get items => _items;
@@ -170,6 +171,15 @@ class ItemStore extends ChangeNotifier {
     _fittingRenters.add(fittingRenter);
     await FirestoreService.addFittingRenter(fittingRenter);
     notifyListeners();
+  }
+
+  void fetchLedgersOnce() async {
+    if (ledgers.length == 0) {
+      final snapshot = await FirestoreService.getLedgersOnce();
+      for (var doc in snapshot.docs) {
+        _ledgers.add(doc.data());
+      }
+    }
   }
 
   void fetchMessagesOnce() async {
@@ -280,6 +290,10 @@ class ItemStore extends ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+  void deleteLedgers() async {
+      await FirestoreService.deleteLedgers();
+      _ledgers.clear();
   }
   void deleteItems() async {
       await FirestoreService.deleteItems();

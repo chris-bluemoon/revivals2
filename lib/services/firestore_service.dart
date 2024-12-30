@@ -104,6 +104,9 @@ class FirestoreService {
     await refFittingRenter.doc(fittingRenter.id).set(fittingRenter);
   }
 
+  static Future<QuerySnapshot<Ledger>> getLedgersOnce() {
+    return refLedger.get();
+  }
   // get itemRenters once
   static Future<QuerySnapshot<Message>> getMessagesOnce() {
     return refMessage.get();
@@ -148,12 +151,18 @@ class FirestoreService {
     );
   }
   
+  static deleteLedgers() {
+  FirebaseFirestore.instance
+    .collection('ledger').get().then((snapshot) {
+      for (DocumentSnapshot i in snapshot.docs) {
+        i.reference.delete();
+      }
+    });
+  }
   static deleteItems() {
   FirebaseFirestore.instance
     .collection('item').get().then((snapshot) {
-     
       for (DocumentSnapshot i in snapshot.docs) {
-       
         i.reference.delete();
       }
     });

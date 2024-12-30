@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +13,7 @@ import 'package:uuid/uuid.dart';
 var uuid = const Uuid();
 
 class MyTransactionsAdminImageWidget extends StatefulWidget {
-  MyTransactionsAdminImageWidget(this.itemRenter, this.itemId, this.startDate, this.endDate, this.price, this.status,
+  const MyTransactionsAdminImageWidget(this.itemRenter, this.itemId, this.startDate, this.endDate, this.price, this.status,
       {super.key});
 
   final ItemRenter itemRenter;
@@ -143,10 +141,10 @@ class _MyTransactionsAdminImageWidgetState extends State<MyTransactionsAdminImag
                 borderRadius: BorderRadius.circular(8),
                 child: ColorFiltered(
                     colorFilter: greyscale,
-                    child: Container(
-                      child: thisImage,
+                    child: SizedBox(
                       height: width * 0.25,
-                      width: width * 0.2
+                      width: width * 0.2,
+                      child: thisImage
                       ))),
             const SizedBox(width: 30),
             Column(
@@ -197,7 +195,14 @@ class _MyTransactionsAdminImageWidgetState extends State<MyTransactionsAdminImag
                       onPressed: () {
                         widget.itemRenter.status = 'paid';
                         Provider.of<ItemStore>(context, listen: false).saveItemRenter(widget.itemRenter);
-                        Ledger l = Ledger(id: uuid.v4(), owner: 'owner', date: 'date', desc: 'desc', amount: 0, balance: 0);
+                        int runningBalance = 0;
+                        for (Ledger l in Provider.of<ItemStore>(context, listen: false).ledgers) {
+                          if (l.owner == Provider.of<ItemStore>(context, listen: false).renter.email) {
+                            runningBalance = runningBalance + l.balance;
+                          }
+                        }
+                        int newBalance = runningBalance + widget.itemRenter.price;
+                        Ledger l = Ledger(id: uuid.v4(), reference: widget.itemRenter.id, owner: Provider.of<ItemStore>(context, listen: false).renter.email, date: DateTime.now().toString(), desc: 'Rental from ${widget.itemRenter.renterId}', amount: widget.itemRenter.price, balance: newBalance);
                         Provider.of<ItemStore>(context, listen: false).addLedger(l);
                       }, 
                       child: const Text('MARK AS PAID'))

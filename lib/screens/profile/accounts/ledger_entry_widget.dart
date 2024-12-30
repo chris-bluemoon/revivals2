@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:revivals/models/item.dart';
-import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/ledger.dart';
 import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 
 
 class LedgerEntryWidget extends StatelessWidget {
-  LedgerEntryWidget(this.itemRenter, {super.key});
+  LedgerEntryWidget(this.ledgerEntry, {super.key});
 
-  final ItemRenter itemRenter;
+  final Ledger ledgerEntry;
 
   late String itemType;
   late String itemName;
@@ -20,18 +19,18 @@ class LedgerEntryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    DateTime convertedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(itemRenter.endDate) ;
+    DateTime convertedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(ledgerEntry.date) ;
     for (Renter r in Provider.of<ItemStore>(context, listen: false).renters) {
-      if (r.email == itemRenter.renterId) {
+      if (r.email == ledgerEntry.owner) {
         renterName = r.name;
       }
     }
-    for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
-      if (i.id == itemRenter.itemId) {
-        itemType = i.type;
-        itemName = i.name;
-      }
-    }
+    // for (Item i in Provider.of<ItemStore>(context, listen: false).items) {
+    //   if (i.id == itemRenter.itemId) {
+    //     itemType = i.type;
+    //     itemName = i.name;
+    //   }
+    // }
     return Row(
       children: [
         Column(
@@ -47,12 +46,16 @@ class LedgerEntryWidget extends StatelessWidget {
                       child: StyledBody(DateFormat('yMd').format(convertedDate), color: Colors.grey, weight: FontWeight.normal)
                     ),
                     SizedBox(
-                      width: width * 0.55,
-                      child: StyledBody('$itemType from $renterName', color: Colors.grey, weight: FontWeight.normal)
+                      width: width * 0.35,
+                      child: StyledBody(ledgerEntry.desc, color: Colors.grey, weight: FontWeight.normal)
+                     ),
+                    SizedBox(
+                      width: width * 0.2,
+                      child: StyledBody(ledgerEntry.amount.toString(), color: Colors.grey, weight: FontWeight.normal)
                      ),
                     SizedBox(
                       width: width * 0.1,
-                      child: StyledBody(itemRenter.price.toString(), color: Colors.grey, weight: FontWeight.normal)
+                      child: StyledBody(ledgerEntry.balance.toString(), color: Colors.grey, weight: FontWeight.normal)
                     ),
                   ],
                 ),

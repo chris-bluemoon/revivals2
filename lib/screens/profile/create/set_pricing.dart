@@ -284,8 +284,8 @@ bool postageSwitch = false;
    
     uploadTask;
     //
-      imagePaths.add(ref.fullPath.toString());
-    // log('Added imagePath of: ${ref.fullPath.toString()}');
+    imagePaths.add(ref.fullPath.toString());
+    log('uploadTask has completed');
    
     // setState(() {
       // readyToSubmit = true;
