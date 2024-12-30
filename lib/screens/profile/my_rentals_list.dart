@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class _MyRentalsListState extends State<MyRentalsList> {
   
 
   List<ItemRenter> myRentalsList = [];
-  List<Item> myItems = [];
+  // List<Item> myItems = [];
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _MyRentalsListState extends State<MyRentalsList> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     // String address = Provider.of<ItemStore>(context, listen: false).renters[0].address;
+    log('Bookings page - transaction list size: ${myRentalsList.length}');
     return 
       ListView.builder(
         padding: EdgeInsets.all(width*0.01),

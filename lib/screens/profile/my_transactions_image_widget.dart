@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:revivals/globals.dart' as globals;
 import 'package:revivals/models/item.dart';
+import 'package:revivals/models/item_image.dart';
 import 'package:revivals/models/item_renter.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/styled_text.dart';
 
 
-class MyTransactionsImageWidget extends StatelessWidget {
+class MyTransactionsImageWidget extends StatefulWidget {
   MyTransactionsImageWidget(this.itemRenter, this.itemId, this.startDate, this.endDate, this.price, this.status,
       {super.key});
 
@@ -19,13 +22,41 @@ class MyTransactionsImageWidget extends StatelessWidget {
   final int price;
   final String status;
 
+  @override
+  State<MyTransactionsImageWidget> createState() => _MyTransactionsImageWidgetState();
+}
+
+class _MyTransactionsImageWidgetState extends State<MyTransactionsImageWidget> {
   late String itemType;
+
   late String itemName;
+
   late String brandName;
+
   late String imageName;
+
   // Item item = Item(id: '-', owner: 'owner', type: 'dress', bookingType: 'rental', dateAdded: '01-01-2023', occasion: ['party'], style: 'classic', name: 'MISSING', brand: 'MISSING', colour: ['Black'], size: ['8'], length: 'midi', print: 'none', sleeve: 'short sleeve', rentPrice: 1200, buyPrice: 0, rrp: 16000, description: 'Short Description', bust: '', waist: '', hips: '', longDescription: '', imageId: [] );
   late Item item;
 
+    Image thisImage = Image.asset('assets/img/items2/No_Image_Available.jpg');
+    late Item thisItem;
+
+    @override
+    void initState() {
+      super.initState();
+    for (Item it in Provider.of<ItemStore>(context, listen: false).items) {
+      if (it.id == widget.itemId) {
+        thisItem = it;
+      }
+    }
+    for (ItemImage i in Provider.of<ItemStore>(context, listen: false).images) {
+      if (i.id == thisItem.imageId[0]) {
+        setState(() {
+          thisImage = i.imageId;
+        }
+        );
+      }
+    }}
 
   String setItemImage() {
     itemType = toBeginningOfSentenceCase(item.type.replaceAll(RegExp(' +'), '_'));
@@ -39,13 +70,13 @@ class MyTransactionsImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     List<Item> allItems = Provider.of<ItemStore>(context, listen: false).items;
-    DateTime fromDate = DateTime.parse(startDate);
-    DateTime toDate = DateTime.parse(endDate);
+    DateTime fromDate = DateTime.parse(widget.startDate);
+    DateTime toDate = DateTime.parse(widget.endDate);
     String fromDateString = DateFormat('d MMMM, y').format(fromDate);
     String toDateString = DateFormat('d MMMM, y').format(toDate);
     // yMMMMd('en_US')
     for (Item d in allItems) {
-      if (d.id == itemId) {
+      if (d.id == widget.itemId) {
        
         item = d;
       }
@@ -111,11 +142,16 @@ class MyTransactionsImageWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: ColorFiltered(
                     colorFilter: greyscale,
-                    child: Image.asset(
-                        'assets/img/items2/${setItemImage()}',
-                        fit: BoxFit.fitHeight,
-                        height: width*0.25,
-                        width: width*0.2))),
+                    child: Container(
+                      child: thisImage,
+                      height: width * 0.25,
+                      width: width * 0.2
+                      ))),
+                    // child: Image.asset(
+                    //     'assets/img/items2/${setItemImage()}',
+                    //     fit: BoxFit.fitHeight,
+                    //     height: width*0.25,
+                    //     width: width*0.2))),
             const SizedBox(width: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +182,7 @@ class MyTransactionsImageWidget extends StatelessWidget {
                       width: width * 0.2,
                       child: const StyledBody('Price', color: Colors.grey, weight: FontWeight.normal)),
                     SizedBox(width: width * 0.01),
-                    StyledBody('${price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
+                    StyledBody('${widget.price.toString()}${globals.thb}', color: Colors.grey, weight: FontWeight.normal),
                   ],
                 ),
                 Row(
@@ -155,7 +191,7 @@ class MyTransactionsImageWidget extends StatelessWidget {
                       width: width * 0.2,
                       child: const StyledBody('Status', color: Colors.grey, weight: FontWeight.normal)),
                     SizedBox(width: width * 0.01),
-                    StyledBody(status, color: Colors.grey, weight: FontWeight.normal),
+                    StyledBody(widget.status, color: Colors.grey, weight: FontWeight.normal),
                   ],
                 ),
               ],

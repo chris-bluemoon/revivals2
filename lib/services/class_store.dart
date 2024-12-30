@@ -7,6 +7,7 @@ import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_image.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/ledger.dart';
 import 'package:revivals/models/message.dart';
 import 'package:revivals/models/renter.dart';
 import 'package:revivals/services/firestore_service.dart';
@@ -16,6 +17,7 @@ class ItemStore extends ChangeNotifier {
 
   final double width = WidgetsBinding.instance.platformDispatcher.views.first.physicalSize.width;
 
+  final List<Ledger> _ledgers = [];
   final List<Message> _messages = [];
   final List<ItemImage> _images = [];
   final List<Item> _items = [];
@@ -119,6 +121,12 @@ class ItemStore extends ChangeNotifier {
     // await FirestoreService.addItem(item);
     _user = user;
     notifyListeners();
+  }
+
+  void addLedger(Ledger ledger) async {
+    _ledgers.add(ledger);
+    await FirestoreService.addLedger(ledger);
+    // notifyListeners();
   }
 
   void addMessage(Message message) async {

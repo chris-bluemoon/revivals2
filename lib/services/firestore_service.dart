@@ -2,10 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:revivals/models/fitting_renter.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_renter.dart';
+import 'package:revivals/models/ledger.dart';
 import 'package:revivals/models/message.dart';
 import 'package:revivals/models/renter.dart';
 
 class FirestoreService {
+
+  static final refLedger = FirebaseFirestore.instance
+    .collection('ledger')
+    .withConverter(
+      fromFirestore: Ledger.fromFirestore, 
+      toFirestore: (Ledger d, _) => d.toFirestore()
+  );
 
   static final refMessage = FirebaseFirestore.instance
     .collection('message')
@@ -41,6 +49,11 @@ class FirestoreService {
       fromFirestore: FittingRenter.fromFirestore, 
       toFirestore: (FittingRenter d, _) => d.toFirestore()
   );
+
+  // add a new message
+  static Future<void> addLedger(Ledger ledger) async {
+    await refLedger.doc(ledger.id).set(ledger);
+  }
 
   // add a new message
   static Future<void> addMessage(Message message) async {
