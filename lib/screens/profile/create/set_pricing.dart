@@ -251,7 +251,7 @@ bool postageSwitch = false;
                 const SizedBox(width: 5),
                 if (formComplete) Expanded(
                   child: OutlinedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       handleSubmit();
                       Navigator.of(context).popUntil((route) => route.isFirst);
 
@@ -314,9 +314,9 @@ bool postageSwitch = false;
         length: allItems[0].length,
         print: allItems[0].print,
         sleeve: allItems[0].sleeve,
-        rentPrice: int.parse(widget.retailPrice.substring(1)),
+        rentPrice: int.parse(dailyPriceController.text),
         buyPrice: allItems[0].buyPrice,
-        rrp: allItems[0].rrp,
+        rrp: int.parse(widget.retailPrice.substring(1)),
         description: widget.shortDesc,
         bust: allItems[0].bust,
         waist: allItems[0].waist,

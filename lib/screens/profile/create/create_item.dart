@@ -145,10 +145,11 @@ class _CreateItemState extends State<CreateItem> {
                       : Icon(Icons.image_outlined, size: width * 0.2),
                     onTap: () {
                       if (_images.isNotEmpty) {
-                        log('remove iamge');
-                        removeImage(1);
+                        showModal('edit', 1, width) ;
+                        // removeImage(1);
                       } else {
-                        getImage();
+                        showModal('create', 1, width) ;
+                        // getImage();
                       }
                     },
                   ),
@@ -159,10 +160,9 @@ class _CreateItemState extends State<CreateItem> {
                         : Icon(Icons.image_outlined, size: width * 0.2),
                     onTap: () {
                       if (_images.length > 1) {
-                        log('remove iamge');
-                        removeImage(2);
+                        showModal('edit', 2, width) ;
                       } else {
-                        getImage();
+                        showModal('create', 2, width) ;
                       }
                     },
                   ),
@@ -173,10 +173,9 @@ class _CreateItemState extends State<CreateItem> {
                       : Icon(Icons.image_outlined, size: width * 0.2),
                     onTap: () {
                       if (_images.length > 2) {
-                        log('remove iamge');
-                        removeImage(3);
+                        showModal('edit', 3, width) ;
                       } else {
-                        getImage();
+                        showModal('create', 3, width) ;
                       }
                     },
                   ),
@@ -187,43 +186,15 @@ class _CreateItemState extends State<CreateItem> {
                       : Icon(Icons.image_outlined, size: width * 0.2),
                     onTap: () {
                       if (_images.length > 3) {
-                        log('remove iamge');
-                        removeImage(4);
+                        showModal('edit', 4, width) ;
                       } else {
-                        getImage();
+                        showModal('create', 4, width);
+                        
                       }
                     },
                   ),
               ],),
-              // GestureDetector(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       (_images.isNotEmpty)
-              //           ? SizedBox(width: 80, child: _images[0])
-              //           : Icon(Icons.image_outlined, size: width * 0.2),
-              //       SizedBox(width: width * 0.02),
-              //       (_images.length > 1)
-              //           ? SizedBox(width: 80, child: _images[1])
-              //           : Icon(Icons.image_outlined, size: width * 0.2),
-              //       SizedBox(width: width * 0.02),
-              //       (_images.length > 2)
-              //           ? SizedBox(width: 80, child: _images[2])
-              //           : Icon(Icons.image_outlined, size: width * 0.2),
-              //       SizedBox(width: width * 0.02),
-              //       (_images.length > 3)
-              //           ? SizedBox(width: 80, child: _images[3])
-              //           : Icon(Icons.image_outlined, size: width * 0.2),
-              //     ],
-              //   ),
-              //   onTap: () {
-              //     getImage();
-              //   },
-              // ),
-        
-              // Product Type bottom modal
               SizedBox(height: width * 0.02),
-              // if (widget.item != null) thisImage,
               const Divider(),
               Row(
                 children: [
@@ -760,4 +731,64 @@ class _CreateItemState extends State<CreateItem> {
      
     }
   }
+    void showModal(type, n, width) {
+                              if (type == 'create') {
+                              showModalBottomSheet(
+                            backgroundColor: Colors.white,
+                            context: context,
+                            isScrollControlled: false,
+                            constraints: BoxConstraints(maxHeight: width * 0.2, minWidth: width * 0.8),
+                            builder: (context) {
+                              return Column(
+                                children: [
+                                  SizedBox(height: width * 0.04),
+                                  GestureDetector(
+                                    onTap: () {
+                                      getImage();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Center(
+                                      child: StyledBody('ADD FROM GALLERY')),
+                                  ),
+                                  Divider(height: width * 0.04),
+                                  const Center(
+                                    child: StyledBody('ADD FROM CAMERA')),
+                                ]
+                              );
+                            });
+                              } else if (type == 'edit') {
+                              showModalBottomSheet(
+                            backgroundColor: Colors.white,
+                            context: context,
+                            isScrollControlled: false,
+                            constraints: BoxConstraints(maxHeight: width * 0.2, minWidth: width * 0.8),
+                            builder: (context) {
+                              return 
+                                Column(
+                                children: [
+                                  SizedBox(height: width * 0.04),
+                                  GestureDetector(
+                                    onTap: () {
+                                      getImage();
+                                      Navigator.pop(context);},
+                                    child: const Center(
+                                      child: StyledBody('VIEW IMAGE')),
+                                  ),
+                                  Divider(height: width * 0.04),
+                                  GestureDetector(
+                                    onTap: () {
+                                      removeImage(n);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Center(
+                                      child: StyledBody('DELETE')),
+                                  ),
+                                ]
+                              );
+                            });
+
+                              }
+                            // getImage();
+
+    }
 }
