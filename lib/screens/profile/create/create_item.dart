@@ -737,8 +737,9 @@ class _CreateItemState extends State<CreateItem> {
                             backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: false,
-                            constraints: BoxConstraints(maxHeight: width * 0.2, minWidth: width * 0.8),
+                            constraints: BoxConstraints(maxHeight: width * 0.4, minWidth: width * 0.8),
                             builder: (context) {
+                              
                               return Column(
                                 children: [
                                   SizedBox(height: width * 0.04),
@@ -753,7 +754,8 @@ class _CreateItemState extends State<CreateItem> {
                                   Divider(height: width * 0.04),
                                   const Center(
                                     child: StyledBody('ADD FROM CAMERA')),
-                                ]
+                                  // SizedBox(height: 400)
+                                ],
                               );
                             });
                               } else if (type == 'edit') {
@@ -761,7 +763,7 @@ class _CreateItemState extends State<CreateItem> {
                             backgroundColor: Colors.white,
                             context: context,
                             isScrollControlled: false,
-                            constraints: BoxConstraints(maxHeight: width * 0.2, minWidth: width * 0.8),
+                            constraints: BoxConstraints(maxHeight: width * 0.4, minWidth: width * 0.8),
                             builder: (context) {
                               return 
                                 Column(
