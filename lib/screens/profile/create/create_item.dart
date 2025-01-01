@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:revivals/models/item.dart';
 import 'package:revivals/models/item_image.dart';
 import 'package:revivals/screens/profile/create/set_pricing.dart';
+import 'package:revivals/screens/profile/create/view_image.dart';
 import 'package:revivals/services/class_store.dart';
 import 'package:revivals/shared/black_button.dart';
 import 'package:revivals/shared/styled_text.dart';
@@ -118,7 +119,7 @@ class _CreateItemState extends State<CreateItem> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-   
+    checkFormComplete(); 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: width * 0.2,
@@ -248,7 +249,7 @@ class _CreateItemState extends State<CreateItem> {
                                                 return GestureDetector(
                                                   onTap: () {
                                                     setState(() {
-                                                      formComplete = true;
+                                                      // formComplete = true;
                                                       productTypeValue =
                                                           productTypes[index];
                                                     });
@@ -672,11 +673,31 @@ class _CreateItemState extends State<CreateItem> {
     );
   }
 
+  viewImage(int n) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => (ViewImage(_images, n))));
+  }
+  
   Future removeImage(n) async {
       setState(() {
         _images.removeAt(n-1);
         _imageFiles.removeAt(n-1);
       });
+  }
+
+  getImageCamera() async {
+    final XFile? image = await _picker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1000,
+        maxHeight: 1500,
+        imageQuality: 100);
+    if (image != null) {
+      _images.add(Image.file(File(image.path)));
+      _imageFiles.add(image);
+      log('Added imageFile: ${image.path.toString()}');
+    }
+
+    setState(() {
+    });
   }
   Future getImage() async {
     final XFile? image = await _picker.pickImage(
@@ -692,8 +713,6 @@ class _CreateItemState extends State<CreateItem> {
 
     setState(() {
     });
-    // uploadFile();
-    // handleSubmit();
   }
 
   uploadFile() async {
@@ -752,8 +771,14 @@ class _CreateItemState extends State<CreateItem> {
                                       child: StyledBody('ADD FROM GALLERY')),
                                   ),
                                   Divider(height: width * 0.04),
-                                  const Center(
-                                    child: StyledBody('ADD FROM CAMERA')),
+                                  GestureDetector(
+                                    onTap: () {
+                                      getImageCamera();
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Center(
+                                      child: StyledBody('ADD FROM CAMERA')),
+                                  ),
                                   // SizedBox(height: 400)
                                 ],
                               );
@@ -771,8 +796,9 @@ class _CreateItemState extends State<CreateItem> {
                                   SizedBox(height: width * 0.04),
                                   GestureDetector(
                                     onTap: () {
-                                      getImage();
-                                      Navigator.pop(context);},
+                                      Navigator.pop(context);
+                                      viewImage(n);
+                                    },
                                     child: const Center(
                                       child: StyledBody('VIEW IMAGE')),
                                   ),
@@ -792,5 +818,17 @@ class _CreateItemState extends State<CreateItem> {
                               }
                             // getImage();
 
+    }
+    void checkFormComplete() {
+      formComplete = true;
+      if (_images.isNotEmpty 
+        && productTypeValue != ''
+        && colourValue != ''
+        && brandValue != ''
+        && titleController.text != ''
+        && shortDescController.text != ''
+        && longDescController.text != '') {
+        formComplete = true;
+      }
     }
 }

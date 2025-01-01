@@ -52,6 +52,7 @@ dependencies:
   syncfusion_flutter_charts: ^27.2.5
   animated_digit: ^3.2.3
   flutter_native_splash: ^2.4.1
+  photo_view: ^0.15.0
 
 dev_dependencies:
   flutter_test:

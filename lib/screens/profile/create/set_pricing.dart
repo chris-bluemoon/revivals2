@@ -40,16 +40,19 @@ class _SetPricingState extends State<SetPricing> {
 List<String> imagePaths = [];
 
 final dailyPriceController = TextEditingController();
+final weeklyPriceController = TextEditingController();
+final monthlyPriceController = TextEditingController();
+final minimalRentalPeriodController = TextEditingController();
 
 bool postageSwitch = false;
 
-  bool formComplete = true;
+  bool formComplete = false;
 
   FirebaseStorage storage = FirebaseStorage.instance;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    checkFormComplete();
    
     return Scaffold(
       appBar: AppBar(
@@ -82,6 +85,8 @@ bool postageSwitch = false;
                         maxLength: 10,
                         controller: dailyPriceController,
                         onChanged: (text) {
+                          monthlyPriceController.text = (int.parse(text) * 0.5).round().toString();
+                          weeklyPriceController.text = (int.parse(text) * 0.8).round().toString();
                           // checkContents(text);
                         },
                         decoration: InputDecoration(
@@ -111,7 +116,7 @@ bool postageSwitch = false;
                         keyboardType: TextInputType.number,
                         maxLines: null,
                         maxLength: 10,
-                        controller: dailyPriceController,
+                        controller: weeklyPriceController,
                         onChanged: (text) {
                           // checkContents(text);
                         },
@@ -141,7 +146,7 @@ bool postageSwitch = false;
                         keyboardType: TextInputType.number,
                         maxLines: null,
                         maxLength: 10,
-                        controller: dailyPriceController,
+                        controller: monthlyPriceController,
                         onChanged: (text) {
                           // checkContents(text);
                         },
@@ -172,7 +177,7 @@ bool postageSwitch = false;
                         keyboardType: TextInputType.number,
                         maxLines: null,
                         maxLength: 10,
-                        controller: dailyPriceController,
+                        controller: minimalRentalPeriodController,
                         onChanged: (text) {
                           // checkContents(text);
                         },
@@ -244,7 +249,7 @@ bool postageSwitch = false;
                       ),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: StyledHeading('CONTINUE', weight: FontWeight.bold, color: Colors.grey),
+                      child: StyledHeading('SUBMIT', weight: FontWeight.bold, color: Colors.grey),
                     ),
                   ),
                 ),
@@ -325,6 +330,14 @@ bool postageSwitch = false;
         imageId: imagePaths,
         status: 'submitted'
         ));
+  }
+  void checkFormComplete() {
+    if (dailyPriceController.text != '' &&
+      weeklyPriceController.text != '' &&
+      monthlyPriceController.text != '' &&
+      minimalRentalPeriodController.text != '') {
+      formComplete = true;
+    }
   }
   
 }
